@@ -22,7 +22,7 @@
 		4EABD5D12C1AE1E20089DF1D /* WebPageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5D02C1AE1E20089DF1D /* WebPageListView.swift */; };
 		4EABD5D32C1AE2260089DF1D /* IWebPageListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5D22C1AE2260089DF1D /* IWebPageListPresenter.swift */; };
 		4EABD5D52C1AE2CC0089DF1D /* WebPageListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5D42C1AE2CC0089DF1D /* WebPageListPresenter.swift */; };
-		4EABD5D72C1AE4410089DF1D /* WebPageListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5D62C1AE4410089DF1D /* WebPageListTableViewCell.swift */; };
+		4EABD5D72C1AE4410089DF1D /* WebPageListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5D62C1AE4410089DF1D /* WebPageListCollectionViewCell.swift */; };
 		4EABD5D92C1AE4690089DF1D /* WebPageListViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5D82C1AE4690089DF1D /* WebPageListViewData.swift */; };
 		4EABD5DD2C1C1DAE0089DF1D /* SearchWebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5DC2C1C1DAE0089DF1D /* SearchWebPageViewController.swift */; };
 		4EABD5DF2C1C1E130089DF1D /* WebPageSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5DE2C1C1E130089DF1D /* WebPageSearchView.swift */; };
@@ -52,7 +52,7 @@
 		4EABD5D02C1AE1E20089DF1D /* WebPageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageListView.swift; sourceTree = "<group>"; };
 		4EABD5D22C1AE2260089DF1D /* IWebPageListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IWebPageListPresenter.swift; sourceTree = "<group>"; };
 		4EABD5D42C1AE2CC0089DF1D /* WebPageListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageListPresenter.swift; sourceTree = "<group>"; };
-		4EABD5D62C1AE4410089DF1D /* WebPageListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageListTableViewCell.swift; sourceTree = "<group>"; };
+		4EABD5D62C1AE4410089DF1D /* WebPageListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageListCollectionViewCell.swift; sourceTree = "<group>"; };
 		4EABD5D82C1AE4690089DF1D /* WebPageListViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageListViewData.swift; sourceTree = "<group>"; };
 		4EABD5DC2C1C1DAE0089DF1D /* SearchWebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWebPageViewController.swift; sourceTree = "<group>"; };
 		4EABD5DE2C1C1E130089DF1D /* WebPageSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageSearchView.swift; sourceTree = "<group>"; };
@@ -102,7 +102,6 @@
 				4EABD5B62C182C240089DF1D /* Assets.xcassets */,
 				4EABD5B82C182C240089DF1D /* LaunchScreen.storyboard */,
 				4EABD5BB2C182C240089DF1D /* Info.plist */,
-				4EABD5B32C182C210089DF1D /* CO2WebpageTracker.xcdatamodeld */,
 			);
 			path = CO2WebpageTracker;
 			sourceTree = "<group>";
@@ -142,7 +141,7 @@
 		4EABD5DA2C1AED050089DF1D /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				4EABD5D62C1AE4410089DF1D /* WebPageListTableViewCell.swift */,
+				4EABD5D62C1AE4410089DF1D /* WebPageListCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -175,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				4EABD5E72C1C25CB0089DF1D /* DataService.swift */,
+				4EABD5B32C182C210089DF1D /* CO2WebpageTracker.xcdatamodeld */,
 			);
 			path = DataService;
 			sourceTree = "<group>";
@@ -292,7 +292,7 @@
 				4EABD5EF2C1C82280089DF1D /* TabBarViewController.swift in Sources */,
 				4EABD5CF2C1AE16D0089DF1D /* SearchWebPageViewAssembly.swift in Sources */,
 				4EABD5E82C1C25CB0089DF1D /* DataService.swift in Sources */,
-				4EABD5D72C1AE4410089DF1D /* WebPageListTableViewCell.swift in Sources */,
+				4EABD5D72C1AE4410089DF1D /* WebPageListCollectionViewCell.swift in Sources */,
 				4EABD5E32C1C23510089DF1D /* SearchWebPageViewPresenter.swift in Sources */,
 				4EABD5C92C1AD3760089DF1D /* NetworkMonitor.swift in Sources */,
 				4EABD5CB2C1AD3C80089DF1D /* Constants.swift in Sources */,

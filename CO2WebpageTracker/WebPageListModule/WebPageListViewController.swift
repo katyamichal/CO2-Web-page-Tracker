@@ -55,15 +55,15 @@ extension WebPageListViewController: IWebPageListView {
     }
 }
 
-extension WebPageListViewController: UITableViewDelegate {}
+extension WebPageListViewController: UICollectionViewDelegate {}
 
-extension WebPageListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension WebPageListViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         presenter.getRowCountInSection()
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        presenter.rowForCell(tableView: tableView, at: indexPath)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        presenter.rowForCell(collectionView: collectionView, at:indexPath)
     }
 }
 
@@ -71,7 +71,7 @@ extension WebPageListViewController: UITableViewDataSource {
 
 private extension WebPageListViewController {
     func setupTableViewDelegates() {
-        webPageListView.tableView.delegate = self
-        webPageListView.tableView.dataSource = self
+        webPageListView.collectionView.delegate = self
+        webPageListView.collectionView.dataSource = self
     }
 }

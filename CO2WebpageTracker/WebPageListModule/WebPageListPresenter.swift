@@ -23,27 +23,16 @@ extension WebPageListPresenter: IWebPageListPresenter {
         self.view = view
     }
     
-    func loadData(with keyword: String) {
-    }
-    
-    func updateViewData(with id: UUID) {
-        
-    }
-    
     func getRowCountInSection() -> Int {
         viewData.count
     }
     
-    func rowForCell(tableView: UITableView, at index: IndexPath) -> UITableViewCell {
-        cell(for: tableView, at: index)
+    func rowForCell(collectionView: UICollectionView, at index: IndexPath) -> UICollectionViewCell {
+        cell(for: collectionView, at: index)
     }
     
     func updateRow(at index: Int) {
         
-    }
-    
-    func heightForRow(at index: Int) -> CGFloat {
-        3.0
     }
     
     func permitDeleting(at index: IndexPath) -> Bool {
@@ -51,15 +40,15 @@ extension WebPageListPresenter: IWebPageListPresenter {
     }
     
     func deleteRow(at index: IndexPath) {
-    
+        
     }
 }
 
 private extension WebPageListPresenter {
  
-    func cell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: WebPageListTableViewCell.reuseIdentifier, for: indexPath) as? WebPageListTableViewCell else {
-            return UITableViewCell()
+    func cell(for collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WebPageListCollectionViewCell.reuseIdentifier, for: indexPath) as? WebPageListCollectionViewCell else {
+            return UICollectionViewCell()
         }
         let data = viewData[indexPath.row]
    

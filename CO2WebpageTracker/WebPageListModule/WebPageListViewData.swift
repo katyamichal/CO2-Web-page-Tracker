@@ -9,6 +9,7 @@ import UIKit
 
 struct WebPageListViewData {
     var webpageId: UUID
+    var lastDateTest: String
     var wepPageInfo: WebPageInfo
 }
 

@@ -8,20 +8,19 @@
 import Foundation
 import UIKit
 
-final class WebPageListTableViewCell: UITableViewCell {
+final class WebPageListCollectionViewCell: UICollectionViewCell {
     
     private let spacing: CGFloat = 16
     private let inset: CGFloat = 8
-    private let progressViewHeight: CGFloat = 3
     
     static var reuseIdentifier: String {
-        return String(describing: WebPageListTableViewCell.self)
+        return String(describing: WebPageListCollectionViewCell.self)
     }
 
     // MARK: - Inits
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupCell()
     }
     
@@ -44,16 +43,15 @@ final class WebPageListTableViewCell: UITableViewCell {
         return stackView
     }()
     
-    private lazy var webPageImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.isHidden = true
-        return imageView
+    private lazy var dateLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFont(name: "Avenir Next Regular", size: 14)
+        label.textColor = .black
+        return label
     }()
     
 
-    
     private lazy var urlLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +64,7 @@ final class WebPageListTableViewCell: UITableViewCell {
     // MARK: - Public
     
     override func prepareForReuse() {
-        webPageImage.image = nil
+        dateLabel.text = nil
         urlLabel.text = nil
         super.prepareForReuse()
     }
@@ -74,16 +72,15 @@ final class WebPageListTableViewCell: UITableViewCell {
 
 // MARK: - Setup methods
 
-private extension WebPageListTableViewCell {
+private extension WebPageListCollectionViewCell {
     func setupCell() {
-        selectionStyle = .none
         setupViews()
         setupConstraints()
     }
     
     func setupViews() {
         contentView.addSubview(webPageStackView)
-        webPageStackView.addArrangedSubview(webPageImage)
+        webPageStackView.addArrangedSubview(dateLabel)
         webPageStackView.addArrangedSubview(urlLabel)
     }
     
