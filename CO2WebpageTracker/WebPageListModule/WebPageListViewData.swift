@@ -6,11 +6,12 @@
 //
 
 import UIKit
+
 enum LoadingStatus: Equatable, Hashable {
     case nonActive
     case waitToLoad(message: String)
     case loading(progress: Float, image: UIImage?)
-    case completed(image: UIImage)
+    case completed(url: String)
     case paused(image: UIImage?)
     case failed(message: String)
 }
@@ -18,5 +19,22 @@ enum LoadingStatus: Equatable, Hashable {
 struct WebPageListViewData {
     var webpageId: UUID
     var loadingStatus: LoadingStatus
-    var wepPageData: WebsiteData
+    var wepPageInfo: WebPageInfo
+}
+
+struct WebPageInfo {
+    var image: String?
+    let url: String
+//    let rating: String
+//    let isGreen: Bool
+//    let gramsForVisit: Float
+}
+
+extension WebPageInfo {
+    init(with url: String) {
+        self.url = url
+       // self.rating = rating
+//        self.isGreen = isGreen
+//        self.gramsForVisit = gramsForVisit
+    }
 }

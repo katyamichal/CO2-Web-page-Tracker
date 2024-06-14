@@ -141,12 +141,13 @@ private extension WebPageListTableViewCell {
             messageLabel.isHidden = true
             activityIndicator.stopAnimating()
             
-        case .completed(let image):
-            loadedImage.image = image
-            loadedImage.isHidden = false
+        case .completed(let url):
+            //loadedImage.image = image
+           // loadedImage.isHidden = false
             loadingProgressView.isHidden = true
             pauseLoadingView.isHidden = true
-            messageLabel.isHidden = true
+            messageLabel.isHidden = false
+            messageLabel.text = url
             
         case .failed(let message):
             loadingProgressView.isHidden = true

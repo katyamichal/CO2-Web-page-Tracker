@@ -25,7 +25,7 @@ extension WebPageListPresenter: IWebPageListPresenter {
     }
     
     func loadData(with keyword: String) {
-        networkService.performRequest(with: "www.instagram.com", id: UUID())
+        networkService.performRequest(with: keyword, id: UUID())
     }
     
     func updateViewData(with id: UUID) {
@@ -92,7 +92,7 @@ private extension WebPageListPresenter {
             
             guard let index = self.viewData.firstIndex(where: { $0.webpageId == webpageId }) else { return }
             if let responseData {
-               // self.viewData[index].loadingStatus = .completed(image: responseData)
+                self.viewData[index].loadingStatus = .completed(url: responseData.url)
             } else {
                 let failedMessage = self.configureErrorResponse(with: error!)
                 self.viewData[index].loadingStatus = .failed(message: failedMessage)
@@ -117,6 +117,10 @@ private extension WebPageListPresenter {
             }
         }
     }
+    
+//    func setLoading(at index: Int, with status: LoadingStatus, with data: Any?) {
+//        viewData[index].loadingStatus = .completed(image: data as UI)
+//    }
     
     func configureErrorResponse(with type: APIError) -> String {
         switch type {
