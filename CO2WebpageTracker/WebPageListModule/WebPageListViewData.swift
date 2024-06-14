@@ -7,18 +7,8 @@
 
 import UIKit
 
-enum LoadingStatus: Equatable, Hashable {
-    case nonActive
-    case waitToLoad(message: String)
-    case loading(progress: Float, image: UIImage?)
-    case completed(url: String)
-    case paused(image: UIImage?)
-    case failed(message: String)
-}
-
 struct WebPageListViewData {
     var webpageId: UUID
-    var loadingStatus: LoadingStatus
     var wepPageInfo: WebPageInfo
 }
 

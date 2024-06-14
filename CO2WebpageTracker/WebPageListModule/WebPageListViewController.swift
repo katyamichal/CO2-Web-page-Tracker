@@ -9,7 +9,6 @@ import UIKit
 protocol IWebPageListView: AnyObject {
     func updateView()
     func prepareForRequest(with id: UUID)
-    func showAlert(with type: Constants.AlerMessagesType)
     func deleteRow(at indexPath: IndexPath)
 }
 
@@ -39,7 +38,6 @@ final class WebPageListViewController: UIViewController {
         super.viewDidLoad()
         presenter.viewDidLoaded(view: self)
         setupTableViewDelegates()
-        presenter.loadData(with: "www.instagram.com")
     }
 }
 
@@ -49,10 +47,6 @@ extension WebPageListViewController: IWebPageListView {
     }
     
     func prepareForRequest(with id: UUID) {
-        
-    }
-    
-    func showAlert(with type: Constants.AlerMessagesType) {
         
     }
     

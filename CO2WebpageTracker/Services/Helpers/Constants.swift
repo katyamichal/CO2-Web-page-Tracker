@@ -23,12 +23,17 @@ enum Constants {
         static let activeImage = "xmark.circle"
     }
     
-    enum CellLoadingMessage {
-        static let noInternetConnection = "Poor Internet Connection. Please check your network settings and try again. Swipe right to delete this message."
-        static let waitForLoad = "Please wait, loading image..."
-        static let failFetchData = "Could not load image. Please check the name and try again. Swipe right to delete this message."
-        static let urlSessionError = "Oops! Something went wrong while loading the image. Please try again. Swipe right to delete this message."
-        static let serverError = "Our server is currently unavailable. Please try again later. Swipe right to delete this message."
+    enum SearchLoadingMessage {
+        static let noInternetConnection = "Poor Internet Connection. Please check your network settings and try again."
+        static let waitForLoad = "We're just loading your result..."
+        static let failFetchData = "We're sorry but something hasn't worked. Please check the URL and try testing again."
+        static let urlSessionError = "Oops! Something went wrong while getting your result. Please try again."
+        static let serverError = "Our server is currently unavailable. Please try again later."
+    }
+    
+    enum LabelPlaceHolders {
+        static let searchLabel1 = "Estimate yoour web page carbon footprint:"
+        static let searchLabel2 = "Your web page address"
     }
     
     enum AlerMessagesType {

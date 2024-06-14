@@ -55,11 +55,6 @@ private extension WebPageListView {
     }
     
     func setupConstraints() {
-        searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: inset).isActive = true
-        searchBar.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -inset).isActive = true
-        searchBar.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: inset).isActive = true
-        searchBar.heightAnchor.constraint(equalToConstant: searchFieldHeight).isActive = true
-        
         tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: inset).isActive = true
         tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true

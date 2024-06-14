@@ -13,8 +13,7 @@ protocol IWebPageListViewLifeCycle: AnyObject {
 }
 
 protocol IWebPageListLoading: AnyObject {
-    func loadData(with keyword: String)
-    func updateViewData(with id: UUID)
+
 }
 
 protocol IWebPageListTableViewHandler: AnyObject {

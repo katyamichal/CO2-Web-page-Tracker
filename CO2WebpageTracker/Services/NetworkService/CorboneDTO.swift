@@ -18,6 +18,13 @@ struct WebsiteData: Codable {
 //    let timestamp: TimeInterval
 
 }
+//
+//
+//enum GreenState: Codable {
+//    case `false`
+//    case `true`
+//    case unknown
+//}
 
 // MARK: - WebsiteStatistics
 struct WebsiteStatistics: Codable {

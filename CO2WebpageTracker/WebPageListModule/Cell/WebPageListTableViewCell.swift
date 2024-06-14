@@ -17,13 +17,7 @@ final class WebPageListTableViewCell: UITableViewCell {
     static var reuseIdentifier: String {
         return String(describing: WebPageListTableViewCell.self)
     }
-    
-    var currentState: LoadingStatus = .nonActive {
-        didSet {
-            updateState()
-        }
-    }
-    
+
     // MARK: - Inits
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -38,7 +32,7 @@ final class WebPageListTableViewCell: UITableViewCell {
     
     // MARK: - UI Elements
     
-    private lazy var loadingStackView: UIStackView = {
+    private lazy var webPageStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -50,7 +44,7 @@ final class WebPageListTableViewCell: UITableViewCell {
         return stackView
     }()
     
-    private lazy var loadedImage: UIImageView = {
+    private lazy var webPageImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
@@ -58,33 +52,9 @@ final class WebPageListTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    private lazy var loadingProgressView: UIProgressView = {
-        let progressView = UIProgressView()
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.progressTintColor = .systemBlue
-        progressView.heightAnchor.constraint(equalToConstant: progressViewHeight).isActive = true
-        return progressView
-    }()
+
     
-    private lazy var pauseLoadingView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.tintColor = .systemBlue
-        imageView.contentMode = .scaleAspectFit
-        return imageView
-    }()
-    
-    
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView()
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.style = .medium
-        activityIndicator.color = .systemBlue
-        activityIndicator.hidesWhenStopped = true
-        return activityIndicator
-    }()
-    
-    private lazy var messageLabel: UILabel = {
+    private lazy var urlLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontForContentSizeCategory = true
@@ -96,10 +66,8 @@ final class WebPageListTableViewCell: UITableViewCell {
     // MARK: - Public
     
     override func prepareForReuse() {
-        loadingProgressView.progress = 0.0
-        loadedImage.image = nil
-        pauseLoadingView.image = nil
-        messageLabel.text = nil
+        webPageImage.image = nil
+        urlLabel.text = nil
         super.prepareForReuse()
     }
 }
@@ -114,68 +82,15 @@ private extension WebPageListTableViewCell {
     }
     
     func setupViews() {
-        contentView.addSubview(loadingStackView)
-        loadingStackView.addArrangedSubview(messageLabel)
-        loadingStackView.addArrangedSubview(activityIndicator)
-        loadingStackView.addArrangedSubview(pauseLoadingView)
-        loadingStackView.addArrangedSubview(loadingProgressView)
-        loadingStackView.addArrangedSubview(loadedImage)
+        contentView.addSubview(webPageStackView)
+        webPageStackView.addArrangedSubview(webPageImage)
+        webPageStackView.addArrangedSubview(urlLabel)
     }
     
     func setupConstraints() {
-        loadingStackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        loadingStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        loadingStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        loadingStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-    }
-    
-    private func updateState() {
-        switch currentState {
-            
-        case .loading(let progress, let image):
-            loadingProgressView.isHidden = false
-            pauseLoadingView.isHidden = false
-            pauseLoadingView.image = image
-            loadingProgressView.progress = progress
-            loadedImage.isHidden = true
-            messageLabel.isHidden = true
-            activityIndicator.stopAnimating()
-            
-        case .completed(let url):
-            //loadedImage.image = image
-           // loadedImage.isHidden = false
-            loadingProgressView.isHidden = true
-            pauseLoadingView.isHidden = true
-            messageLabel.isHidden = false
-            messageLabel.text = url
-            
-        case .failed(let message):
-            loadingProgressView.isHidden = true
-            pauseLoadingView.isHidden = true
-            loadedImage.isHidden = true
-            messageLabel.isHidden = false
-            messageLabel.text = message
-            
-        case .nonActive:
-            loadingProgressView.isHidden = true
-            pauseLoadingView.isHidden = true
-            loadedImage.isHidden = true
-            messageLabel.isHidden = true
-            
-        case .paused(let image):
-            loadingProgressView.isHidden = false
-            pauseLoadingView.isHidden = false
-            pauseLoadingView.image = image
-            loadedImage.isHidden = true
-            messageLabel.isHidden = true
-            
-        case .waitToLoad(let message):
-            loadingProgressView.isHidden = true
-            pauseLoadingView.isHidden = true
-            loadedImage.isHidden = true
-            messageLabel.text = message
-            messageLabel.isHidden = false
-            activityIndicator.startAnimating()
-        }
+        webPageStackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        webPageStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        webPageStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        webPageStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
     }
 }
