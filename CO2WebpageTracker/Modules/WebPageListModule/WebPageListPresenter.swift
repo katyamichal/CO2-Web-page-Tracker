@@ -45,7 +45,6 @@ extension WebPageListPresenter: IWebPageListPresenter {
 }
 
 private extension WebPageListPresenter {
- 
     func cell(for collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WebPageListCollectionViewCell.reuseIdentifier, for: indexPath) as? WebPageListCollectionViewCell else {
             return UICollectionViewCell()

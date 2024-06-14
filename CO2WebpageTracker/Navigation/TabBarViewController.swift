@@ -4,9 +4,9 @@
 //
 //  Created by Catarina Polakowsky on 14.06.2024.
 //
-
-import UIKit
-
+//
+//import UIKit
+//
 //private enum TabBarImageView: String, CaseIterable {
 //    case firstTab = "magnifyingglass"
 //    case secondTab = "list.bullet.rectangle.fill"
@@ -44,4 +44,4 @@ import UIKit
 //        }
 //    }
 //}
-//
+

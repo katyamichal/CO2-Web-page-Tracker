@@ -32,6 +32,12 @@
 		4EABD5E82C1C25CB0089DF1D /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5E72C1C25CB0089DF1D /* DataService.swift */; };
 		4EABD5EC2C1C285C0089DF1D /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5EB2C1C285C0089DF1D /* SearchView.swift */; };
 		4EABD5EF2C1C82280089DF1D /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5EE2C1C82280089DF1D /* TabBarViewController.swift */; };
+		4EABD5F22C1C8CB40089DF1D /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5F12C1C8CB40089DF1D /* WebPageViewController.swift */; };
+		4EABD5F52C1C8D530089DF1D /* WebPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5F42C1C8D530089DF1D /* WebPageView.swift */; };
+		4EABD5F72C1C8F8F0089DF1D /* CarbonRatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5F62C1C8F8F0089DF1D /* CarbonRatingCell.swift */; };
+		4EABD5F92C1C92490089DF1D /* WebPagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5F82C1C92490089DF1D /* WebPagePresenter.swift */; };
+		4EABD5FB2C1C93050089DF1D /* WebPageViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5FA2C1C93050089DF1D /* WebPageViewData.swift */; };
+		4EABD5FD2C1C95240089DF1D /* WebPageSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5FC2C1C95240089DF1D /* WebPageSection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +68,12 @@
 		4EABD5E72C1C25CB0089DF1D /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		4EABD5EB2C1C285C0089DF1D /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		4EABD5EE2C1C82280089DF1D /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		4EABD5F12C1C8CB40089DF1D /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
+		4EABD5F42C1C8D530089DF1D /* WebPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageView.swift; sourceTree = "<group>"; };
+		4EABD5F62C1C8F8F0089DF1D /* CarbonRatingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbonRatingCell.swift; sourceTree = "<group>"; };
+		4EABD5F82C1C92490089DF1D /* WebPagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPagePresenter.swift; sourceTree = "<group>"; };
+		4EABD5FA2C1C93050089DF1D /* WebPageViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewData.swift; sourceTree = "<group>"; };
+		4EABD5FC2C1C95240089DF1D /* WebPageSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageSection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,11 +108,9 @@
 			children = (
 				4EABD5C32C1AD0090089DF1D /* App */,
 				4EABD5F02C1C822E0089DF1D /* Navigation */,
-				4EABD5DB2C1C1D870089DF1D /* SearchModule */,
-				4EABD5C42C1AD0100089DF1D /* WebPageListModule */,
+				4EABD5FE2C1C964E0089DF1D /* Modules */,
 				4EABD5C52C1AD0CF0089DF1D /* Services */,
-				4EABD5B62C182C240089DF1D /* Assets.xcassets */,
-				4EABD5B82C182C240089DF1D /* LaunchScreen.storyboard */,
+				4EABD5ED2C1C56420089DF1D /* Helpers */,
 				4EABD5BB2C182C240089DF1D /* Info.plist */,
 			);
 			path = CO2WebpageTracker;
@@ -133,7 +143,6 @@
 			children = (
 				4EABD5E62C1C25B30089DF1D /* NetworkService */,
 				4EABD5E92C1C25D00089DF1D /* DataService */,
-				4EABD5ED2C1C56420089DF1D /* Helpers */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -191,7 +200,9 @@
 		4EABD5ED2C1C56420089DF1D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				4EABD5B62C182C240089DF1D /* Assets.xcassets */,
 				4EABD5CA2C1AD3C80089DF1D /* Constants.swift */,
+				4EABD5B82C182C240089DF1D /* LaunchScreen.storyboard */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -202,6 +213,29 @@
 				4EABD5EE2C1C82280089DF1D /* TabBarViewController.swift */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		4EABD5F32C1C8CB80089DF1D /* WebPageModule */ = {
+			isa = PBXGroup;
+			children = (
+				4EABD5F12C1C8CB40089DF1D /* WebPageViewController.swift */,
+				4EABD5F42C1C8D530089DF1D /* WebPageView.swift */,
+				4EABD5F62C1C8F8F0089DF1D /* CarbonRatingCell.swift */,
+				4EABD5F82C1C92490089DF1D /* WebPagePresenter.swift */,
+				4EABD5FA2C1C93050089DF1D /* WebPageViewData.swift */,
+				4EABD5FC2C1C95240089DF1D /* WebPageSection.swift */,
+			);
+			path = WebPageModule;
+			sourceTree = "<group>";
+		};
+		4EABD5FE2C1C964E0089DF1D /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				4EABD5DB2C1C1D870089DF1D /* SearchModule */,
+				4EABD5C42C1AD0100089DF1D /* WebPageListModule */,
+				4EABD5F32C1C8CB80089DF1D /* WebPageModule */,
+			);
+			path = Modules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,10 +308,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EABD5FB2C1C93050089DF1D /* WebPageViewData.swift in Sources */,
+				4EABD5F22C1C8CB40089DF1D /* WebPageViewController.swift in Sources */,
+				4EABD5F72C1C8F8F0089DF1D /* CarbonRatingCell.swift in Sources */,
 				4EABD5CD2C1AD6F10089DF1D /* CorboneDTO.swift in Sources */,
 				4EABD5AF2C182C210089DF1D /* WebPageListViewController.swift in Sources */,
 				4EABD5E52C1C23D60089DF1D /* SearchViewData.swift in Sources */,
 				4EABD5D92C1AE4690089DF1D /* WebPageListViewData.swift in Sources */,
+				4EABD5F92C1C92490089DF1D /* WebPagePresenter.swift in Sources */,
 				4EABD5D32C1AE2260089DF1D /* IWebPageListPresenter.swift in Sources */,
 				4EABD5DD2C1C1DAE0089DF1D /* SearchWebPageViewController.swift in Sources */,
 				4EABD5B52C182C210089DF1D /* CO2WebpageTracker.xcdatamodeld in Sources */,
@@ -286,10 +324,12 @@
 				4EABD5C22C1998320089DF1D /* NetworkService.swift in Sources */,
 				4EABD5EC2C1C285C0089DF1D /* SearchView.swift in Sources */,
 				4EABD5AD2C182C210089DF1D /* SceneDelegate.swift in Sources */,
+				4EABD5FD2C1C95240089DF1D /* WebPageSection.swift in Sources */,
 				4EABD5C72C1AD3420089DF1D /* APIErrors.swift in Sources */,
 				4EABD5D52C1AE2CC0089DF1D /* WebPageListPresenter.swift in Sources */,
 				4EABD5D12C1AE1E20089DF1D /* WebPageListView.swift in Sources */,
 				4EABD5EF2C1C82280089DF1D /* TabBarViewController.swift in Sources */,
+				4EABD5F52C1C8D530089DF1D /* WebPageView.swift in Sources */,
 				4EABD5CF2C1AE16D0089DF1D /* SearchWebPageViewAssembly.swift in Sources */,
 				4EABD5E82C1C25CB0089DF1D /* DataService.swift in Sources */,
 				4EABD5D72C1AE4410089DF1D /* WebPageListCollectionViewCell.swift in Sources */,
