@@ -15,16 +15,33 @@ protocol IWebPagePresenter: AnyObject {
 }
 
 final class WebPagePresenter {
+    private weak var coordinator: Coordinator?
     private weak var view: IWebPageView?
-    private let dataService: IDataService
+    private var dataService: IDataService
     private var viewData: WebPageViewData?
-    private let webPageId: UUID
+    private let webPageId: UUID?
     
-    init(dataService: IDataService, id: UUID) {
+    init(coordinator: Coordinator?, dataService: IDataService, id: UUID?) {
         self.dataService = dataService
         self.webPageId = id
-        //dataService.add(webPage: WebPageViewData(url: "www.apple.com", date: Date(), rating: "B", isGreen: true, gramForVisit: 0.23))
+        self.coordinator = coordinator
+//        dataService.add(webPage: WebPageViewData(url: "www.apple.com", date: Date(), diertierThan: 40, rating: "B", isGreen: true, gramForVisit: 0.23))
     }
+}
+
+extension WebPagePresenter {
+//    convenience init?(coordinator: Coordinator, dataService: IDataService, data: WebsiteData) {
+//        self.init(coordinator: coordinator, dataService: dataService, id: nil)
+//
+//        self.viewData = WebPageViewData(
+//            url: data.url,
+//            date: Date(), 
+//            diertierThan: (100 - Int(data.cleanerThan)),
+//            rating: data.rating,
+//            isGreen: data.green,
+//            gramForVisit: Float(data.statistics.co2.renewable.grams)
+//        )
+//    }
 }
 
 extension WebPagePresenter: IWebPagePresenter {
@@ -48,12 +65,17 @@ extension WebPagePresenter: IWebPagePresenter {
     
     func viewDidLoaded(view: IWebPageView) {
         self.view = view
-        getData()
+        if webPageId == nil {
+            self.view?.update()
+        } else {
+            getData()
+        }
     }
 }
 
 private extension WebPagePresenter {
     func getData() {
+        guard let webPageId else { return }
         dataService.fetchWepPage(with: webPageId) { [weak self] data in
             self?.viewData = data
             self?.view?.update()
@@ -69,7 +91,8 @@ private extension WebPagePresenter {
               guard let cell = tableView.dequeueReusableCell(withIdentifier: CarbonRatingCell.reuseIdentifier, for: indexPath) as? CarbonRatingCell else {
                   return UITableViewCell()
               }
-              cell.update(with: viewData.rating)
+              
+              cell.update(with: viewData.ratingLetter, url: viewData.url, diertierThan: Float(viewData.diertierThan), date: "16.06.24")
               return cell
 
           case .energyType:

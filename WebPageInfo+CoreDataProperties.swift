@@ -16,13 +16,13 @@ extension WebPageInfo {
         return NSFetchRequest<WebPageInfo>(entityName: "WebPageInfo")
     }
 
-    @NSManaged public var url: String
-    @NSManaged public var identifier: UUID
-    @NSManaged public var rating: String
-    @NSManaged public var isGreen: Bool
     @NSManaged public var gramForVisit: Float
+    @NSManaged public var identifier: UUID
+    @NSManaged public var isGreen: Bool
+    @NSManaged public var rating: String
+    @NSManaged public var url: String
     @NSManaged public var date: Date
-    
+    @NSManaged public var cleanerThan: Int64
 
 }
 

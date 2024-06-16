@@ -42,6 +42,7 @@ enum PersistantContainerStorage {
 final class DataService: IDataService {
     private let frcDelegate = FRCDelegate()
     private let entityName = "WebPageInfo"
+    private let maxPercentage: Int = 100
     
     private lazy var controller: NSFetchedResultsController<WebPageInfo> = {
         let sortDescriptor = NSSortDescriptor(keyPath: \WebPageInfo.date, ascending: true)
@@ -86,7 +87,9 @@ final class DataService: IDataService {
     
     func fetchWepPage(with webPageId: UUID, completionHandler: (WebPageViewData) -> Void) {
         guard let webPage = getWebPage(with: webPageId) else { return }
-        completionHandler(WebPageViewData(id: webPage.identifier, url: webPage.url, date: webPage.date, rating: webPage.rating, isGreen: webPage.isGreen, gramForVisit: webPage.gramForVisit))
+        print(webPage.cleanerThan)
+        completionHandler(WebPageViewData(id: webPage.identifier, url: webPage.url, date: webPage.date, ratingLetter: webPage.rating, diertierThan: (maxPercentage - Int(webPage.cleanerThan)), isGreen: webPage.isGreen, gramForVisit: webPage.gramForVisit))
+        
     }
     // MARK: - Add
     
@@ -115,9 +118,10 @@ final class DataService: IDataService {
             newWebPage.identifier = webPage.id
             newWebPage.url = webPage.url
             newWebPage.date = webPage.date
-            newWebPage.rating = webPage.rating
+            newWebPage.rating = webPage.ratingLetter
             newWebPage.isGreen = webPage.isGreen
             newWebPage.gramForVisit = webPage.gramForVisit
+            newWebPage.cleanerThan = Int64((maxPercentage - webPage.diertierThan))
             
             PersistantContainerStorage.saveContext()
         } else {

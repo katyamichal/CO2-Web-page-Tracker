@@ -27,7 +27,7 @@ final class WebPageListCoordinator: Coordinator {
     }
     
     func showWebPageDetail(with id: UUID) {
-        let presenter = WebPagePresenter(dataService: dataService, id: id)
+        let presenter = WebPagePresenter(coordinator: nil, dataService: dataService, id: id)
         let viewController = WebPageViewController(presenter: presenter)
         navigationController.pushViewController(viewController, animated: true)
     }

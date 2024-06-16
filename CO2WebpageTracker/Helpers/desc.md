@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>url</key>
+    <string>The URL of the website being analyzed.</string>
+    <key>green</key>
+    <dict>
+        <key>true</key>
+        <string>This web page appears to be running on sustainable energy.</string>
+        <key>false</key>
+        <string>Oh no, it looks like this web page uses bog standard energy.</string>
+        <key>unknown</key>
+        <string>The environmental status of the website is unknown.</string>
+    </dict>
+    <key>cleanerThan</key>
+    <string>Indicates how much cleaner the website is compared to a benchmark.</string>
+    <key>scale</key>
+    <dict>
+        <key>A+</key>
+        <real>0.095</real>
+        <key>A</key>
+        <real>0.186</real>
+        <key>B</key>
+        <real>0.341</real>
+        <key>C</key>
+        <real>0.493</real>
+        <key>D</key>
+        <real>0.656</real>
+        <key>E</key>
+        <real>0.846</real>
+        <key>F</key>
+        <real>0.847</real>
+    </dict>
+    <key>co2PerPageview</key>
+    <string>The grams of CO2 produced every time someone visits this web page.</string>
+</dict>
+</plist>
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>url</key>
+    <string>The URL of the website being analyzed.</string>
+    <key>green</key>
+    <dict>
+        <key>true</key>
+        <string>This web page appears to be running on sustainable energy.</string>
+        <key>false</key>
+        <string>Oh no, it looks like this web page uses bog standard energy.</string>
+        <key>unknown</key>
+        <string>The environmental status of the website is unknown.</string>
+    </dict>
+    <key>cleanerThan</key>
+    <string>Indicates how much cleaner the website is compared to a benchmark.</string>
+    <key>scale</key>
+    <dict>
+        <key>A+</key>
+        <dict>
+            <key>value</key>
+            <real>0.095</real>
+            <key>color</key>
+            <string>#00FF00</string>
+        </dict>
+        <key>A</key>
+        <dict>
+            <key>value</key>
+            <real>0.186</real>
+            <key>color</key>
+            <string>#7FFF00</string>
+        </dict>
+        <key>B</key>
+        <dict>
+            <key>value</key>
+            <real>0.341</real>
+            <key>color</key>
+            <string>#FFFF00</string>
+        </dict>
+        <key>C</key>
+        <dict>
+            <key>value</key>
+            <real>0.493</real>
+            <key>color</key>
+            <string>#FFBF00</string>
+        </dict>
+        <key>D</key>
+        <dict>
+            <key>value</key>
+            <real>0.656</real>
+            <key>color</key>
+            <string>#FF8000</string>
+        </dict>
+        <key>E</key>
+        <dict>
+            <key>value</key>
+            <real>0.846</real>
+            <key>color</key>
+            <string>#FF4000</string>
+        </dict>
+        <key>F</key>
+        <dict>
+            <key>value</key>
+            <real>0.847</real>
+            <key>color</key>
+            <string>#FF0000</string>
+        </dict>
+    </dict>
+    <key>co2PerPageview</key>
+    <string>The grams of CO2 produced every time someone visits this web page.</string>
+</dict>
+</plist>

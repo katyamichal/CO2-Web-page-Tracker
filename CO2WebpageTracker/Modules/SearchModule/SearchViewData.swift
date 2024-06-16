@@ -8,7 +8,7 @@
 import UIKit
 
 struct SearchViewData {
-    var seatchStatus: SearchStatus
+    var searchStatus: SearchStatus
 }
 
 enum SearchStatus {

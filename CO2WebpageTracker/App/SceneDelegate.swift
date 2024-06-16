@@ -11,13 +11,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     var coordinator: Coordinator?
+    var descriptions: [String: Any]?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let navigationController = UINavigationController()
         window = UIWindow(windowScene: windowScene)
         
-
+        
         coordinator = TabBarCoordinator(
             window: window,
             networkService: NetworkService(),

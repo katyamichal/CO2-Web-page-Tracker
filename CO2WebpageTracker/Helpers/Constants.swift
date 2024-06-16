@@ -5,7 +5,7 @@
 //  Created by Catarina Polakowsky on 13.06.2024.
 //
 
-import Foundation
+import UIKit
 
 enum Constants {
     
@@ -58,3 +58,17 @@ enum Constants {
     }
 }
 
+//import Foundation
+//
+//func loadWebsiteData(fromPlistNamed plistName: String) -> WebsiteData? {
+//    guard let url = Bundle.main.url(forResource: plistName, withExtension: "plist") else {
+//        print("Failed to locate or load plist file.")
+//        return nil
+//    }
+//    
+////    let dict = NSDictionary(contentsOfFile: path) as? [String: AnyObject]
+////    // и здесь из словаря ты можешь собрать модельку
+////    // или сделать
+//    let data = try? Data(contentsOf: url)
+//    // и из Data собрать Codable модель
+//}

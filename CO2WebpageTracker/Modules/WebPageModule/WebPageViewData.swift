@@ -10,18 +10,20 @@ struct WebPageViewData {
     let id: UUID
     let url: String
     let date: Date
-    let rating: String
+    let ratingLetter: String
+    let diertierThan: Int
     let isGreen: Bool
     let gramForVisit: Float
  
 }
 
 extension WebPageViewData {
-    init(url: String, date: Date, rating: String, isGreen: Bool, gramForVisit: Float) {
+    init(url: String, date: Date, diertierThan: Int, rating: String, isGreen: Bool, gramForVisit: Float) {
         self.id = UUID()
         self.url = url
         self.date = date
-        self.rating = rating
+        self.ratingLetter = rating
+        self.diertierThan = diertierThan
         self.isGreen = isGreen
         self.gramForVisit = gramForVisit
     }

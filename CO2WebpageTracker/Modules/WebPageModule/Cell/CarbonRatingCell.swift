@@ -43,15 +43,16 @@ final class CarbonRatingCell: UITableViewCell {
     private lazy var letterLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 14)
+        label.font = UIFont(name: "Avenir Next Regular", size: 34)
         label.textColor = .black
+        label.textAlignment = .center
         return label
     }()
     
     private lazy var resultForLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 14)
+        label.font = UIFont(name: "Avenir Next Regular", size: 21)
         label.textColor = .black
         return label
     }()
@@ -59,7 +60,7 @@ final class CarbonRatingCell: UITableViewCell {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 14)
+        label.font = UIFont(name: "Avenir Next Regular", size: 30)
         label.textColor = .black
         return label
     }()
@@ -67,7 +68,7 @@ final class CarbonRatingCell: UITableViewCell {
     private lazy var dirtierThatLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 14)
+        label.font = UIFont(name: "Avenir Next Regular", size: 22)
         label.textColor = .black
         return label
     }()
@@ -80,6 +81,7 @@ final class CarbonRatingCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont(name: "Avenir Next Regular", size: 14)
+ 
         label.textColor = .black
         return label
     }()
@@ -92,8 +94,12 @@ final class CarbonRatingCell: UITableViewCell {
         super.prepareForReuse()
     }
     
-    func update(with letter: String) {
+    func update(with letter: String, url: String, diertierThan: Float, date: String) {
+        resultForLabel.text = "Website carbon result for: \(url)"
         letterLabel.text = letter
+        descriptionLabel.text = "Oh no! This web page  achieves a carbon rating of \(letter)"
+        dirtierThatLabel.text = "This is dirtier then \(diertierThan)"
+        dateLabel.text = "This page was tested on \(date)"
     }
 }
 
@@ -109,6 +115,7 @@ private extension CarbonRatingCell {
         stackView.addArrangedSubview(resultForLabel)
         stackView.addArrangedSubview(descriptionLabel)
         stackView.addArrangedSubview(dirtierThatLabel)
+        stackView.addArrangedSubview(dateLabel)
     }
     
     func setupConstraints() {

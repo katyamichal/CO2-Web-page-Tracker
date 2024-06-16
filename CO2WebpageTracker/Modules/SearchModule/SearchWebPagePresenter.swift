@@ -19,7 +19,7 @@ final class SearchWebPagePresenter {
     private let networkService: INetworkService
     private weak var coordinator: Coordinator?
     private weak var view: ISearchWebPageView?
-    private var viewData = SearchViewData(seatchStatus: .search)
+    private var viewData = SearchViewData(searchStatus: .search)
     
     // MARK: - Init
 
@@ -32,8 +32,8 @@ final class SearchWebPagePresenter {
 
 extension SearchWebPagePresenter: ISearchWebPagePresenter {
     func tryAgainButtonPressed() {
-        viewData.seatchStatus = .search
-        view?.updateView(with: viewData.seatchStatus)
+        viewData.searchStatus = .search
+        view?.updateView(with: viewData.searchStatus)
     }
 
     func viewDidLoaded(view: ISearchWebPageView) {
@@ -47,8 +47,8 @@ extension SearchWebPagePresenter: ISearchWebPagePresenter {
     }
     
     func updateViewData()  {
-        viewData.seatchStatus = .load(status: .loading(message: Constants.SearchLoadingMessage.waitForLoad, image: PauseLoadingImages.paused))
-        view?.updateView(with: viewData.seatchStatus)
+        viewData.searchStatus = .load(status: .loading(message: Constants.SearchLoadingMessage.waitForLoad, image: PauseLoadingImages.paused))
+        view?.updateView(with: viewData.searchStatus)
     }
 }
 
@@ -73,14 +73,14 @@ private extension SearchWebPagePresenter {
             guard let self else { return }
             
             if let responseData {
-                self.viewData.seatchStatus = .search
+                self.viewData.searchStatus = .search
             } else {
                 let failedMessage = self.configureErrorResponse(with: error!)
-                self.viewData.seatchStatus = .load(status: .failed(message: failedMessage))
+                self.viewData.searchStatus = .load(status: .failed(message: failedMessage))
             }
     
             DispatchQueue.main.async {
-                self.view?.updateView(with: self.viewData.seatchStatus)
+                self.view?.updateView(with: self.viewData.searchStatus)
             }
         }
     }
