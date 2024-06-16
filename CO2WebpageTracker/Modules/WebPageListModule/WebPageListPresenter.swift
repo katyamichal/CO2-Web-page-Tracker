@@ -10,17 +10,27 @@ import UIKit
 final class WebPageListPresenter {
     private weak var view: IWebPageListView?
     private let dataService: IDataService
+    private weak var coordinator: Coordinator?
     private var viewData: [WebPageListViewData] = []
 
 
-    init(dataService: IDataService) {
+    init(coordinator: Coordinator, dataService: IDataService) {
+        self.coordinator = coordinator
         self.dataService = dataService
     }
 }
 
 extension WebPageListPresenter: IWebPageListPresenter {
+    func showDetailView(at index: Int) {
+        let id = viewData[index].id
+        (coordinator as? WebPageListCoordinator)?.showWebPageDetail(with: id)
+    }
+    
     func viewDidLoaded(view: IWebPageListView) {
         self.view = view
+        self.view?.setupNavigationBar(with: "Web Pages")
+        dataService.addFetchDelegate(self)
+        getData()
     }
     
     func getRowCountInSection() -> Int {
@@ -44,13 +54,48 @@ extension WebPageListPresenter: IWebPageListPresenter {
     }
 }
 
+
+extension WebPageListPresenter: IFetchResultControllerDelegate {
+    func insertObject(at index: IndexPath, with object: WebPageListViewData) {
+        viewData.insert(object, at: index.row)
+        view?.insertRow(at: index)
+    }
+    
+    func objectDidChange(at index: IndexPath, with object: WebPageListViewData) {
+        viewData[index.row] = object
+        view?.update()
+    }
+        
+    func deleteRow(at index: Int) {
+        //
+    }
+}
+
 private extension WebPageListPresenter {
+    func getData() {
+        dataService.fetchWepPages { [weak self] data in
+            self?.dataService.performFetch()
+            self?.viewData = data
+            if viewData.count == 0 {
+                viewData.append(contentsOf: generateSampleWebPageData())
+            }
+            self?.view?.update()
+        }
+    }
+    
     func cell(for collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WebPageListCollectionViewCell.reuseIdentifier, for: indexPath) as? WebPageListCollectionViewCell else {
             return UICollectionViewCell()
         }
         let data = viewData[indexPath.row]
-   
+
+        cell.updateLabels(url: data.url, rating: data.rating)
         return cell
+    }
+    
+    func generateSampleWebPageData() -> [WebPageListViewData] {
+        return [
+            WebPageListViewData(url: "https://example.com", date: Date(), rating: "A"),
+        ]
     }
 }

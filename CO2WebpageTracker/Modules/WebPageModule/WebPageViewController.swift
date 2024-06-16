@@ -7,6 +7,8 @@
 
 import UIKit
 protocol IWebPageView: AnyObject {
+    func update()
+    func setupNavigationTitle(with title: String)
     
 }
 
@@ -35,16 +37,30 @@ final class WebPageViewController: UIViewController {
         super.viewDidLoad()
         presenter.viewDidLoaded(view: self)
         setupTableViewDelegates()
+        setupNavigationBar()
     }
 }
 
-extension WebPageViewController: IWebPageView {}
+extension WebPageViewController: IWebPageView {
+    
+    func update() {
+        webPageView.tableView.reloadData()
+    }
+    
+    func setupNavigationTitle(with title: String) {
+        navigationItem.title = title
+    }
+}
 
 extension WebPageViewController: UITableViewDelegate {}
 
 extension WebPageViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        presenter.getSectionCount()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.getRowCountInSection()
+        presenter.getRowCountInSection(at: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -56,5 +72,22 @@ private extension WebPageViewController {
     func setupTableViewDelegates() {
         webPageView.tableView.dataSource = self
         webPageView.tableView.delegate = self
+    }
+    
+    func setupNavigationBar() {
+        let config2 = UIImage.SymbolConfiguration(pointSize: 18, weight: .light)
+        let image2 = UIImage(systemName: "square.and.arrow.up", withConfiguration: config2)
+        let rightBarButton = UIBarButtonItem(image: image2, style: .plain, target: self, action: #selector(shareProduct))
+        navigationItem.rightBarButtonItem = rightBarButton
+    }
+    
+    @objc
+    func shareProduct() {
+        // 
+        let url = URL(string: "https://www.websitecarbon.com/website/instagram-com/")!
+        let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        activityVC.title = "Instagram"
+        activityVC.excludedActivityTypes = [.airDrop]
+        self.present(activityVC, animated: true)
     }
 }

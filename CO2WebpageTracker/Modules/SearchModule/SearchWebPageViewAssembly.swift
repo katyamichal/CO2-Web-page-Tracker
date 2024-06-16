@@ -6,16 +6,16 @@
 //
 
 import UIKit
-enum SearchWebPageViewAssembly {
-    
-    struct Dependencies {
-        let service: INetworkService
-    }
-    
-    static func makeModule(dependencies: Dependencies) -> UIViewController {
-        let presenter = SearchWebPageViewPresenter(networkService: dependencies.service)
-        let viewController = SearchWebPageViewController(presenter: presenter)
-        return viewController
-    }
-}
+//enum SearchWebPageViewAssembly {
+//    
+//    struct Dependencies {
+//        let service: INetworkService
+//    }
+//    
+//    static func makeModule(dependencies: Dependencies) -> UIViewController {
+//        let presenter = SearchWebPageViewPresenter(coordinator: , networkService: dependencies.service)
+//        let viewController = SearchWebPageViewController(presenter: presenter)
+//        return viewController
+//    }
+//}
 

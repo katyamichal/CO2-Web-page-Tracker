@@ -6,7 +6,7 @@
 //
 
 import Foundation
-enum WebPageSection {
+enum WebPageSection: CaseIterable {
     case carbonRating
     case renewable
     case energyType

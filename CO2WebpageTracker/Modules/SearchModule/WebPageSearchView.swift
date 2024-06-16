@@ -10,6 +10,7 @@ import UIKit
 final class WebPageSearchView: UIView {
     private let inset: CGFloat = 8
     private let spacing: CGFloat = 16
+    var stackViewBottomConstraint: NSLayoutConstraint?
     
     // MARK: - Inits
     
@@ -52,8 +53,8 @@ final class WebPageSearchView: UIView {
         return view
     }()
     
-    func setupActionForTryAgainButton(action: Selector) {
-        loadingView.setupActionForTryAgainButton(target: self, action: action)
+    func setupActionForTryAgainButton(target: Any?, action: Selector) {
+        loadingView.setupActionForTryAgainButton(target: target, action: action)
     }
     
     func update(with status: SearchStatus) {
@@ -83,9 +84,13 @@ private extension WebPageSearchView {
     }
     
     func setupConstraints() {
-        searchStackView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor).isActive = true
+        let stackViewBottomConstraint = searchStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+        searchStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
         searchStackView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
         searchStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: inset).isActive = true
+        stackViewBottomConstraint.isActive = true
         searchStackView.heightAnchor.constraint(equalToConstant: 400).isActive = true
+        
+        self.stackViewBottomConstraint = stackViewBottomConstraint
     }
 }

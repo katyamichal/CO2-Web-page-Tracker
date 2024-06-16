@@ -32,7 +32,7 @@ enum Constants {
     }
     
     enum LabelPlaceHolders {
-        static let searchLabel1 = "Estimate yoour web page carbon footprint:"
+        static let searchLabel1 = "Estimate your web page carbon footprint:"
         static let searchLabel2 = "Your web page address"
     }
     
@@ -49,7 +49,7 @@ enum Constants {
         var message: String {
             switch self {
             case .emptyTextField:
-                return "Please, enter an image name"
+                return "Please enter a URL"
             }
         }
         var buttonTitle: String {

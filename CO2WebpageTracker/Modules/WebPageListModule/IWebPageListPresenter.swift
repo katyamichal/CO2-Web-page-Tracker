@@ -22,4 +22,7 @@ protocol IWebPageListCollectionViewHandler: AnyObject {
     func updateRow(at index: Int)
     func permitDeleting(at index: IndexPath) -> Bool
     func deleteRow(at index: IndexPath)
+    func showDetailView(at index: Int)
 }
+
+

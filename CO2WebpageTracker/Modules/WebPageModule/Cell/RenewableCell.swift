@@ -1,17 +1,17 @@
 //
-//  CarbonRatingCell.swift
+//  RenewableCell.swift
 //  CO2WebpageTracker
 //
-//  Created by Catarina Polakowsky on 14.06.2024.
+//  Created by Catarina Polakowsky on 16.06.2024.
 //
 
 import UIKit
-final class CarbonRatingCell: UITableViewCell {
+final class RenewableCell: UITableViewCell {
     private let spacing: CGFloat = 16
     private let inset: CGFloat = 8
     
     static var reuseIdentifier: String {
-        return String(describing: CarbonRatingCell.self)
+        return String(describing: RenewableCell.self)
     }
     
     // MARK: - Init
@@ -91,9 +91,15 @@ final class CarbonRatingCell: UITableViewCell {
         dirtierThatLabel.text = nil
         super.prepareForReuse()
     }
+
+    // MARK: - Public
+    
+    func update(with letter: String) {
+        letterLabel.text = letter
+    }
 }
 
-private extension CarbonRatingCell {
+private extension RenewableCell {
     func setupCell() {
         setupViews()
         setupConstraints()

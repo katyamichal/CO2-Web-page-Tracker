@@ -8,16 +8,24 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
-
+    var coordinator: Coordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let dependencies = SearchWebPageViewAssembly.Dependencies(service: NetworkService())
-        let viewController = SearchWebPageViewAssembly.makeModule(dependencies: dependencies)
+        let navigationController = UINavigationController()
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = viewController
+        
+
+        coordinator = TabBarCoordinator(
+            window: window,
+            networkService: NetworkService(),
+            dataService: DataService(),
+            navigationController: navigationController
+        )
+        coordinator?.start()
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 

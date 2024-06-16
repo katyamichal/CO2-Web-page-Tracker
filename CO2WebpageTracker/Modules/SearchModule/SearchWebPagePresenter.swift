@@ -17,7 +17,7 @@ protocol ISearchWebPagePresenter: AnyObject {
 final class SearchWebPagePresenter {
     
     private let networkService: INetworkService
-    private let coordinator: Coordinator?
+    private weak var coordinator: Coordinator?
     private weak var view: ISearchWebPageView?
     private var viewData = SearchViewData(seatchStatus: .search)
     

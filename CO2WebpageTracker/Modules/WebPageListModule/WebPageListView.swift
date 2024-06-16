@@ -37,7 +37,7 @@ final class WebPageListView: UIView {
 
 private extension WebPageListView {
     func setupView() {
-        backgroundColor = .systemBackground
+        backgroundColor = .systemYellow.withAlphaComponent(0.9)
         setupViews()
         setupConstraints()
     }

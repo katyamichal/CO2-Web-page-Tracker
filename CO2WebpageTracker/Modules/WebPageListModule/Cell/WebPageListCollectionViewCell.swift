@@ -61,12 +61,30 @@ final class WebPageListCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    private lazy var ratingLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.adjustsFontForContentSizeCategory = true
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
+    }()
+    
     // MARK: - Public
     
     override func prepareForReuse() {
         dateLabel.text = nil
         urlLabel.text = nil
+        ratingLabel.text = nil
         super.prepareForReuse()
+    }
+    
+    // MARK: - Public
+    
+    func updateLabels(url: String, rating: String) {
+        dateLabel.text = "12.05.24"
+        urlLabel.text = url
+        ratingLabel.text = rating
     }
 }
 
@@ -74,6 +92,7 @@ final class WebPageListCollectionViewCell: UICollectionViewCell {
 
 private extension WebPageListCollectionViewCell {
     func setupCell() {
+        contentView.backgroundColor = .systemGreen.withAlphaComponent(0.5)
         setupViews()
         setupConstraints()
     }
@@ -82,6 +101,7 @@ private extension WebPageListCollectionViewCell {
         contentView.addSubview(webPageStackView)
         webPageStackView.addArrangedSubview(dateLabel)
         webPageStackView.addArrangedSubview(urlLabel)
+        webPageStackView.addArrangedSubview(ratingLabel)
     }
     
     func setupConstraints() {

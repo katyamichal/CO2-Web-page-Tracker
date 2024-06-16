@@ -8,24 +8,17 @@
 import UIKit
 
 struct WebPageListViewData {
-    var webpageId: UUID
-    var lastDateTest: String
-    var wepPageInfo: WebPageInfo
-}
-
-struct WebPageInfo {
-    var image: String?
+//    var image: String?
+    let id: UUID
     let url: String
-//    let rating: String
-//    let isGreen: Bool
-//    let gramsForVisit: Float
+    let date: Date
+    let rating: String
 }
-
-extension WebPageInfo {
-    init(with url: String) {
+extension WebPageListViewData {
+    init(url: String, date: Date, rating: String) {
+        self.id = UUID()
         self.url = url
-       // self.rating = rating
-//        self.isGreen = isGreen
-//        self.gramsForVisit = gramsForVisit
+        self.date = date
+        self.rating = rating
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Coordinator {
+protocol Coordinator: AnyObject {
     var parentCoordinator: Coordinator? { get set }
     var childCoordinators: [Coordinator] { get set }
     func start()

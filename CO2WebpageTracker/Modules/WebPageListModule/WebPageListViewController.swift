@@ -7,7 +7,11 @@
 
 import UIKit
 protocol IWebPageListView: AnyObject {
-    func updateView()
+//    func beginUpdate()
+//    func endUpdate()
+    func setupNavigationBar(with title: String)
+    func insertRow(at index: IndexPath)
+    func update()
     func prepareForRequest(with id: UUID)
     func deleteRow(at indexPath: IndexPath)
 }
@@ -21,6 +25,7 @@ final class WebPageListViewController: UIViewController {
     
     init(presenter: IWebPageListPresenter) {
         self.presenter = presenter
+
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -39,11 +44,25 @@ final class WebPageListViewController: UIViewController {
         presenter.viewDidLoaded(view: self)
         setupTableViewDelegates()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationBar()
+    }
 }
 
 extension WebPageListViewController: IWebPageListView {
-    func updateView() {
-        
+    func setupNavigationBar(with title: String) {
+        navigationItem.title = title
+    }
+    
+    func insertRow(at index: IndexPath) {
+        webPageListView.collectionView.insertItems(at: [index])
+    }
+    
+
+    
+    func update() {
+        webPageListView.collectionView.reloadData()
     }
     
     func prepareForRequest(with id: UUID) {
@@ -55,7 +74,11 @@ extension WebPageListViewController: IWebPageListView {
     }
 }
 
-extension WebPageListViewController: UICollectionViewDelegate {}
+extension WebPageListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter.showDetailView(at: indexPath.row)
+    }
+}
 
 extension WebPageListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -73,5 +96,10 @@ private extension WebPageListViewController {
     func setupTableViewDelegates() {
         webPageListView.collectionView.delegate = self
         webPageListView.collectionView.dataSource = self
+    }
+    
+    func setupNavigationBar() {
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
 }

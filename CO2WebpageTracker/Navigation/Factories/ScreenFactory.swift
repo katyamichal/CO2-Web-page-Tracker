@@ -8,37 +8,33 @@
 import Foundation
 import UIKit
 
-struct ScreenFactory {
-    
-    let appDIContainer: AppDIContainer?
-    
-    init(appDIContainer: AppDIContainer?) {
-        self.appDIContainer = appDIContainer
-    }
-//
+//struct ScreenFactory {
+//    
 //    struct Dependencies {
-//        let coordinator: Coordinator
 //        let networkService: INetworkService
 //        let dataService: IDataService
 //    }
 //    
-    func makeSearchScene() -> UIViewController {
-        guard let network = appDIContainer?.networkService else { return UIViewController() }
-        //let coordinator = coordinator
-        let presenter = SearchWebPageViewPresenter(coordinator: coordinator, networkService: network)
-        
-        let viewController = SearchWebPageViewController(presenter: presenter)
-        return viewController
-    }
-    
-    func makeWebPageListScene() -> UIViewController {
-        return UIViewController()
-    }
-    
-    func makeWebPageScene() -> UIViewController {
-        return UIViewController()
-    }
-}
+//    func makeSearchScene(navigationController: UINavigationController, dependencies: Dependencies) -> UIViewController {
+//        let network = dependencies.networkService
+//        let coordinator = SearchCoordinator(navigationController: navigationController)
+//        let presenter = SearchWebPageViewPresenter(coordinator: coordinator, networkService: network)
+//        let viewController = SearchWebPageViewController(presenter: presenter)
+//        return viewController
+//    }
+//    
+//    func makeWebPageListScene(navigationController: UINavigationController, dependencies: Dependencies) -> UIViewController {
+//        let dataServiece = dependencies.dataService
+//        let coordinator = WebPageListCoordinator(navigationController: navigationController, factory: , dataService: <#T##IDataService#>, networkService: <#T##INetworkService#>)
+//        let presenter = WebPageListPresenter(dataService: dataServiece)
+//        let viewController = WebPageListViewController(presenter: presenter)
+//        return UIViewController()
+//    }
+//    
+//    func makeWebPageScene() -> UIViewController {
+//        return UIViewController()
+//    }
+//}
 
 //
 //let someService: SomeService
