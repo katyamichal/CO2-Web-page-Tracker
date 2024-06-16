@@ -7,27 +7,30 @@
 
 import UIKit
 
-protocol ISearchWebPageViewPresenter: AnyObject {
+protocol ISearchWebPagePresenter: AnyObject {
     func viewDidLoaded(view: ISearchWebPageView)
     func loadData(with url: String)
     func updateViewData()
     func tryAgainButtonPressed()
 }
 
-final class SearchWebPageViewPresenter {
-    private weak var view: ISearchWebPageView?
+final class SearchWebPagePresenter {
+    
     private let networkService: INetworkService
+    private let coordinator: Coordinator?
+    private weak var view: ISearchWebPageView?
     private var viewData = SearchViewData(seatchStatus: .search)
     
     // MARK: - Init
 
-    init(networkService: INetworkService) {
+    init(coordinator: Coordinator, networkService: INetworkService) {
+        self.coordinator = coordinator
         self.networkService = networkService
         configureServiceCompletionHandler()
     }
 }
 
-extension SearchWebPageViewPresenter: ISearchWebPageViewPresenter {
+extension SearchWebPagePresenter: ISearchWebPagePresenter {
     func tryAgainButtonPressed() {
         viewData.seatchStatus = .search
         view?.updateView(with: viewData.seatchStatus)
@@ -49,7 +52,7 @@ extension SearchWebPageViewPresenter: ISearchWebPageViewPresenter {
     }
 }
 
-private extension SearchWebPageViewPresenter {
+private extension SearchWebPagePresenter {
     enum PauseLoadingImages {
         static let paused = UIImage(systemName: Constants.UIElementNameStrings.pausedImage)
         static let active = UIImage(systemName: Constants.UIElementNameStrings.activeImage)
