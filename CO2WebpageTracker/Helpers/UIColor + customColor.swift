@@ -6,15 +6,15 @@
 //
 
 import UIKit
-//Flyweight
 
 enum Colours {
     
     enum WebPageColours {
-        static let turquoise = UIColor.rgba(red: 13, green: 187, blue: 228, alpha: 1)
-       // static let red = UIColor.rgba(red: 222, green: 135, blue: 134, alpha: 1)
-        static let green = UIColor.rgba(red: 0, green: 194, blue: 69, alpha: 1)
-        static let defaultColour = UIColor.rgba(red: 255, green: 255, blue: 255, alpha: 1)
+        static let darkBlue = UIColor.rgba(red: 10, green: 11, blue: 122, alpha: 1)
+        static let red = UIColor.rgba(red: 222, green: 135, blue: 134, alpha: 1)
+        static let blue = UIColor.rgba(red: 21, green: 26, blue: 210, alpha: 1)
+        static let defaultColour = UIColor.rgba(red: 240, green: 248, blue: 255, alpha: 1)
+        static let yellow = UIColor.rgba(red: 255, green: 236, blue: 41, alpha: 1)
     }
     
     enum BackgroundsColours {
@@ -27,7 +27,7 @@ enum Colours {
     }
 
     enum Button {
-        static let addButtonColour = UIColor.rgba(red: 66, green: 80, blue: 113, alpha: 1)
+        static let addButtonColour = UIColor.rgba(red: 0, green: 255, blue: 189, alpha: 1)
     }
 
 }

@@ -42,15 +42,6 @@ final class WebPageListCollectionViewCell: UICollectionViewCell {
         stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
-    
-    private lazy var dateLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 14)
-        label.textColor = .label
-        return label
-    }()
-    
 
     private lazy var urlLabel: UILabel = {
         let label = UILabel()
@@ -58,6 +49,7 @@ final class WebPageListCollectionViewCell: UICollectionViewCell {
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
         label.textColor = .label
+        label.font = Fonts.Titles.subtitle
         label.textAlignment = .center
         return label
     }()
@@ -68,7 +60,16 @@ final class WebPageListCollectionViewCell: UICollectionViewCell {
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
         label.textColor = .label
+        label.font = Fonts.Body.defaultFont
         label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var dateLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = Fonts.Body.secondaryFont
+        label.textColor = .label
         return label
     }()
     

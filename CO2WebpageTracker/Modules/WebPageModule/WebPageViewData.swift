@@ -8,9 +8,8 @@
 import Foundation
 
 // energy == over a year, with 1 monthly page views, this web page produces
-
+#warning("")
 struct WebPageViewData {
-    
     let id: UUID
     let url: String
     let date: Date

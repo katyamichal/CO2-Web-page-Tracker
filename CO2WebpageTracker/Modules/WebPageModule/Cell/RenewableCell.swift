@@ -37,6 +37,7 @@ final class RenewableCell: UITableViewCell {
         stackView.spacing = spacing
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
         stackView.isLayoutMarginsRelativeArrangement = true
+        
         return stackView
     }()
     

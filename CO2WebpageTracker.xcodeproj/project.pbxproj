@@ -52,6 +52,7 @@
 		4EAC847D2C203B2B00F6CD8A /* WebPageInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC847B2C203B2B00F6CD8A /* WebPageInfo+CoreDataClass.swift */; };
 		4EAC847E2C203B2B00F6CD8A /* WebPageInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC847C2C203B2B00F6CD8A /* WebPageInfo+CoreDataProperties.swift */; };
 		4EAC84802C20550400F6CD8A /* UIColor + customColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC847F2C20550400F6CD8A /* UIColor + customColor.swift */; };
+		4EAC84822C20995F00F6CD8A /* UIFont + CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC84812C20995F00F6CD8A /* UIFont + CustomFont.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +104,7 @@
 		4EAC847B2C203B2B00F6CD8A /* WebPageInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebPageInfo+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		4EAC847C2C203B2B00F6CD8A /* WebPageInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebPageInfo+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4EAC847F2C20550400F6CD8A /* UIColor + customColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + customColor.swift"; sourceTree = "<group>"; };
+		4EAC84812C20995F00F6CD8A /* UIFont + CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + CustomFont.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,8 +150,8 @@
 			isa = PBXGroup;
 			children = (
 				4EABD5F62C1C8F8F0089DF1D /* CarbonRatingCell.swift */,
-				4E34E0402C1EF387004D15A5 /* EnergyWasteTypeCell.swift */,
 				4E34E0422C1EF3AD004D15A5 /* RenewableCell.swift */,
+				4E34E0402C1EF387004D15A5 /* EnergyWasteTypeCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -318,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				4EAC84762C202E7300F6CD8A /* UIColor + hex.swift */,
+				4EAC84812C20995F00F6CD8A /* UIFont + CustomFont.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				4EABD5F22C1C8CB40089DF1D /* WebPageViewController.swift in Sources */,
 				4EABD5F72C1C8F8F0089DF1D /* CarbonRatingCell.swift in Sources */,
 				4EABD5CD2C1AD6F10089DF1D /* CorboneDTO.swift in Sources */,
+				4EAC84822C20995F00F6CD8A /* UIFont + CustomFont.swift in Sources */,
 				4E34E02A2C1DBF13004D15A5 /* ScreenFactory.swift in Sources */,
 				4EAC84792C20340E00F6CD8A /* DescriptionConstructor.swift in Sources */,
 				4EABD5AF2C182C210089DF1D /* WebPageListViewController.swift in Sources */,

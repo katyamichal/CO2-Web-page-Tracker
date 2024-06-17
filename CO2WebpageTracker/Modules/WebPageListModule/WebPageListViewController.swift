@@ -101,5 +101,6 @@ private extension WebPageListViewController {
     func setupNavigationBar() {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.tintColor = Colours.WebPageColours.yellow
     }
 }

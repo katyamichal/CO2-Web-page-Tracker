@@ -30,18 +30,12 @@ final class WebPagePresenter {
 }
 
 extension WebPagePresenter {
-//    convenience init?(coordinator: Coordinator, dataService: IDataService, data: WebsiteData) {
-//        self.init(coordinator: coordinator, dataService: dataService, id: nil)
-//
-//        self.viewData = WebPageViewData(
-//            url: data.url,
-//            date: Date(), 
-//            diertierThan: (100 - Int(data.cleanerThan)),
-//            rating: data.rating,
-//            isGreen: data.green,
-//            gramForVisit: Float(data.statistics.co2.renewable.grams)
-//        )
-//    }
+    convenience init(coordinator: Coordinator, dataService: IDataService, data: WebsiteData) {
+        self.init(coordinator: coordinator, dataService: dataService, id: nil)
+
+        self.viewData = WebPageViewData(url: data.url, date: Date(), diertierThan: Int(data.cleanerThan), ratingLetter: data.rating, isGreen: data.green, gramForVisit: Float(data.statistics.energy), energy: data.statistics.co2.renewable.grams
+        )
+    }
 }
 
 extension WebPagePresenter: IWebPagePresenter {
@@ -92,6 +86,7 @@ private extension WebPagePresenter {
             }
             let color = UIColor.init(hex: viewData.ratingColor) ?? UIColor.gray
             cell.update(with: color, with: viewData.ratingLetter, description: viewData.ratingDescription, url: viewData.urlDescription, diertierThan: String(describing: viewData.diertierThan), date: "20.04.34")
+            
             return cell
             
         case .energyType:

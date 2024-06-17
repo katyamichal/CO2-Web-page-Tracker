@@ -11,17 +11,17 @@ final class WebPageCoordinator: Coordinator {
     
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
-    let navigationController: UINavigationController
+    private let navigationController: UINavigationController
     
-    let dataService: IDataService
-   // let dataDTO: WebsiteData
+    private let dataService: IDataService
+    private let dataDTO: WebsiteData?
+    private let webPageId: UUID?
     
-    init(navigationController: UINavigationController, dataService: IDataService) {
+    init(navigationController: UINavigationController, dataService: IDataService, dataDto: WebsiteData? = nil, webPageId: UUID? = nil) {
         self.navigationController = navigationController
-//        self.factory = factory
         self.dataService = dataService
-       // self.dataDTO = dataDTO
-        //self.dataService = networkService
+        self.dataDTO = dataDto
+        self.webPageId = webPageId
     }
     
     func start() {
@@ -31,7 +31,12 @@ final class WebPageCoordinator: Coordinator {
 
 private extension WebPageCoordinator {
     func showModule() {
-        let presenter = WebPagePresenter(coordinator: self, dataService: dataService, id: nil) 
+        let presenter: WebPagePresenter
+        if let dataDTO {
+        presenter = WebPagePresenter(coordinator: self, dataService: dataService, data: dataDTO)
+        } else {
+            presenter = WebPagePresenter(coordinator: self, dataService: dataService, id: webPageId)
+        }
         let viewController = WebPageViewController(presenter: presenter)
         navigationController.pushViewController(viewController, animated: true)
     }

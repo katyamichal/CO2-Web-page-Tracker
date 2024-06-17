@@ -38,6 +38,8 @@ final class CarbonRatingCell: UITableViewCell {
         stackView.spacing = spacing
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
         stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layer.borderWidth = 4
+        stackView.layer.borderColor = UIColor.white.cgColor
         return stackView
     }()
     
@@ -51,17 +53,17 @@ final class CarbonRatingCell: UITableViewCell {
     private lazy var scaleLetterLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 70)
         label.textColor = .blue
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
+        label.font = Fonts.Body.largeFont
         return label
     }()
     
     private lazy var resultForLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 24)
+        label.font = Fonts.Body.descriptionFont
         label.textColor = .white
         return label
     }()
@@ -69,7 +71,7 @@ final class CarbonRatingCell: UITableViewCell {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 30)
+        label.font = Fonts.Body.descriptionFont
         label.textColor = .white
         return label
     }()
@@ -77,7 +79,7 @@ final class CarbonRatingCell: UITableViewCell {
     private lazy var dirtierThatLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 22)
+        label.font = Fonts.Body.descriptionFont
         label.textColor = .white
         return label
     }()
@@ -89,8 +91,7 @@ final class CarbonRatingCell: UITableViewCell {
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 14)
- 
+        label.font = Fonts.Body.defaultFont
         label.textColor = .white
         return label
     }()

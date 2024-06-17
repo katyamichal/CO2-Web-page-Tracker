@@ -16,30 +16,24 @@ final class TabBarCoordinator: Coordinator {
     
     var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
-    var navigationController: UINavigationController
-    private let window: UIWindow?
+    private var window: UIWindow
    // private let factory: ScreenFactory?
     private let networkService: INetworkService
     private let dataService: IDataService
-    var tabBarController: TabBarController?
+    private var tabBarController: TabBarController?
 
     // MARK: - Init
 
-    init(window: UIWindow?, networkService: INetworkService, dataService: IDataService, navigationController: UINavigationController) {
+    init(window: UIWindow, networkService: INetworkService, dataService: IDataService) {
         self.window = window
         //self.factory = factory
         self.networkService = networkService
         self.dataService = dataService
-        self.navigationController = navigationController
     }
     
     func start() {
         showTabBarFlow()
     }
-    
-    func switchToSecondTab() {
-          tabBarController?.selectedIndex = 1
-      }
 }
 
 private extension TabBarCoordinator {
@@ -66,8 +60,7 @@ private extension TabBarCoordinator {
         //4
         let tabBarControllers = [searchNavigationController, webPageListNavigationController]
         tabBarController = TabBarController(tabBarControllers: tabBarControllers)
-        // 4
-        guard let tabBarController else {return}
-        navigationController.pushViewController(tabBarController, animated: false)
+        window.rootViewController = tabBarController
+        window.makeKeyAndVisible()
     }
 }

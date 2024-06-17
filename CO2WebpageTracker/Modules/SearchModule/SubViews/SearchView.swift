@@ -43,6 +43,7 @@ final class SearchView: UIView {
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
         label.text = Constants.LabelPlaceHolders.searchLabel1
+        label.font = Fonts.Titles.mainTitle
         label.textAlignment = .left
         return label
     }()
@@ -52,6 +53,7 @@ final class SearchView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
+        label.font = Fonts.Titles.subtitle
         label.text = Constants.LabelPlaceHolders.searchLabel2
         label.textAlignment = .left
         return label

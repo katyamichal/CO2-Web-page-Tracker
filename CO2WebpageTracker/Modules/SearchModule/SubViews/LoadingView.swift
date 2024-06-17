@@ -48,7 +48,7 @@ final class LoadingView: UIView {
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.style = .medium
+        activityIndicator.style = .large
         activityIndicator.color = .systemBlue
         activityIndicator.hidesWhenStopped = true
         return activityIndicator
@@ -67,6 +67,7 @@ final class LoadingView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
+        label.font = Fonts.Titles.subtitle
         label.textAlignment = .center
         return label
     }()
@@ -76,7 +77,7 @@ final class LoadingView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.tertiarySystemBackground, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
+        button.titleLabel?.font = Fonts.Buttons.primaryButtonFont
         button.setTitle("Try testing again", for: .normal)
         button.backgroundColor = .black
         button.layer.cornerRadius = buttonHeight / 2
@@ -117,7 +118,7 @@ private extension LoadingView {
         switch currentState {
         
         case .loading(let message, let image):
-            activityIndicator.isHidden = false
+           // activityIndicator.isHidden = false
             activityIndicator.startAnimating()
             messageLabel.isHidden = false
             messageLabel.text = message
@@ -126,7 +127,7 @@ private extension LoadingView {
             tryAgainButton.isHidden = true
             
         case .completed(let url):
-            activityIndicator.isHidden = true
+           // activityIndicator.isHidden = true
             pauseLoadingView.isHidden = true
             messageLabel.isHidden = false
             messageLabel.text = url
@@ -134,7 +135,7 @@ private extension LoadingView {
             activityIndicator.stopAnimating()
             
         case .failed(let message):
-            activityIndicator.isHidden = true
+          //  activityIndicator.isHidden = true
             pauseLoadingView.isHidden = true
             messageLabel.isHidden = false
             messageLabel.text = message
@@ -142,13 +143,13 @@ private extension LoadingView {
             tryAgainButton.isHidden = false
             
         case .nonActive:
-            activityIndicator.isHidden = true
+          //  activityIndicator.isHidden = true
             pauseLoadingView.isHidden = true
             messageLabel.isHidden = true
             tryAgainButton.isHidden = true
             
         case .paused(let image):
-            activityIndicator.isHidden = true
+           // activityIndicator.isHidden = true
             pauseLoadingView.isHidden = false
             pauseLoadingView.image = image
             messageLabel.isHidden = false

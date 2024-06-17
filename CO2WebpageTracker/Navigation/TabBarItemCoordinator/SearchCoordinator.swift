@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+#warning("прокинуть дата сервис")
 final class SearchCoordinator: Coordinator {
     
     var parentCoordinator: Coordinator?
@@ -26,15 +26,11 @@ final class SearchCoordinator: Coordinator {
         showModule()
     }
     
-    func showDetail() {
-        guard let par = (parentCoordinator as? TabBarCoordinator)
-            else {return}
-        par.switchToSecondTab()
-        if let secondNavigationController = par.tabBarController?.viewControllers?[1] as?  UINavigationController {
-            let detailCoordinator = WebPageCoordinator(navigationController: secondNavigationController, dataService: DataService())
-            childCoordinators.append(detailCoordinator)
-            detailCoordinator.start()
-        }
+    func showDetail(with dataDTO: WebsiteData) {
+        let detailCoordinator = WebPageCoordinator(navigationController: navigationController, dataService: DataService(), dataDto: dataDTO)
+        childCoordinators.append(detailCoordinator)
+        detailCoordinator.start()
+        
     }
 }
 
