@@ -40,79 +40,53 @@ final class RenewableCell: UITableViewCell {
         return stackView
     }()
     
-    private lazy var letterLabel: UILabel = {
+    private lazy var gramsLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 14)
-        label.textColor = .black
-        return label
-    }()
-    
-    private lazy var resultForLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 14)
-        label.textColor = .black
-        return label
-    }()
-    
-    private lazy var descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 14)
-        label.textColor = .black
-        return label
-    }()
-    
-    private lazy var dirtierThatLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 14)
-        label.textColor = .black
+        label.font = UIFont(name: "Avenir Next Regular", size: 21)
+        label.textColor = .white
         return label
     }()
 
-    
-    private lazy var dateLabel: UILabel = {
+    private lazy var greenEnergyStatusLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 14)
-        label.textColor = .black
+        label.font = UIFont(name: "Avenir Next Regular", size: 21)
+        label.textColor = .white
         return label
     }()
     
     override func prepareForReuse() {
-        letterLabel.text = nil
-        resultForLabel.text = nil
-        descriptionLabel.text = nil
-        dirtierThatLabel.text = nil
+        greenEnergyStatusLabel.text = nil
+        gramsLabel.text = nil
         super.prepareForReuse()
     }
 
     // MARK: - Public
     
-    func update(with letter: String) {
-        letterLabel.text = letter
+    func update(with grams: String, energyType: String) {
+        gramsLabel.text = grams
+        greenEnergyStatusLabel.text = energyType
     }
 }
 
 private extension RenewableCell {
     func setupCell() {
+        selectionStyle = .none
+        backgroundColor = .clear
         setupViews()
         setupConstraints()
     }
     
     func setupViews() {
         contentView.addSubview(stackView)
-        stackView.addArrangedSubview(letterLabel)
-        stackView.addArrangedSubview(resultForLabel)
-        stackView.addArrangedSubview(descriptionLabel)
-        stackView.addArrangedSubview(dirtierThatLabel)
+        stackView.addArrangedSubview(gramsLabel)
+        stackView.addArrangedSubview(greenEnergyStatusLabel)
     }
     
     func setupConstraints() {
         stackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -inset).isActive = true
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
     }

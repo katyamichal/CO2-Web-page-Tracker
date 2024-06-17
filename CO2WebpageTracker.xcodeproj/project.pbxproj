@@ -13,11 +13,9 @@
 		4E34E0342C1EAA01004D15A5 /* TabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34E0332C1EAA01004D15A5 /* TabBarCoordinator.swift */; };
 		4E34E0382C1EAB9B004D15A5 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34E0372C1EAB9B004D15A5 /* SearchCoordinator.swift */; };
 		4E34E03E2C1ED983004D15A5 /* FRCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34E03D2C1ED983004D15A5 /* FRCDelegate.swift */; };
-		4E34E0412C1EF387004D15A5 /* EnergyTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34E0402C1EF387004D15A5 /* EnergyTypeCell.swift */; };
+		4E34E0412C1EF387004D15A5 /* EnergyWasteTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34E0402C1EF387004D15A5 /* EnergyWasteTypeCell.swift */; };
 		4E34E0432C1EF3AD004D15A5 /* RenewableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34E0422C1EF3AD004D15A5 /* RenewableCell.swift */; };
 		4E34E0452C1F178A004D15A5 /* WebPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34E0442C1F178A004D15A5 /* WebPageCoordinator.swift */; };
-		4E34E0482C1F2ABF004D15A5 /* WebPageInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34E0462C1F2ABF004D15A5 /* WebPageInfo+CoreDataClass.swift */; };
-		4E34E0492C1F2ABF004D15A5 /* WebPageInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34E0472C1F2ABF004D15A5 /* WebPageInfo+CoreDataProperties.swift */; };
 		4E34E04D2C1F5C2A004D15A5 /* Descriptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4E34E04C2C1F5C2A004D15A5 /* Descriptions.plist */; };
 		4EABD5AB2C182C210089DF1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5AA2C182C210089DF1D /* AppDelegate.swift */; };
 		4EABD5AD2C182C210089DF1D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5AC2C182C210089DF1D /* SceneDelegate.swift */; };
@@ -51,6 +49,8 @@
 		4EAC84752C2008B700F6CD8A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC84742C2008B700F6CD8A /* TabBarController.swift */; };
 		4EAC84772C202E7300F6CD8A /* UIColor + hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC84762C202E7300F6CD8A /* UIColor + hex.swift */; };
 		4EAC84792C20340E00F6CD8A /* DescriptionConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC84782C20340E00F6CD8A /* DescriptionConstructor.swift */; };
+		4EAC847D2C203B2B00F6CD8A /* WebPageInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC847B2C203B2B00F6CD8A /* WebPageInfo+CoreDataClass.swift */; };
+		4EAC847E2C203B2B00F6CD8A /* WebPageInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC847C2C203B2B00F6CD8A /* WebPageInfo+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,11 +60,9 @@
 		4E34E0332C1EAA01004D15A5 /* TabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCoordinator.swift; sourceTree = "<group>"; };
 		4E34E0372C1EAB9B004D15A5 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		4E34E03D2C1ED983004D15A5 /* FRCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FRCDelegate.swift; sourceTree = "<group>"; };
-		4E34E0402C1EF387004D15A5 /* EnergyTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyTypeCell.swift; sourceTree = "<group>"; };
+		4E34E0402C1EF387004D15A5 /* EnergyWasteTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyWasteTypeCell.swift; sourceTree = "<group>"; };
 		4E34E0422C1EF3AD004D15A5 /* RenewableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenewableCell.swift; sourceTree = "<group>"; };
 		4E34E0442C1F178A004D15A5 /* WebPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageCoordinator.swift; sourceTree = "<group>"; };
-		4E34E0462C1F2ABF004D15A5 /* WebPageInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebPageInfo+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		4E34E0472C1F2ABF004D15A5 /* WebPageInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebPageInfo+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4E34E04C2C1F5C2A004D15A5 /* Descriptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Descriptions.plist; sourceTree = "<group>"; };
 		4E34E04E2C1F5DBA004D15A5 /* desc.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = desc.md; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xml; };
 		4EABD5A72C182C210089DF1D /* CO2WebpageTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CO2WebpageTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,6 +99,8 @@
 		4EAC84742C2008B700F6CD8A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		4EAC84762C202E7300F6CD8A /* UIColor + hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + hex.swift"; sourceTree = "<group>"; };
 		4EAC84782C20340E00F6CD8A /* DescriptionConstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionConstructor.swift; sourceTree = "<group>"; };
+		4EAC847B2C203B2B00F6CD8A /* WebPageInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebPageInfo+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		4EAC847C2C203B2B00F6CD8A /* WebPageInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebPageInfo+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,7 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				4EABD5F62C1C8F8F0089DF1D /* CarbonRatingCell.swift */,
-				4E34E0402C1EF387004D15A5 /* EnergyTypeCell.swift */,
+				4E34E0402C1EF387004D15A5 /* EnergyWasteTypeCell.swift */,
 				4E34E0422C1EF3AD004D15A5 /* RenewableCell.swift */,
 			);
 			path = Cell;
@@ -247,8 +247,8 @@
 		4EABD5E92C1C25D00089DF1D /* DataService */ = {
 			isa = PBXGroup;
 			children = (
-				4E34E0462C1F2ABF004D15A5 /* WebPageInfo+CoreDataClass.swift */,
-				4E34E0472C1F2ABF004D15A5 /* WebPageInfo+CoreDataProperties.swift */,
+				4EAC847B2C203B2B00F6CD8A /* WebPageInfo+CoreDataClass.swift */,
+				4EAC847C2C203B2B00F6CD8A /* WebPageInfo+CoreDataProperties.swift */,
 				4EABD5E72C1C25CB0089DF1D /* DataService.swift */,
 				4EABD5B32C182C210089DF1D /* CO2WebpageTracker.xcdatamodeld */,
 			);
@@ -391,7 +391,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EABD5FB2C1C93050089DF1D /* WebPageViewData.swift in Sources */,
-				4E34E0482C1F2ABF004D15A5 /* WebPageInfo+CoreDataClass.swift in Sources */,
 				4EABD5F22C1C8CB40089DF1D /* WebPageViewController.swift in Sources */,
 				4EABD5F72C1C8F8F0089DF1D /* CarbonRatingCell.swift in Sources */,
 				4EABD5CD2C1AD6F10089DF1D /* CorboneDTO.swift in Sources */,
@@ -400,23 +399,24 @@
 				4EABD5AF2C182C210089DF1D /* WebPageListViewController.swift in Sources */,
 				4E34E0382C1EAB9B004D15A5 /* SearchCoordinator.swift in Sources */,
 				4EABD5E52C1C23D60089DF1D /* SearchViewData.swift in Sources */,
-				4E34E0412C1EF387004D15A5 /* EnergyTypeCell.swift in Sources */,
+				4E34E0412C1EF387004D15A5 /* EnergyWasteTypeCell.swift in Sources */,
 				4EABD5D92C1AE4690089DF1D /* WebPageListViewData.swift in Sources */,
 				4EABD5F92C1C92490089DF1D /* WebPagePresenter.swift in Sources */,
 				4E34E0432C1EF3AD004D15A5 /* RenewableCell.swift in Sources */,
 				4EABD5D32C1AE2260089DF1D /* IWebPageListPresenter.swift in Sources */,
 				4EABD5DD2C1C1DAE0089DF1D /* SearchWebPageViewController.swift in Sources */,
+				4EAC847E2C203B2B00F6CD8A /* WebPageInfo+CoreDataProperties.swift in Sources */,
 				4EABD5B52C182C210089DF1D /* CO2WebpageTracker.xcdatamodeld in Sources */,
 				4EABD5DF2C1C1E130089DF1D /* WebPageSearchView.swift in Sources */,
 				4EABD5AB2C182C210089DF1D /* AppDelegate.swift in Sources */,
 				4EABD5C22C1998320089DF1D /* NetworkService.swift in Sources */,
 				4EAC84772C202E7300F6CD8A /* UIColor + hex.swift in Sources */,
 				4E34E03E2C1ED983004D15A5 /* FRCDelegate.swift in Sources */,
+				4EAC847D2C203B2B00F6CD8A /* WebPageInfo+CoreDataClass.swift in Sources */,
 				4EABD5EC2C1C285C0089DF1D /* SearchView.swift in Sources */,
 				4EABD5AD2C182C210089DF1D /* SceneDelegate.swift in Sources */,
 				4EABD5FD2C1C95240089DF1D /* WebPageSection.swift in Sources */,
 				4EABD5C72C1AD3420089DF1D /* APIErrors.swift in Sources */,
-				4E34E0492C1F2ABF004D15A5 /* WebPageInfo+CoreDataProperties.swift in Sources */,
 				4EABD5D52C1AE2CC0089DF1D /* WebPageListPresenter.swift in Sources */,
 				4EABD5D12C1AE1E20089DF1D /* WebPageListView.swift in Sources */,
 				4EAC84752C2008B700F6CD8A /* TabBarController.swift in Sources */,

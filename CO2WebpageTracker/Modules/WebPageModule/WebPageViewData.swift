@@ -7,6 +7,8 @@
 
 import Foundation
 
+// energy == over a year, with 1 monthly page views, this web page produces
+
 struct WebPageViewData {
     
     let id: UUID
@@ -16,6 +18,7 @@ struct WebPageViewData {
     let diertierThan: Int
     let isGreen: Bool
     let gramForVisit: Float
+    let energy: Double
     
     // first cell ---> carbonRating
     var urlDescription: String {
@@ -39,7 +42,7 @@ struct WebPageViewData {
     }
     
     var co2PerPageviewDescription: String {
-        return DescriptionConstructor.shared.getDescription(for: "co2PerPageview") as? String ?? ""
+        return "\(energy)" + (DescriptionConstructor.shared.getDescription(for: "co2PerPageview") as? String ?? "")
     }
     var ratingColor: String {
         return DescriptionConstructor.shared.getRatingLetter(with: ratingLetter)?.lowercased() ?? ""
@@ -51,7 +54,7 @@ struct WebPageViewData {
 }
 
 extension WebPageViewData {
-    init(url: String, date: Date, diertierThan: Int, ratingLetter: String, isGreen: Bool, gramForVisit: Float) {
+    init(url: String, date: Date, diertierThan: Int, ratingLetter: String, isGreen: Bool, gramForVisit: Float, energy: Double) {
         self.id = UUID()
         self.url = url
         self.date = date
@@ -59,5 +62,6 @@ extension WebPageViewData {
         self.diertierThan = diertierThan
         self.isGreen = isGreen
         self.gramForVisit = gramForVisit
+        self.energy = energy
     }
 }

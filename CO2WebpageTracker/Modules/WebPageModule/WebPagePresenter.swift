@@ -25,7 +25,7 @@ final class WebPagePresenter {
         self.dataService = dataService
         self.webPageId = id
         self.coordinator = coordinator
-//        dataService.add(webPage: WebPageViewData(url: "www.apple.com", date: Date(), diertierThan: 40, rating: "B", isGreen: true, gramForVisit: 0.23))
+//        dataService.add(webPage: WebPageViewData(url: "www.apple.com", date: Date(), diertierThan: 60, ratingLetter: "D", isGreen: false, gramForVisit: 0.3, energy: 0.1))
     }
 }
 
@@ -69,8 +69,6 @@ extension WebPagePresenter: IWebPagePresenter {
             self.view?.update()
         } else {
             getData()
-            print(viewData?.greenDescription)
-            print(viewData?.co2PerPageviewDescription)
         }
     }
 }
@@ -86,29 +84,29 @@ private extension WebPagePresenter {
     func cell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         let section = WebPageSection.allCases[indexPath.section]
         
-          guard let viewData else { return UITableViewCell() }
-          switch section {
-          case .carbonRating:
-              guard let cell = tableView.dequeueReusableCell(withIdentifier: CarbonRatingCell.reuseIdentifier, for: indexPath) as? CarbonRatingCell else {
-                  return UITableViewCell()
-              }
-              let color = UIColor.init(hex: viewData.ratingColor) ?? UIColor.gray
-              cell.update(with: color, with: viewData.ratingLetter, description: viewData.ratingDescription, url: viewData.urlDescription, diertierThan: String(describing: viewData.diertierThan), date: "20.04.34")
-              return cell
-
-          case .energyType:
-              guard let cell = tableView.dequeueReusableCell(withIdentifier: EnergyTypeCell.reuseIdentifier, for: indexPath) as? EnergyTypeCell else {
-                  return UITableViewCell()
-              }
-              cell.update(with: (viewData.isGreen) ? "Green Energe" : "Not green Energy")
-              return cell
-
-          case .renewable:
-              guard let cell = tableView.dequeueReusableCell(withIdentifier: RenewableCell.reuseIdentifier, for: indexPath) as? RenewableCell else {
-                  return UITableViewCell()
-              }
-              cell.update(with: String(describing: viewData.gramForVisit))
-              return cell
-          }
+        guard let viewData else { return UITableViewCell() }
+        switch section {
+        case .carbonRating:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CarbonRatingCell.reuseIdentifier, for: indexPath) as? CarbonRatingCell else {
+                return UITableViewCell()
+            }
+            let color = UIColor.init(hex: viewData.ratingColor) ?? UIColor.gray
+            cell.update(with: color, with: viewData.ratingLetter, description: viewData.ratingDescription, url: viewData.urlDescription, diertierThan: String(describing: viewData.diertierThan), date: "20.04.34")
+            return cell
+            
+        case .energyType:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: EnergyWasteTypeCell.reuseIdentifier, for: indexPath) as? EnergyWasteTypeCell else {
+                return UITableViewCell()
+            }
+            cell.update(with: String(viewData.energy))
+            return cell
+            
+        case .renewable:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: RenewableCell.reuseIdentifier, for: indexPath) as? RenewableCell else {
+                return UITableViewCell()
+            }
+            cell.update(with: viewData.co2PerPageviewDescription, energyType: viewData.greenDescription)
+            return cell
+        }
     }
 }

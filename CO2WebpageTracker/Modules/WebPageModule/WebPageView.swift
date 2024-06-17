@@ -29,9 +29,8 @@ final class WebPageView: UIView {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.register(CarbonRatingCell.self, forCellReuseIdentifier: CarbonRatingCell.reuseIdentifier)
-        tableView.register(EnergyTypeCell.self, forCellReuseIdentifier: EnergyTypeCell.reuseIdentifier)
+        tableView.register(EnergyWasteTypeCell.self, forCellReuseIdentifier: EnergyWasteTypeCell.reuseIdentifier)
         tableView.register(RenewableCell.self, forCellReuseIdentifier: RenewableCell.reuseIdentifier)
-        //        tableView.register(TableViewHeader.self, forHeaderFooterViewReuseIdentifier: TableViewHeader.reuseIdentifier)
         return tableView
     }()
 }

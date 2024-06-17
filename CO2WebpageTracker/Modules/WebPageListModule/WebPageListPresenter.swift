@@ -89,7 +89,7 @@ private extension WebPageListPresenter {
         }
         let data = viewData[indexPath.row]
 
-        cell.updateLabels(url: data.url, rating: data.rating)
+        cell.updateLabels(url: data.url, rating: data.rating, date: "12.05.23")
         return cell
     }
     

@@ -95,7 +95,9 @@ final class DataService: IDataService {
             ratingLetter: webPage.rating,
             diertierThan: Int(webPage.cleanerThan),
             isGreen: webPage.isGreen,
-            gramForVisit: webPage.gramForVisit))
+            gramForVisit: webPage.gramForVisit,
+            energy: webPage.energy
+        ))
         
     }
     // MARK: - Add
@@ -129,10 +131,26 @@ final class DataService: IDataService {
             newWebPage.isGreen = webPage.isGreen
             newWebPage.gramForVisit = webPage.gramForVisit
             newWebPage.cleanerThan = Int64((maxPercentage - webPage.diertierThan))
+            newWebPage.energy = webPage.energy
             
             PersistantContainerStorage.saveContext()
         } else {
             print("Dublicated")
+        }
+    }
+    
+    func deleteWebPage(with id: UUID) {
+        print(id)
+        defer { PersistantContainerStorage.saveContext() }
+        let context = PersistantContainerStorage.persistentContainer.viewContext
+        let fetchRequest = WebPageInfo.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "identifier == %@", id.uuidString)
+        do {
+            let webPages = try context.fetch(fetchRequest)
+            print(webPages)
+            webPages.forEach { context.delete($0) }
+        } catch let error as NSError {
+            print("Error to delete: \(error)")
         }
     }
 }

@@ -74,6 +74,7 @@ private extension WebPageViewController {
         webPageView.tableView.delegate = self
     }
     
+    
     func setupNavigationBar() {
         let config2 = UIImage.SymbolConfiguration(pointSize: 18, weight: .light)
         let image2 = UIImage(systemName: "square.and.arrow.up", withConfiguration: config2)
@@ -88,6 +89,7 @@ private extension WebPageViewController {
         let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         activityVC.title = "Instagram"
         activityVC.excludedActivityTypes = [.airDrop]
+        
         self.present(activityVC, animated: true)
     }
 }

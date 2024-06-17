@@ -2,7 +2,7 @@
 //  WebPageInfo+CoreDataClass.swift
 //  CO2WebpageTracker
 //
-//  Created by Catarina Polakowsky on 16.06.2024.
+//  Created by Catarina Polakowsky on 17.06.2024.
 //
 //
 

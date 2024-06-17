@@ -144,7 +144,7 @@ private extension CarbonRatingCell {
         scaleLetterLabel.centerYAnchor.constraint(equalTo: scaleView.centerYAnchor).isActive = true
         
         stackView.topAnchor.constraint(equalTo: scaleView.bottomAnchor, constant: inset).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -inset).isActive = true
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
     }

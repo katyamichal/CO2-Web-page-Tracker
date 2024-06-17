@@ -81,10 +81,10 @@ final class WebPageListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Public
     
-    func updateLabels(url: String, rating: String) {
-        dateLabel.text = "12.05.24"
+    func updateLabels(url: String, rating: String, date: String) {
+        dateLabel.text = "This web page was tested on \(date)"
         urlLabel.text = url
-        ratingLabel.text = rating
+        ratingLabel.text = "Website Carbon Rating is \(rating)"
     }
 }
 
@@ -92,16 +92,17 @@ final class WebPageListCollectionViewCell: UICollectionViewCell {
 
 private extension WebPageListCollectionViewCell {
     func setupCell() {
-        contentView.backgroundColor = .systemGreen.withAlphaComponent(0.5)
+        layer.cornerRadius = 10
+        backgroundColor = .white
         setupViews()
         setupConstraints()
     }
     
     func setupViews() {
         contentView.addSubview(webPageStackView)
-        webPageStackView.addArrangedSubview(dateLabel)
         webPageStackView.addArrangedSubview(urlLabel)
         webPageStackView.addArrangedSubview(ratingLabel)
+        webPageStackView.addArrangedSubview(dateLabel)
     }
     
     func setupConstraints() {

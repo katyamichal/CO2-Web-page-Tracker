@@ -3,6 +3,7 @@
     <entity name="WebPageInfo" representedClassName="WebPageInfo" syncable="YES">
         <attribute name="cleanerThan" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="energy" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="gramForVisit" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="identifier" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isGreen" attributeType="Boolean" usesScalarValueType="YES"/>
