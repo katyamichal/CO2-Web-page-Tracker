@@ -8,7 +8,8 @@
 import UIKit
 final class CarbonRatingCell: UITableViewCell {
     private let spacing: CGFloat = 16
-    private let inset: CGFloat = 8
+    private let inset: CGFloat = 24
+    private let letterViewHeight: CGFloat = 130
     
     static var reuseIdentifier: String {
         return String(describing: CarbonRatingCell.self)
@@ -40,11 +41,19 @@ final class CarbonRatingCell: UITableViewCell {
         return stackView
     }()
     
-    private lazy var letterLabel: UILabel = {
+    private lazy var scaleView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = letterViewHeight / 2
+        return view
+    }()
+    
+    private lazy var scaleLetterLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 34)
-        label.textColor = .black
+        label.font = UIFont(name: "Avenir Next Regular", size: 70)
+        label.textColor = .blue
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         return label
     }()
@@ -52,8 +61,8 @@ final class CarbonRatingCell: UITableViewCell {
     private lazy var resultForLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 21)
-        label.textColor = .black
+        label.font = UIFont(name: "Avenir Next Regular", size: 24)
+        label.textColor = .white
         return label
     }()
     
@@ -61,7 +70,7 @@ final class CarbonRatingCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont(name: "Avenir Next Regular", size: 30)
-        label.textColor = .black
+        label.textColor = .white
         return label
     }()
     
@@ -69,7 +78,7 @@ final class CarbonRatingCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = UIFont(name: "Avenir Next Regular", size: 22)
-        label.textColor = .black
+        label.textColor = .white
         return label
     }()
     
@@ -82,36 +91,42 @@ final class CarbonRatingCell: UITableViewCell {
         label.numberOfLines = 0
         label.font = UIFont(name: "Avenir Next Regular", size: 14)
  
-        label.textColor = .black
+        label.textColor = .white
         return label
     }()
     
     override func prepareForReuse() {
-        letterLabel.text = nil
+        scaleLetterLabel.text = nil
         resultForLabel.text = nil
         descriptionLabel.text = nil
         dirtierThatLabel.text = nil
         super.prepareForReuse()
     }
     
-    func update(with letter: String, url: String, diertierThan: Float, date: String) {
-        resultForLabel.text = "Website carbon result for: \(url)"
-        letterLabel.text = letter
-        descriptionLabel.text = "Oh no! This web page  achieves a carbon rating of \(letter)"
-        dirtierThatLabel.text = "This is dirtier then \(diertierThan)"
+    func update(with colour: UIColor, with letter: String, description: String, url: String, diertierThan: String, date: String) {
+        scaleView.backgroundColor = colour
+        resultForLabel.text = url
+        scaleLetterLabel.text = letter
+        descriptionLabel.text = description
+        dirtierThatLabel.text = "This is dirtier then \(diertierThan) of all web pages globally"
         dateLabel.text = "This page was tested on \(date)"
     }
 }
 
 private extension CarbonRatingCell {
     func setupCell() {
+        selectionStyle = .none
+        backgroundColor = .clear
         setupViews()
         setupConstraints()
     }
     
     func setupViews() {
         contentView.addSubview(stackView)
-        stackView.addArrangedSubview(letterLabel)
+ 
+        contentView.addSubview(scaleView)
+        scaleView.addSubview(scaleLetterLabel)
+
         stackView.addArrangedSubview(resultForLabel)
         stackView.addArrangedSubview(descriptionLabel)
         stackView.addArrangedSubview(dirtierThatLabel)
@@ -119,7 +134,16 @@ private extension CarbonRatingCell {
     }
     
     func setupConstraints() {
-        stackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        
+        scaleView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        scaleView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        scaleView.widthAnchor.constraint(equalToConstant: letterViewHeight).isActive = true
+        scaleView.heightAnchor.constraint(equalToConstant: letterViewHeight).isActive = true
+        
+        scaleLetterLabel.centerXAnchor.constraint(equalTo: scaleView.centerXAnchor).isActive = true
+        scaleLetterLabel.centerYAnchor.constraint(equalTo: scaleView.centerYAnchor).isActive = true
+        
+        stackView.topAnchor.constraint(equalTo: scaleView.bottomAnchor, constant: inset).isActive = true
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true

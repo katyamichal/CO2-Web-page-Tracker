@@ -21,6 +21,7 @@ final class TabBarCoordinator: Coordinator {
    // private let factory: ScreenFactory?
     private let networkService: INetworkService
     private let dataService: IDataService
+    var tabBarController: TabBarController?
 
     // MARK: - Init
 
@@ -36,9 +37,9 @@ final class TabBarCoordinator: Coordinator {
         showTabBarFlow()
     }
     
-    func showSearchDetailModule() {
-        
-    }
+    func switchToSecondTab() {
+          tabBarController?.selectedIndex = 1
+      }
 }
 
 private extension TabBarCoordinator {
@@ -48,6 +49,7 @@ private extension TabBarCoordinator {
         let searchNavigationController = UINavigationController()
         searchNavigationController.tabBarItem = UITabBarItem(title: "Search", image: searchImage, selectedImage: searchImage)
         let searchCoordinator = SearchCoordinator(navigationController: searchNavigationController, networkService: networkService)
+        searchCoordinator.parentCoordinator = self
         searchCoordinator.start()
         // 2
         let listImage = UIImage(systemName: TabBarImageView.list.rawValue)
@@ -63,8 +65,9 @@ private extension TabBarCoordinator {
         
         //4
         let tabBarControllers = [searchNavigationController, webPageListNavigationController]
-        let tabBarController = TabBarController(tabBarControllers: tabBarControllers)
+        tabBarController = TabBarController(tabBarControllers: tabBarControllers)
         // 4
+        guard let tabBarController else {return}
         navigationController.pushViewController(tabBarController, animated: false)
     }
 }

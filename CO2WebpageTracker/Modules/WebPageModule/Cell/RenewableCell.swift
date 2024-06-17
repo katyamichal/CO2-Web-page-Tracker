@@ -71,10 +71,7 @@ final class RenewableCell: UITableViewCell {
         label.textColor = .black
         return label
     }()
-    
-    // charts
-    
-    // leart about
+
     
     private lazy var dateLabel: UILabel = {
         let label = UILabel()

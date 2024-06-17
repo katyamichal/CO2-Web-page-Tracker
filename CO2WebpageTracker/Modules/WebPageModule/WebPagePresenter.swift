@@ -69,6 +69,8 @@ extension WebPagePresenter: IWebPagePresenter {
             self.view?.update()
         } else {
             getData()
+            print(viewData?.greenDescription)
+            print(viewData?.co2PerPageviewDescription)
         }
     }
 }
@@ -85,14 +87,13 @@ private extension WebPagePresenter {
         let section = WebPageSection.allCases[indexPath.section]
         
           guard let viewData else { return UITableViewCell() }
-        
           switch section {
           case .carbonRating:
               guard let cell = tableView.dequeueReusableCell(withIdentifier: CarbonRatingCell.reuseIdentifier, for: indexPath) as? CarbonRatingCell else {
                   return UITableViewCell()
               }
-              
-              cell.update(with: viewData.ratingLetter, url: viewData.url, diertierThan: Float(viewData.diertierThan), date: "16.06.24")
+              let color = UIColor.init(hex: viewData.ratingColor) ?? UIColor.gray
+              cell.update(with: color, with: viewData.ratingLetter, description: viewData.ratingDescription, url: viewData.urlDescription, diertierThan: String(describing: viewData.diertierThan), date: "20.04.34")
               return cell
 
           case .energyType:

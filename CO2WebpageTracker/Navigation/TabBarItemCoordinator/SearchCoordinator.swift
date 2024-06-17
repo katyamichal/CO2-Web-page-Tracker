@@ -25,6 +25,17 @@ final class SearchCoordinator: Coordinator {
     func start() {
         showModule()
     }
+    
+    func showDetail() {
+        guard let par = (parentCoordinator as? TabBarCoordinator)
+            else {return}
+        par.switchToSecondTab()
+        if let secondNavigationController = par.tabBarController?.viewControllers?[1] as?  UINavigationController {
+            let detailCoordinator = WebPageCoordinator(navigationController: secondNavigationController, dataService: DataService())
+            childCoordinators.append(detailCoordinator)
+            detailCoordinator.start()
+        }
+    }
 }
 
 private extension SearchCoordinator {

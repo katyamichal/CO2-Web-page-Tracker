@@ -88,7 +88,14 @@ final class DataService: IDataService {
     func fetchWepPage(with webPageId: UUID, completionHandler: (WebPageViewData) -> Void) {
         guard let webPage = getWebPage(with: webPageId) else { return }
         print(webPage.cleanerThan)
-        completionHandler(WebPageViewData(id: webPage.identifier, url: webPage.url, date: webPage.date, ratingLetter: webPage.rating, diertierThan: (maxPercentage - Int(webPage.cleanerThan)), isGreen: webPage.isGreen, gramForVisit: webPage.gramForVisit))
+        completionHandler(WebPageViewData(
+            id: webPage.identifier,
+            url: webPage.url,
+            date: webPage.date,
+            ratingLetter: webPage.rating,
+            diertierThan: Int(webPage.cleanerThan),
+            isGreen: webPage.isGreen,
+            gramForVisit: webPage.gramForVisit))
         
     }
     // MARK: - Add

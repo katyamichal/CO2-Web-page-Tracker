@@ -48,33 +48,7 @@ final class EnergyTypeCell: UITableViewCell {
         return label
     }()
     
-    private lazy var resultForLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 14)
-        label.textColor = .black
-        return label
-    }()
-    
-    private lazy var descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 14)
-        label.textColor = .black
-        return label
-    }()
-    
-    private lazy var dirtierThatLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 14)
-        label.textColor = .black
-        return label
-    }()
-    
-    // charts
-    
-    // leart about
+
     
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
@@ -86,9 +60,6 @@ final class EnergyTypeCell: UITableViewCell {
     
     override func prepareForReuse() {
         letterLabel.text = nil
-        resultForLabel.text = nil
-        descriptionLabel.text = nil
-        dirtierThatLabel.text = nil
         super.prepareForReuse()
     }
     
@@ -109,9 +80,6 @@ private extension EnergyTypeCell {
     func setupViews() {
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(letterLabel)
-        stackView.addArrangedSubview(resultForLabel)
-        stackView.addArrangedSubview(descriptionLabel)
-        stackView.addArrangedSubview(dirtierThatLabel)
     }
     
     func setupConstraints() {

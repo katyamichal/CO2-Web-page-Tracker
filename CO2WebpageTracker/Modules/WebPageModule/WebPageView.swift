@@ -31,14 +31,14 @@ final class WebPageView: UIView {
         tableView.register(CarbonRatingCell.self, forCellReuseIdentifier: CarbonRatingCell.reuseIdentifier)
         tableView.register(EnergyTypeCell.self, forCellReuseIdentifier: EnergyTypeCell.reuseIdentifier)
         tableView.register(RenewableCell.self, forCellReuseIdentifier: RenewableCell.reuseIdentifier)
-//        tableView.register(TableViewHeader.self, forHeaderFooterViewReuseIdentifier: TableViewHeader.reuseIdentifier)
+        //        tableView.register(TableViewHeader.self, forHeaderFooterViewReuseIdentifier: TableViewHeader.reuseIdentifier)
         return tableView
     }()
 }
 
 private extension WebPageView {
     func setupView() {
-        backgroundColor = .systemYellow.withAlphaComponent(0.9)
+        backgroundColor = .blue
         setupViews()
         setupConstraints()
     }
