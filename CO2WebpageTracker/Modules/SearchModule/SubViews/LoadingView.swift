@@ -89,10 +89,6 @@ final class LoadingView: UIView {
     func setupActionForTryAgainButton(target: Any?, action: Selector, for event: UIControl.Event = .touchUpInside) {
         tryAgainButton.addTarget(target, action: action, for: event)
     }
-//    @objc
-//    func addAction() {
-//        print("***tryAgainButton")
-//    }
 }
 
 // MARK: - Setup methods

@@ -36,7 +36,9 @@ final class WebPageSearchView: UIView {
         stackView.alignment = .fill
         stackView.spacing = spacing
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
-        stackView.isLayoutMarginsRelativeArrangement = true
+         stackView.isLayoutMarginsRelativeArrangement = true
+         stackView.layer.borderWidth = 3
+         stackView.layer.borderColor = UIColor.black.cgColor
         return stackView
     }()
     
@@ -72,7 +74,7 @@ final class WebPageSearchView: UIView {
 
 private extension WebPageSearchView {
     func setupView() {
-        backgroundColor = .systemGreen.withAlphaComponent(0.4)
+        backgroundColor = Colours.WebPageColours.turquoise
         setupViews()
         setupConstraints()
     }

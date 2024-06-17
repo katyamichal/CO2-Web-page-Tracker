@@ -74,6 +74,9 @@ private extension SearchWebPagePresenter {
             
             if let responseData {
                 self.viewData.searchStatus = .search
+                DispatchQueue.main.async {
+                    (self.coordinator as? SearchCoordinator)?.showDetail()
+                }
             } else {
                 let failedMessage = self.configureErrorResponse(with: error!)
                 self.viewData.searchStatus = .load(status: .failed(message: failedMessage))
@@ -81,7 +84,6 @@ private extension SearchWebPagePresenter {
     
             DispatchQueue.main.async {
                 self.view?.updateView(with: self.viewData.searchStatus)
-                (self.coordinator as? SearchCoordinator)?.showDetail()
             }
         }
     }

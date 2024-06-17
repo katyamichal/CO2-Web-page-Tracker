@@ -76,7 +76,6 @@ final class SearchView: UIView {
 
 private extension SearchView {
     func setupView() {
-        backgroundColor = .systemBackground
         setupViews()
         setupConstraints()
     }
@@ -92,6 +91,6 @@ private extension SearchView {
         searchStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: inset).isActive = true
         searchStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -inset).isActive = true
         searchStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: inset).isActive = true
-       // searchStackView.heightAnchor.constraint(equalToConstant: 400).isActive = true
+    
     }
 }
