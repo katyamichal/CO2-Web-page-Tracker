@@ -9,19 +9,19 @@ import UIKit
 
 final class GradientRatingView: UIView {
     
-    init(with frame: CGRect = CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width - 20, height: 40))) {
-        super.init(frame: frame)
-        setupGradient()
-        setupLabels()
-        setupMarker()
-    }
-    
-//    override init(frame: CGRect) {
+//    init(with frame: CGRect = CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width - 40, height: 40))) {
 //        super.init(frame: frame)
 //        setupGradient()
 //        setupLabels()
 //        setupMarker()
 //    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupGradient()
+        setupLabels()
+        setupMarker()
+    }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {

@@ -51,9 +51,10 @@
 		4EAC84792C20340E00F6CD8A /* DescriptionConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC84782C20340E00F6CD8A /* DescriptionConstructor.swift */; };
 		4EAC84802C20550400F6CD8A /* UIColor + customColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC847F2C20550400F6CD8A /* UIColor + customColor.swift */; };
 		4EAC84822C20995F00F6CD8A /* UIFont + CustomFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC84812C20995F00F6CD8A /* UIFont + CustomFont.swift */; };
-		4EAC84842C215BC700F6CD8A /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC84832C215BC700F6CD8A /* View.swift */; };
+		4EAC84842C215BC700F6CD8A /* GradientRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC84832C215BC700F6CD8A /* GradientRatingView.swift */; };
 		4EAC848B2C21A3A100F6CD8A /* WebPageInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC84892C21A3A100F6CD8A /* WebPageInfo+CoreDataClass.swift */; };
 		4EAC848C2C21A3A100F6CD8A /* WebPageInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC848A2C21A3A100F6CD8A /* WebPageInfo+CoreDataProperties.swift */; };
+		4EAC848E2C21C2F800F6CD8A /* StepperDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC848D2C21C2F800F6CD8A /* StepperDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,9 +105,10 @@
 		4EAC84782C20340E00F6CD8A /* DescriptionConstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionConstructor.swift; sourceTree = "<group>"; };
 		4EAC847F2C20550400F6CD8A /* UIColor + customColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + customColor.swift"; sourceTree = "<group>"; };
 		4EAC84812C20995F00F6CD8A /* UIFont + CustomFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + CustomFont.swift"; sourceTree = "<group>"; };
-		4EAC84832C215BC700F6CD8A /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		4EAC84832C215BC700F6CD8A /* GradientRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientRatingView.swift; sourceTree = "<group>"; };
 		4EAC84892C21A3A100F6CD8A /* WebPageInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebPageInfo+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		4EAC848A2C21A3A100F6CD8A /* WebPageInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebPageInfo+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		4EAC848D2C21C2F800F6CD8A /* StepperDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 				4EABD5F62C1C8F8F0089DF1D /* CarbonRatingCell.swift */,
 				4E34E0422C1EF3AD004D15A5 /* RenewableCell.swift */,
 				4E34E0402C1EF387004D15A5 /* EnergyWasteTypeCell.swift */,
+				4EAC848F2C21CB1600F6CD8A /* CarbonCellSubview */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -234,7 +237,7 @@
 				4EABD5E42C1C23D60089DF1D /* SearchViewData.swift */,
 				4EABD5E22C1C23510089DF1D /* SearchWebPagePresenter.swift */,
 				4EABD5DE2C1C1E130089DF1D /* WebPageSearchView.swift */,
-				4EABD5EA2C1C26D10089DF1D /* SubViews */,
+				4EABD5EA2C1C26D10089DF1D /* Subviews */,
 			);
 			path = SearchModule;
 			sourceTree = "<group>";
@@ -261,13 +264,13 @@
 			path = DataService;
 			sourceTree = "<group>";
 		};
-		4EABD5EA2C1C26D10089DF1D /* SubViews */ = {
+		4EABD5EA2C1C26D10089DF1D /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
 				4EABD5E02C1C1FCA0089DF1D /* LoadingView.swift */,
 				4EABD5EB2C1C285C0089DF1D /* SearchView.swift */,
 			);
-			path = SubViews;
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		4EABD5ED2C1C56420089DF1D /* Helpers */ = {
@@ -298,13 +301,13 @@
 		4EABD5F32C1C8CB80089DF1D /* WebPageModule */ = {
 			isa = PBXGroup;
 			children = (
+				4EAC848D2C21C2F800F6CD8A /* StepperDelegate.swift */,
 				4EABD5F12C1C8CB40089DF1D /* WebPageViewController.swift */,
 				4EABD5F42C1C8D530089DF1D /* WebPageView.swift */,
 				4EABD5F82C1C92490089DF1D /* WebPagePresenter.swift */,
 				4EABD5FA2C1C93050089DF1D /* WebPageViewData.swift */,
 				4EABD5FC2C1C95240089DF1D /* WebPageSection.swift */,
 				4E34E03F2C1EEE66004D15A5 /* Cell */,
-				4EAC84832C215BC700F6CD8A /* View.swift */,
 			);
 			path = WebPageModule;
 			sourceTree = "<group>";
@@ -326,6 +329,14 @@
 				4EAC84812C20995F00F6CD8A /* UIFont + CustomFont.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4EAC848F2C21CB1600F6CD8A /* CarbonCellSubview */ = {
+			isa = PBXGroup;
+			children = (
+				4EAC84832C215BC700F6CD8A /* GradientRatingView.swift */,
+			);
+			path = CarbonCellSubview;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -418,9 +429,10 @@
 				4EABD5D32C1AE2260089DF1D /* IWebPageListPresenter.swift in Sources */,
 				4EABD5DD2C1C1DAE0089DF1D /* SearchWebPageViewController.swift in Sources */,
 				4EABD5B52C182C210089DF1D /* CO2WebpageTracker.xcdatamodeld in Sources */,
+				4EAC848E2C21C2F800F6CD8A /* StepperDelegate.swift in Sources */,
 				4EABD5DF2C1C1E130089DF1D /* WebPageSearchView.swift in Sources */,
 				4EABD5AB2C182C210089DF1D /* AppDelegate.swift in Sources */,
-				4EAC84842C215BC700F6CD8A /* View.swift in Sources */,
+				4EAC84842C215BC700F6CD8A /* GradientRatingView.swift in Sources */,
 				4EABD5C22C1998320089DF1D /* NetworkService.swift in Sources */,
 				4EAC84772C202E7300F6CD8A /* UIColor + hex.swift in Sources */,
 				4E34E03E2C1ED983004D15A5 /* FRCDelegate.swift in Sources */,

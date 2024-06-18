@@ -19,6 +19,12 @@ final class LoadingView: UIView {
         }
     }
     
+    enum PauseLoadingImages {
+        static let paused = UIImage(systemName: Constants.UIElementNameStrings.pausedImage)
+        static let active = UIImage(systemName: Constants.UIElementNameStrings.activeImage)
+    }
+    
+    
     // MARK: - Inits
     
     override init(frame: CGRect) {
@@ -49,17 +55,19 @@ final class LoadingView: UIView {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.style = .large
-        activityIndicator.color = .systemBlue
+        activityIndicator.color = Colours.WebPageColours.yellowish
         activityIndicator.hidesWhenStopped = true
         return activityIndicator
     }()
     
-    private lazy var pauseLoadingView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.tintColor = .systemBlue
-        imageView.contentMode = .scaleAspectFit
-        return imageView
+    private lazy var pauseLosdingButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = Colours.WebPageColours.yellowish
+        button.contentMode = .scaleAspectFit
+        button.setImage(PauseLoadingImages.active, for: .normal)
+        button.setImage(PauseLoadingImages.paused, for: .selected)
+        return button
     }()
     
     private lazy var messageLabel: UILabel = {
@@ -103,7 +111,7 @@ private extension LoadingView {
     func setupViews() {
         addSubview(loadingStackView)
         loadingStackView.addArrangedSubview(messageLabel)
-        loadingStackView.addArrangedSubview(pauseLoadingView)
+        loadingStackView.addArrangedSubview(pauseLosdingButton)
         loadingStackView.addArrangedSubview(activityIndicator)
         loadingStackView.addArrangedSubview(tryAgainButton)
     }
@@ -122,13 +130,13 @@ private extension LoadingView {
             activityIndicator.startAnimating()
             messageLabel.isHidden = false
             messageLabel.text = message
-            pauseLoadingView.isHidden = false
-            pauseLoadingView.image = image
+            pauseLosdingButton.isHidden = false
+            pauseLosdingButton.isHidden = false
             tryAgainButton.isHidden = true
             
         case .completed(let url):
            // activityIndicator.isHidden = true
-            pauseLoadingView.isHidden = true
+            pauseLosdingButton.isHidden = true
             messageLabel.isHidden = false
             messageLabel.text = url
             tryAgainButton.isHidden = true
@@ -136,7 +144,7 @@ private extension LoadingView {
             
         case .failed(let message):
           //  activityIndicator.isHidden = true
-            pauseLoadingView.isHidden = true
+            pauseLosdingButton.isHidden = true
             messageLabel.isHidden = false
             messageLabel.text = message
             activityIndicator.stopAnimating()
@@ -144,14 +152,14 @@ private extension LoadingView {
             
         case .nonActive:
           //  activityIndicator.isHidden = true
-            pauseLoadingView.isHidden = true
+            pauseLosdingButton.isHidden = true
             messageLabel.isHidden = true
             tryAgainButton.isHidden = true
             
         case .paused(let image):
            // activityIndicator.isHidden = true
-            pauseLoadingView.isHidden = false
-            pauseLoadingView.image = image
+            pauseLosdingButton.isHidden = false
+            //pauseLosdingButton.image = image
             messageLabel.isHidden = false
             activityIndicator.stopAnimating()
         }

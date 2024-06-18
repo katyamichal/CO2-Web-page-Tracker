@@ -40,6 +40,7 @@ final class WebPageListTableViewCell: UITableViewCell {
         stackView.spacing = spacing
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
         stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.backgroundColor = .systemBackground
         return stackView
     }()
 
@@ -96,7 +97,7 @@ final class WebPageListTableViewCell: UITableViewCell {
 private extension WebPageListTableViewCell {
     func setupCell() {
         layer.cornerRadius = 10
-        backgroundColor = .systemBackground
+        backgroundColor = .clear
         setupViews()
         setupConstraints()
     }

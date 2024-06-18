@@ -7,21 +7,22 @@
 
 import UIKit
 
-protocol EnergyWasteTypeCellDelegate: AnyObject {
-    func stepperValueChanged(to value: Double, in cell: EnergyWasteTypeCell)
+protocol UIStepperViewDelegate: AnyObject {
+    func stepperValueChanged(_ sender: UIStepper)
 }
 
 final class EnergyWasteTypeCell: UITableViewCell {
+    
+    private weak var stepperDelegate: UIStepperViewDelegate?
     private let spacing: CGFloat = 16
     private let inset: CGFloat = 8
-    weak var delegate: EnergyWasteTypeCellDelegate?
     
     static var reuseIdentifier: String {
         return String(describing: EnergyWasteTypeCell.self)
     }
     
     // MARK: - Init
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCell()
@@ -52,17 +53,24 @@ final class EnergyWasteTypeCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.text = "Over a year, with"
-        label.font = UIFont(name: "Avenir Next Regular", size: 21)
+        label.font = Fonts.Body.defaultFont
         label.textColor = .white
         return label
     }()
     
-    lazy var stepper: UIStepper = {
+    private lazy var stepperValueLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = Fonts.Body.defaultFont
+        label.textColor = .white
+        return label
+    }()
+    
+    private lazy var stepper: UIStepper = {
         let stepper = UIStepper()
         stepper.translatesAutoresizingMaskIntoConstraints = false
         stepper.minimumValue = 1
         stepper.maximumValue = 1000
-        stepper.stepValue = (stepper.value) * 10
         stepper.addTarget(self, action: #selector(stepperVulaeDidChange), for: .valueChanged)
         return stepper
     }()
@@ -71,7 +79,7 @@ final class EnergyWasteTypeCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.text = "monthly page views, this page produces"
-        label.font = UIFont(name: "Avenir Next Regular", size: 21)
+        label.font = Fonts.Body.defaultFont
         label.textColor = .white
         return label
     }()
@@ -79,10 +87,15 @@ final class EnergyWasteTypeCell: UITableViewCell {
     private lazy var energyLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 21)
+        label.font = Fonts.Body.defaultFont
         label.textColor = .white
         return label
     }()
+    
+    func configureStepperDelgate(with delegate: UIStepperViewDelegate) {
+        stepperDelegate = delegate
+    }
+    
     
     override func prepareForReuse() {
         energyLabel.text = nil
@@ -91,17 +104,11 @@ final class EnergyWasteTypeCell: UITableViewCell {
     
     // MARK: - Public
     
-    func setupTargetForStepper(tagret: Any?, action: Selector) {
-        stepper.addTarget(tagret, action: action, for: .valueChanged)
-    }
-    
-    func update(with energy: String) {
+    func update(with energy: String, stepperValue: Int) {
+        stepperValueLabel.text = "\(stepperValue)"
+        stepper.value = Double(stepperValue)
         energyLabel.text = energy + " " + "of CO2 equivalent"
     }
-    
-     func updateStepperStepValue(to stepValue: Double) {
-         stepper.stepValue = stepValue
-     }
 }
 
 private extension EnergyWasteTypeCell {
@@ -115,6 +122,7 @@ private extension EnergyWasteTypeCell {
     func setupViews() {
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(helperLabel1)
+        stackView.addArrangedSubview(stepperValueLabel)
         stackView.addArrangedSubview(stepper)
         stackView.addArrangedSubview(helperLabel2)
         stackView.addArrangedSubview(energyLabel)
@@ -130,6 +138,6 @@ private extension EnergyWasteTypeCell {
     
     @objc
     func stepperVulaeDidChange(_ sender: UIStepper) {
-        delegate?.stepperValueChanged(to: sender.value, in: self)
+        stepperDelegate?.stepperValueChanged(sender)
     }
 }

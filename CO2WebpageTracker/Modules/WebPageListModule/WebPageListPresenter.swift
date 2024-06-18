@@ -8,11 +8,11 @@
 import UIKit
 
 final class WebPageListPresenter {
+    
     private weak var view: IWebPageListView?
     private let dataService: IDataService
     private weak var coordinator: Coordinator?
     private var viewData: [WebPageListViewData] = []
-
 
     init(coordinator: Coordinator, dataService: IDataService) {
         self.coordinator = coordinator
@@ -80,14 +80,17 @@ extension WebPageListPresenter: IFetchResultControllerDelegate {
         view?.deleteRow(at: index)
     }
 }
+
 #warning("Ask about     self.dataService.performFetch()")
 private extension WebPageListPresenter {
     func getData() {
-        dataService.fetchWepPages { [weak self] data in
-            self?.dataService.performFetch()
-            self?.viewData = data
-            if viewData.count == 0 {
-                viewData.append(contentsOf: generateSampleWebPageData())
+        dataService.fetchWepPages { [weak self] result in
+            switch result {
+            case .success(let data):
+                self?.dataService.performFetch()
+                self?.viewData = data
+            case .failure(let error):
+                print(error)
             }
             self?.view?.update()
         }
@@ -101,11 +104,5 @@ private extension WebPageListPresenter {
 
         cell.updateLabels(url: data.url, rating: data.rating, date: "12.05.23")
         return cell
-    }
-    
-    func generateSampleWebPageData() -> [WebPageListViewData] {
-        return [
-            WebPageListViewData(url: "https://example.com", date: Date(), rating: "A"),
-        ]
     }
 }

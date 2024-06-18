@@ -17,14 +17,13 @@ extension WebPageInfo {
     }
 
     @NSManaged public var cleanerThan: Double
-    @NSManaged public var date: Date?
+    @NSManaged public var date: Date
     @NSManaged public var energy: Double
     @NSManaged public var gramForVisit: Double
-    @NSManaged public var identifier: UUID?
-    @NSManaged public var isGreen: String?
-    @NSManaged public var rating: String?
-    @NSManaged public var url: String?
-
+    @NSManaged public var identifier: UUID
+    @NSManaged public var isGreen: String
+    @NSManaged public var rating: String
+    @NSManaged public var url: String
 }
 
 extension WebPageInfo : Identifiable {

@@ -11,7 +11,7 @@ import CoreData
 protocol IDataService: AnyObject {
     func addFetchDelegate(_ delegate: IFetchResultControllerDelegate)
     func performFetch()
-    func fetchWepPages(completionHandler: ([WebPageListViewData]) -> Void)
+    func fetchWepPages(completionHandler: (Result<[WebPageListViewData],Error>) -> Void)
     func findDublicate(with webPage: WebPageViewData) -> Bool
     func fetchWepPage(with webPageId: UUID, completionHandler: (WebPageViewData) -> Void)
     func add(webPage: WebPageViewData)
@@ -68,7 +68,7 @@ final class DataService: IDataService {
         }
     }
     
-    func fetchWepPages(completionHandler: ([WebPageListViewData]) -> Void) {
+    func fetchWepPages(completionHandler: (Result<[WebPageListViewData],Error>) -> Void) {
         let context = PersistantContainerStorage.persistentContainer.viewContext
         let sortDescriptor = NSSortDescriptor(keyPath: \WebPageInfo.date, ascending: true)
         
@@ -77,11 +77,12 @@ final class DataService: IDataService {
         
         do {
             let webPages = try context.fetch(fetchRequest)
-            completionHandler(webPages.map { webPage in
+            completionHandler(.success(webPages.map { webPage in
                 WebPageListViewData(id: webPage.identifier, url: webPage.url, date: webPage.date, rating: webPage.rating)
-            })
+            }))
         } catch {
             let error = error as NSError
+            completionHandler(.failure(error))
             print("Error: ", error.localizedDescription)
         }
     }

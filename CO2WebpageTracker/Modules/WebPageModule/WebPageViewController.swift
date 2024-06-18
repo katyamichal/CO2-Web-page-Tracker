@@ -9,6 +9,7 @@ import UIKit
 protocol IWebPageView: AnyObject {
     func update()
     func setupNavigationTitle(with title: String)
+    func updateEnergyWasteTypeCell()
     
 }
 
@@ -43,6 +44,11 @@ final class WebPageViewController: UIViewController {
 }
 
 extension WebPageViewController: IWebPageView {
+    func updateEnergyWasteTypeCell() {
+        let indexPath = IndexPath(row: 0, section: WebPageSection.energyType.rawValue)
+        webPageView.tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
     
     func update() {
         webPageView.tableView.reloadData()

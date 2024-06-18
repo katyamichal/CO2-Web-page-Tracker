@@ -8,8 +8,8 @@
 import UIKit
 
 final class WebPageView: UIView {
+    
     private let inset: CGFloat = 8
-
     
     // MARK: - Init
     

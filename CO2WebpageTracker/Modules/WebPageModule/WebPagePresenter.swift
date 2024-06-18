@@ -22,12 +22,14 @@ final class WebPagePresenter {
     private var dataService: IDataService
     private var viewData: WebPageViewData?
     private let webPageId: UUID?
-    private var values: [Double] = Array(repeating: 1, count: 20) // Example data
+    private let stepperDelegate = StepperDelegate()
+    private var stepperValue: Int = 1
     
     init(coordinator: Coordinator?, dataService: IDataService, id: UUID?) {
         self.dataService = dataService
         self.webPageId = id
         self.coordinator = coordinator
+        self.stepperDelegate.delegate = self
     }
 }
 
@@ -43,7 +45,6 @@ extension WebPagePresenter {
             gramForVisit: Double(data.statistics.energy),
             energy: data.statistics.co2.renewable.grams)
     }
-   
 }
 
 extension WebPagePresenter: IWebPagePresenter {
@@ -108,20 +109,19 @@ private extension WebPagePresenter {
             
             return cell
             
-        case .energyType:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: EnergyWasteTypeCell.reuseIdentifier, for: indexPath) as? EnergyWasteTypeCell else {
-                return UITableViewCell()
-            }
-            cell.update(with: String(viewData.energy))
-            cell.delegate = self
-            return cell
-            
         case .renewable:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RenewableCell.reuseIdentifier, for: indexPath) as? RenewableCell else {
                 return UITableViewCell()
             }
-            
             cell.update(with: co2PerPageviewDescription, energyType: greenDescription)
+            return cell
+            
+        case .energyType:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: EnergyWasteTypeCell.reuseIdentifier, for: indexPath) as? EnergyWasteTypeCell else {
+                return UITableViewCell()
+            }
+            cell.update(with: energy, stepperValue: stepperValue)
+            cell.configureStepperDelgate(with: stepperDelegate)
             return cell
         }
     }
@@ -181,15 +181,16 @@ private extension WebPagePresenter {
         guard let viewData else { return "No Data" }
         return DescriptionConstructor.shared.getRatingDescription(with: viewData.ratingLetter)
     }
+    var energy: String {
+        guard let viewData else { return "No Data" }
+        return String(format: "%.2f", (viewData.energy * Double(stepperValue)))
+    }
 }
 
-extension WebPagePresenter: EnergyWasteTypeCellDelegate {
-    func stepperValueChanged(to value: Double, in cell: EnergyWasteTypeCell) {
-     stepperValueChanged(to: value, at: IndexPath(row: 0, section: 2))
-
+extension WebPagePresenter: IStepperDelegate {
+    func didChanged(with value: Int) {
+//        print("\(value)")
+        stepperValue = value
+        view?.updateEnergyWasteTypeCell()
     }
-    
-    func stepperValueChanged(to value: Double, at indexPath: IndexPath) {
-          values[indexPath.row] = value
-      }
 }
