@@ -6,9 +6,15 @@
 //
 
 import UIKit
+
+protocol EnergyWasteTypeCellDelegate: AnyObject {
+    func stepperValueChanged(to value: Double, in cell: EnergyWasteTypeCell)
+}
+
 final class EnergyWasteTypeCell: UITableViewCell {
     private let spacing: CGFloat = 16
     private let inset: CGFloat = 8
+    weak var delegate: EnergyWasteTypeCellDelegate?
     
     static var reuseIdentifier: String {
         return String(describing: EnergyWasteTypeCell.self)
@@ -57,6 +63,7 @@ final class EnergyWasteTypeCell: UITableViewCell {
         stepper.minimumValue = 1
         stepper.maximumValue = 1000
         stepper.stepValue = (stepper.value) * 10
+        stepper.addTarget(self, action: #selector(stepperVulaeDidChange), for: .valueChanged)
         return stepper
     }()
     
@@ -91,6 +98,10 @@ final class EnergyWasteTypeCell: UITableViewCell {
     func update(with energy: String) {
         energyLabel.text = energy + " " + "of CO2 equivalent"
     }
+    
+     func updateStepperStepValue(to stepValue: Double) {
+         stepper.stepValue = stepValue
+     }
 }
 
 private extension EnergyWasteTypeCell {
@@ -115,5 +126,10 @@ private extension EnergyWasteTypeCell {
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -inset).isActive = true
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+    }
+    
+    @objc
+    func stepperVulaeDidChange(_ sender: UIStepper) {
+        delegate?.stepperValueChanged(to: sender.value, in: self)
     }
 }

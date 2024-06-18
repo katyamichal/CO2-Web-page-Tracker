@@ -28,8 +28,8 @@ final class TabBarController: UITabBarController {
 
 private extension TabBarController {
     func setupTabBarStyle() {
-        tabBar.backgroundColor = Colours.WebPageColours.yellow
-        tabBar.barTintColor = Colours.WebPageColours.yellow
+        tabBar.backgroundColor = Colours.WebPageColours.yellowish
+        tabBar.barTintColor = Colours.WebPageColours.yellowish
         tabBar.tintColor = Colours.WebPageColours.blue
         tabBar.unselectedItemTintColor = .black
     }

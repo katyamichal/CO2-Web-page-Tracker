@@ -6,7 +6,7 @@
 //
 
 import UIKit
-typealias IWebPageListPresenter = IWebPageListViewLifeCycle & IWebPageListLoading & IWebPageListCollectionViewHandler
+typealias IWebPageListPresenter = IWebPageListViewLifeCycle & IWebPageListLoading & IWebPageListTableViewHandler
 
 protocol IWebPageListViewLifeCycle: AnyObject {
     func viewDidLoaded(view: IWebPageListView)
@@ -16,12 +16,12 @@ protocol IWebPageListLoading: AnyObject {
 
 }
 
-protocol IWebPageListCollectionViewHandler: AnyObject {
+protocol IWebPageListTableViewHandler: AnyObject {
     func getRowCountInSection() -> Int
-    func rowForCell(collectionView: UICollectionView, at index: IndexPath) -> UICollectionViewCell
+    func rowForCell(tableView: UITableView, at index: IndexPath) -> UITableViewCell
     func updateRow(at index: Int)
     func permitDeleting(at index: IndexPath) -> Bool
-    func deleteRow(at index: IndexPath)
+    func actionDidSwipeToDelete(at index: Int)
     func showDetailView(at index: Int)
 }
 

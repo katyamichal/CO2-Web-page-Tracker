@@ -15,6 +15,7 @@ protocol IWebPageView: AnyObject {
 final class WebPageViewController: UIViewController {
     private var webPageView: WebPageView { return self.view as! WebPageView }
     private let presenter: IWebPagePresenter
+    private var barButtonMenu = UIMenu()
     
     // MARK: - Inits
     
@@ -76,67 +77,40 @@ private extension WebPageViewController {
     
     
     func setupNavigationBar() {
-        let config2 = UIImage.SymbolConfiguration(pointSize: 18, weight: .light)
-        let image2 = UIImage(systemName: "square.and.arrow.up", withConfiguration: config2)
-        let rightBarButton = UIBarButtonItem(image: image2, style: .plain, target: self, action: #selector(shareProduct))
-        navigationItem.rightBarButtonItem = rightBarButton
- 
-//        
-//        let configuration = UIImage.SymbolConfiguration(pointSize: 20, weight: .light)
-//        let image = UIImage(systemName: "ellipsis.circle", withConfiguration: configuration)
-//        let rightBarItem = UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
-//        rightBarItem.tintColor = Colours.Button.addButtonColour
-//        
-//        
-//        
-//        let barButtonMenu = UIMenu(title: "", children: [
-//            
-////            UIAction(title: NSLocalizedString("Show only pinned", comment: ""), image: UIImage(systemName: "pin"), handler: menuHandler),
-////
-//            UIAction(title: NSLocalizedString("", comment: ""), image: UIImage(systemName: ""), handler: selectionHandler)
-//        ])
-//        rightBarItem.menu = barButtonMenu
-//        navigationItem.rightBarButtonItem = rightBarItem
-//        
-//        self.navigationController?.isToolbarHidden = false
-//        self.navigationController?.toolbar.tintColor = Colours.Button.addButtonColour
-//        self.navigationController?.toolbar.backgroundColor = .clear
-//        
-//        var items = [UIBarButtonItem]()
-//        items.append(
-//            UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-//        )
-//        items.append(
-//            UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(tappedToolBarItem))
-//        )
-//        toolbarItems = items
-    }
-    
-    @objc
-    func tappedToolBarItem() {
+//        let config2 = UIImage.SymbolConfiguration(pointSize: 18, weight: .light)
+//        let image2 = UIImage(systemName: "square.and.arrow.up", withConfiguration: config2)
+//        let rightBarButton = UIBarButtonItem(image: image2, style: .plain, target: self, action: #selector(shareProduct))
+//        navigationItem.rightBarButtonItem = rightBarButton
+//
         
+        let configuration = UIImage.SymbolConfiguration(pointSize: 20, weight: .light)
+        let image = UIImage(systemName: "ellipsis.circle", withConfiguration: configuration)
+        let rightBarItem = UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
+        rightBarItem.tintColor = Colours.WebPageColours.yellowish
+        
+        barButtonMenu = UIMenu(title: "Menu", children: [
+            UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up"), handler: shareWebPage),
+            UIAction(title: "Save", image: UIImage(systemName: "tray.full"), handler: save),
+            UIAction(title: "Delete", image: UIImage(systemName: "trash"), handler: selectionHandler)
+        ])
+        rightBarItem.menu = barButtonMenu
+        navigationItem.rightBarButtonItem = rightBarItem
     }
     
-    @objc
-    func shareProduct() {
-        // 
-        let url = URL(string: "https://www.websitecarbon.com/website/instagram-com/")!
+    func save(action: UIAction) {
+        presenter.saveButtonDidPressed()
+    }
+    
+    func selectionHandler(action: UIAction) {
+        presenter.deleteButtonDidPressed()
+    }
+    
+    func shareWebPage(action: UIAction) {
+        //
+        let url = URL(string: "https://www.websitecarbon.com/website/instagram.com/")!
         let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         activityVC.title = "Instagram"
         activityVC.excludedActivityTypes = [.airDrop]
-        
         self.present(activityVC, animated: true)
-    }
-    
-    
-    func selectionHandler(action: UIAction) {
-        //        notesView.collectionView.performBatchUpdates {
-        //            notesView.collectionView.isEditing = true
-        //            notesViewModel.notes.remove(at: 0)
-        //            notesView.collectionView.deleteItems(at: [IndexPath(row: 0, section: 0)])
-        //           // notesViewModel.deleteNote(notes: )
-        //            notesView.collectionView.endEditing(true)
-        //        }
-        
     }
 }

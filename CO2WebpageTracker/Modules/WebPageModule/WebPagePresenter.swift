@@ -12,6 +12,8 @@ protocol IWebPagePresenter: AnyObject {
     func getSectionCount() -> Int
     func getRowCountInSection(at section: Int) -> Int
     func rowForCell(tableView: UITableView, at index: IndexPath) -> UITableViewCell
+    func deleteButtonDidPressed()
+    func saveButtonDidPressed()
 }
 
 final class WebPagePresenter {
@@ -20,6 +22,7 @@ final class WebPagePresenter {
     private var dataService: IDataService
     private var viewData: WebPageViewData?
     private let webPageId: UUID?
+    private var values: [Double] = Array(repeating: 1, count: 20) // Example data
     
     init(coordinator: Coordinator?, dataService: IDataService, id: UUID?) {
         self.dataService = dataService
@@ -39,6 +42,18 @@ extension WebPagePresenter {
 }
 
 extension WebPagePresenter: IWebPagePresenter {
+    func saveButtonDidPressed() {
+        guard let viewData else { return }
+        dataService.add(webPage: viewData)
+        
+    }
+    
+    func deleteButtonDidPressed() {
+        guard let webPageId else { return }
+        dataService.deleteWebPage(with: webPageId)
+      // coordinator.parent.dismiss
+    }
+    
 
     func getSectionCount() -> Int {
         WebPageSection.allCases.count
@@ -94,14 +109,27 @@ private extension WebPagePresenter {
                 return UITableViewCell()
             }
             cell.update(with: String(viewData.energy))
+            cell.delegate = self
             return cell
             
         case .renewable:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RenewableCell.reuseIdentifier, for: indexPath) as? RenewableCell else {
                 return UITableViewCell()
             }
+            
             cell.update(with: viewData.co2PerPageviewDescription, energyType: viewData.greenDescription)
             return cell
         }
     }
+}
+
+extension WebPagePresenter: EnergyWasteTypeCellDelegate {
+    func stepperValueChanged(to value: Double, in cell: EnergyWasteTypeCell) {
+     stepperValueChanged(to: value, at: IndexPath(row: 0, section: 2))
+
+    }
+    
+    func stepperValueChanged(to value: Double, at indexPath: IndexPath) {
+          values[indexPath.row] = value
+      }
 }

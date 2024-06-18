@@ -8,7 +8,7 @@
 import Foundation
 
 // energy == over a year, with 1 monthly page views, this web page produces
-#warning("")
+#warning("private set??")
 struct WebPageViewData {
     let id: UUID
     let url: String
@@ -25,7 +25,7 @@ struct WebPageViewData {
     }
     
     var scaleDescription: [String: [String: Any]]? {
-        return DescriptionConstructor.shared.getRatingDescription()
+        return DescriptionConstructor.shared.getScaleRating()
     }
     
     var letter: String {

@@ -8,19 +8,19 @@
 import Foundation
 import UIKit
 
-final class WebPageListCollectionViewCell: UICollectionViewCell {
+final class WebPageListTableViewCell: UITableViewCell {
     
     private let spacing: CGFloat = 16
     private let inset: CGFloat = 8
     
     static var reuseIdentifier: String {
-        return String(describing: WebPageListCollectionViewCell.self)
+        return String(describing: WebPageListTableViewCell.self)
     }
 
     // MARK: - Inits
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCell()
     }
     
@@ -93,7 +93,7 @@ final class WebPageListCollectionViewCell: UICollectionViewCell {
 
 // MARK: - Setup methods
 
-private extension WebPageListCollectionViewCell {
+private extension WebPageListTableViewCell {
     func setupCell() {
         layer.cornerRadius = 10
         backgroundColor = .systemBackground

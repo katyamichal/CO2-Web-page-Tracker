@@ -41,19 +41,19 @@ struct DescriptionConstructor {
         }
     }
     
-    func getRatingDescription() -> [String: [String: Any]]? {
+    func getScaleRating() -> [String: [String: Any]]? {
         return (co2Description?["scale"] as? [String: [String: Any]]? ?? nil)
     }
     
     func getRatingLetter(with letter: String) -> String? {
-        let dict = getRatingDescription()
+        let dict = getScaleRating()
         let letterDiscription = dict?[letter] as? [String: Any]
         let colorValue = letterDiscription?["color"] as? String
         return colorValue
     }
     
     func getRatingDescription(with letter: String) -> String {
-        let dict = getRatingDescription()
+        let dict = getScaleRating()
         let letterDiscription = dict?[letter] as? [String: Any]
         let description = letterDiscription?["description"] as? String
         guard let description else { return "There is no description"}

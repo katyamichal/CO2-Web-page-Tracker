@@ -25,53 +25,32 @@ final class WebPageListView: UIView {
     }
     
     // MARK: - UI Element
-    lazy var collectionView: UICollectionView = {
-        let collection = UICollectionView(frame: .zero, collectionViewLayout: createCollectionLayout())
-        collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.backgroundColor = .clear
-        collection.showsVerticalScrollIndicator = false
-        collection.register(WebPageListCollectionViewCell.self, forCellWithReuseIdentifier: WebPageListCollectionViewCell.reuseIdentifier)
-        return collection
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = .clear
+        tableView.showsVerticalScrollIndicator = false
+        tableView.register(WebPageListTableViewCell.self, forCellReuseIdentifier: WebPageListTableViewCell.reuseIdentifier)
+        return tableView
     }()
 }
 
 private extension WebPageListView {
     func setupView() {
-        backgroundColor = Colours.WebPageColours.darkBlue
+        backgroundColor = Colours.WebPageColours.khaki
         setupViews()
         setupConstraints()
     }
     
     func setupViews() {
-        addSubview(collectionView)
+        addSubview(tableView)
     }
     
     func setupConstraints() {
-        collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: inset).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor).isActive = true
-        collectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: inset).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor).isActive = true
     }
-    
-    private func createCollectionLayout() -> UICollectionViewLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(180))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
-        let spacing = CGFloat(20)
-        group.interItemSpacing = .fixed(spacing)
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = spacing
-        section.contentInsets = NSDirectionalEdgeInsets(top: spacing, leading: spacing, bottom: 0, trailing: spacing)
-        
-        //        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(60))
-        //        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: NotesView.elementKind, alignment: .top)
-        //
-        //        section.boundarySupplementaryItems = [sectionHeader]
-        
-        let layout = UICollectionViewCompositionalLayout(section: section)
-        return layout
-    }
+
 }

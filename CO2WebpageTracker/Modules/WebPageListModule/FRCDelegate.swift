@@ -9,8 +9,8 @@ import UIKit
 import CoreData
 
 protocol IFetchResultControllerDelegate {
-//    func beginUpdating()
-//    func endUpdating()
+    func beginUpdating()
+    func endUpdating()
     func insertObject(at index: IndexPath, with object: WebPageListViewData)
     func objectDidChange(at index: IndexPath, with object: WebPageListViewData)
     func deleteRow(at index: IndexPath)
@@ -19,13 +19,13 @@ protocol IFetchResultControllerDelegate {
 final class FRCDelegate: NSObject, NSFetchedResultsControllerDelegate {
     var delegate: IFetchResultControllerDelegate?
     
-//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        delegate?.beginUpdating()
-//    }
-//    
-//    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        delegate?.endUpdating()
-//    }
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        delegate?.beginUpdating()
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        delegate?.endUpdating()
+    }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         

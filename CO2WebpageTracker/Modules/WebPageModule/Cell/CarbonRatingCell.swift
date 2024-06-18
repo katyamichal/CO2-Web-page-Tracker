@@ -84,7 +84,14 @@ final class CarbonRatingCell: UITableViewCell {
         return label
     }()
     
-    // charts
+    private lazy var ratingView: GradientRatingView = {
+        let view = GradientRatingView()
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.heightAnchor.constraint(equalToConstant: 40).isActive = true
+//        view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.size.width - 20).isActive = true
+      
+        return view
+    }()
     
     // leart about
     
@@ -127,9 +134,10 @@ private extension CarbonRatingCell {
  
         contentView.addSubview(scaleView)
         scaleView.addSubview(scaleLetterLabel)
-
+    
         stackView.addArrangedSubview(resultForLabel)
         stackView.addArrangedSubview(descriptionLabel)
+        stackView.addArrangedSubview(ratingView)
         stackView.addArrangedSubview(dirtierThatLabel)
         stackView.addArrangedSubview(dateLabel)
     }

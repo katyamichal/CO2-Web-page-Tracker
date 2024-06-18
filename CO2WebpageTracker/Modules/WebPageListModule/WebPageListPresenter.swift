@@ -37,8 +37,8 @@ extension WebPageListPresenter: IWebPageListPresenter {
         viewData.count
     }
     
-    func rowForCell(collectionView: UICollectionView, at index: IndexPath) -> UICollectionViewCell {
-        cell(for: collectionView, at: index)
+    func rowForCell(tableView: UITableView, at index: IndexPath) -> UITableViewCell {
+        cell(for: tableView, at: index)
     }
     
     func updateRow(at index: Int) {
@@ -49,13 +49,22 @@ extension WebPageListPresenter: IWebPageListPresenter {
         true
     }
     
-    func deleteRow(at index: IndexPath) {
-        
+    func actionDidSwipeToDelete(at index: Int) {
+        guard index < viewData.count else { return }
+        dataService.deleteWebPage(with: viewData[index].id)
     }
 }
 
 
 extension WebPageListPresenter: IFetchResultControllerDelegate {
+    func beginUpdating() {
+        view?.beginUpdate()
+    }
+    
+    func endUpdating() {
+        view?.endUpdate()
+    }
+    
     func insertObject(at index: IndexPath, with object: WebPageListViewData) {
         viewData.insert(object, at: index.row)
         view?.insertRow(at: index)
@@ -66,11 +75,12 @@ extension WebPageListPresenter: IFetchResultControllerDelegate {
         view?.update()
     }
         
-    func deleteRow(at index: Int) {
-        //
+    func deleteRow(at index: IndexPath) {
+        viewData.remove(at: index.row)
+        view?.deleteRow(at: index)
     }
 }
-
+#warning("Ask about     self.dataService.performFetch()")
 private extension WebPageListPresenter {
     func getData() {
         dataService.fetchWepPages { [weak self] data in
@@ -83,9 +93,9 @@ private extension WebPageListPresenter {
         }
     }
     
-    func cell(for collectionView: UICollectionView, at indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WebPageListCollectionViewCell.reuseIdentifier, for: indexPath) as? WebPageListCollectionViewCell else {
-            return UICollectionViewCell()
+    func cell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: WebPageListTableViewCell.reuseIdentifier, for: indexPath) as? WebPageListTableViewCell else {
+            return UITableViewCell()
         }
         let data = viewData[indexPath.row]
 

@@ -7,12 +7,11 @@
 
 import UIKit
 protocol IWebPageListView: AnyObject {
-//    func beginUpdate()
-//    func endUpdate()
-    func setupNavigationBar(with title: String)
-    func insertRow(at index: IndexPath)
     func update()
-    func prepareForRequest(with id: UUID)
+    func setupNavigationBar(with title: String)
+    func beginUpdate()
+    func endUpdate()
+    func insertRow(at index: IndexPath)
     func deleteRow(at indexPath: IndexPath)
 }
 
@@ -44,6 +43,7 @@ final class WebPageListViewController: UIViewController {
         presenter.viewDidLoaded(view: self)
         setupTableViewDelegates()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
@@ -51,42 +51,72 @@ final class WebPageListViewController: UIViewController {
 }
 
 extension WebPageListViewController: IWebPageListView {
+    func update() {
+        webPageListView.tableView.reloadData()
+    }
+    
     func setupNavigationBar(with title: String) {
         navigationItem.title = title
     }
     
+    func beginUpdate() {
+        webPageListView.tableView.beginUpdates()
+    }
+    
+    func endUpdate() {
+        webPageListView.tableView.endUpdates()
+    }
+    
     func insertRow(at index: IndexPath) {
-        webPageListView.collectionView.insertItems(at: [index])
-    }
-    
-
-    
-    func update() {
-        webPageListView.collectionView.reloadData()
-    }
-    
-    func prepareForRequest(with id: UUID) {
-        
+        webPageListView.tableView.insertRows(at: [index], with: .fade)
     }
     
     func deleteRow(at indexPath: IndexPath) {
-        
+        webPageListView.tableView.beginUpdates()
+        webPageListView.tableView.deleteRows(at: [indexPath], with: .fade)
+        webPageListView.tableView.endUpdates()
     }
 }
 
-extension WebPageListViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+extension WebPageListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         presenter.showDetailView(at: indexPath.row)
     }
 }
 
-extension WebPageListViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension WebPageListViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         presenter.getRowCountInSection()
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        presenter.rowForCell(collectionView: collectionView, at:indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        presenter.rowForCell(tableView: tableView, at:indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        guard let deleteAction = createDeleteAction(tableView, at: indexPath) else { return nil }
+        let swipe = UISwipeActionsConfiguration(actions: [deleteAction])
+        swipe.performsFirstActionWithFullSwipe = false
+        return swipe
+    }
+    
+    
+    private func createDeleteAction(_ tableView: UITableView, at indexPath: IndexPath) -> UIContextualAction? {
+        let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, _ in
+            self.deleteAction(tableView, at: indexPath)
+        }
+        deleteAction.image = UIImage(systemName: "trash")
+        deleteAction.backgroundColor = Colours.WebPageColours.red
+        return deleteAction
+    }
+    private func deleteAction(_ tableView: UITableView, at indexPath: IndexPath) {
+        presenter.actionDidSwipeToDelete(at: indexPath.row)
     }
 }
 
@@ -94,13 +124,13 @@ extension WebPageListViewController: UICollectionViewDataSource {
 
 private extension WebPageListViewController {
     func setupTableViewDelegates() {
-        webPageListView.collectionView.delegate = self
-        webPageListView.collectionView.dataSource = self
+        webPageListView.tableView.delegate = self
+        webPageListView.tableView.dataSource = self
     }
     
     func setupNavigationBar() {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.tintColor = Colours.WebPageColours.yellow
+        navigationController?.navigationBar.tintColor = Colours.WebPageColours.yellowish
     }
 }

@@ -5,7 +5,6 @@
 //  Created by Catarina Polakowsky on 14.06.2024.
 //
 
-import Foundation
 import CoreData
 
 protocol IDataService: AnyObject {
@@ -15,6 +14,7 @@ protocol IDataService: AnyObject {
     func findDublicate(with webPage: WebPageViewData) -> Bool
     func fetchWepPage(with webPageId: UUID, completionHandler: (WebPageViewData) -> Void)
     func add(webPage: WebPageViewData)
+    func deleteWebPage(with id: UUID)
 }
 
 enum PersistantContainerStorage {

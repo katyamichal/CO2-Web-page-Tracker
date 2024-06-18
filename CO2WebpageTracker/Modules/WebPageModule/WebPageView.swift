@@ -37,7 +37,7 @@ final class WebPageView: UIView {
 
 private extension WebPageView {
     func setupView() {
-        backgroundColor = Colours.WebPageColours.darkBlue
+        backgroundColor = Colours.WebPageColours.khaki
         setupViews()
         setupConstraints()
     }
