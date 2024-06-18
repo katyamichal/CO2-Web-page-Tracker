@@ -10,11 +10,12 @@ import CoreData
 
 protocol IDataService: AnyObject {
     func addFetchDelegate(_ delegate: IFetchResultControllerDelegate)
+    
+    func fetchWepPages(completionHandler: (Result<[WebPageListViewData],CoreDataErrors>) -> Void)
     func performFetch()
-    func fetchWepPages(completionHandler: (Result<[WebPageListViewData],Error>) -> Void)
-    func findDublicate(with webPage: WebPageViewData) -> Bool
     func fetchWepPage(with webPageId: UUID, completionHandler: (WebPageViewData) -> Void)
-    func add(webPage: WebPageViewData)
+    
+    func add(webPage: WebPageViewData, completion: (Result<String, CoreDataErrors>) -> Void)
     func deleteWebPage(with id: UUID)
 }
 
@@ -41,6 +42,7 @@ enum PersistantContainerStorage {
 }
 
 final class DataService: IDataService {
+    
     private let frcDelegate = FRCDelegate()
     private let entityName = "WebPageInfo"
     private let maxPercentage: Int = 100
@@ -68,7 +70,7 @@ final class DataService: IDataService {
         }
     }
     
-    func fetchWepPages(completionHandler: (Result<[WebPageListViewData],Error>) -> Void) {
+    func fetchWepPages(completionHandler: (Result<[WebPageListViewData],CoreDataErrors>) -> Void) {
         let context = PersistantContainerStorage.persistentContainer.viewContext
         let sortDescriptor = NSSortDescriptor(keyPath: \WebPageInfo.date, ascending: true)
         
@@ -82,14 +84,12 @@ final class DataService: IDataService {
             }))
         } catch {
             let error = error as NSError
-            completionHandler(.failure(error))
-            print("Error: ", error.localizedDescription)
+            completionHandler(.failure(.fetchError))
         }
     }
     
     func fetchWepPage(with webPageId: UUID, completionHandler: (WebPageViewData) -> Void) {
         guard let webPage = getWebPage(with: webPageId) else { return }
-        print(webPage.cleanerThan)
         completionHandler(WebPageViewData(
             id: webPage.identifier,
             url: webPage.url,
@@ -100,31 +100,29 @@ final class DataService: IDataService {
             gramForVisit: webPage.gramForVisit,
             energy: webPage.energy
         ))
-        
     }
     // MARK: - Add
     
-    
     func findDublicate(with webPage: WebPageViewData) -> Bool {
         let request = WebPageInfo.fetchRequest()
-        request.predicate = NSPredicate(format: "identifier = %@", webPage.id as CVarArg)
+        request.predicate = NSPredicate(format: "url = %@", webPage.url)
         let context = PersistantContainerStorage.persistentContainer.viewContext
+        var isDublicated: Bool = false
         do {
             let fetchResult = try context.fetch(request)
             if fetchResult.count > 0 {
                 assert(fetchResult.count == 1, "Dublicate has been found")
-                return true
+                isDublicated = true
             }
         } catch {
-            print(error)
+            print("error to find Dublicate")
         }
-        return false
+        return isDublicated
     }
 
-    func add(webPage: WebPageViewData) {
+    func add(webPage: WebPageViewData, completion: (Result<String, CoreDataErrors>) -> Void) {
         if findDublicate(with: webPage) == false {
             let context = PersistantContainerStorage.persistentContainer.viewContext
-//            print(webPage.id)
             let newWebPage = WebPageInfo(context: context)
             newWebPage.identifier = webPage.id
             newWebPage.url = webPage.url
@@ -134,10 +132,10 @@ final class DataService: IDataService {
             newWebPage.gramForVisit = webPage.gramForVisit
             newWebPage.cleanerThan = webPage.cleanerThan
             newWebPage.energy = webPage.energy
-            
             PersistantContainerStorage.saveContext()
+            completion(.success("We have added web page to the list"))
         } else {
-            print("Dublicated")
+            completion(.failure(.dublicate))
         }
     }
     

@@ -41,6 +41,7 @@ final class WebPageListTableViewCell: UITableViewCell {
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.backgroundColor = .systemBackground
+        stackView.layer.cornerRadius = 10
         return stackView
     }()
 
@@ -49,7 +50,6 @@ final class WebPageListTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
-        label.textColor = .label
         label.font = Fonts.Titles.subtitle
         label.textAlignment = .center
         return label
@@ -60,9 +60,7 @@ final class WebPageListTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
-        label.textColor = .label
         label.font = Fonts.Body.defaultFont
-        label.textAlignment = .center
         return label
     }()
     
@@ -70,7 +68,6 @@ final class WebPageListTableViewCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = Fonts.Body.secondaryFont
-        label.textColor = .label
         return label
     }()
     
@@ -96,7 +93,7 @@ final class WebPageListTableViewCell: UITableViewCell {
 
 private extension WebPageListTableViewCell {
     func setupCell() {
-        layer.cornerRadius = 10
+        selectionStyle = .none
         backgroundColor = .clear
         setupViews()
         setupConstraints()
@@ -110,9 +107,9 @@ private extension WebPageListTableViewCell {
     }
     
     func setupConstraints() {
-        webPageStackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        webPageStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: spacing).isActive = true
         webPageStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        webPageStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        webPageStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        webPageStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: spacing).isActive = true
+        webPageStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -spacing).isActive = true
     }
 }

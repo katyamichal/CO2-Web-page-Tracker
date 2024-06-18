@@ -17,13 +17,16 @@ protocol IWebPagePresenter: AnyObject {
 }
 
 final class WebPagePresenter {
+    
     private weak var coordinator: Coordinator?
     private weak var view: IWebPageView?
     private var dataService: IDataService
     private var viewData: WebPageViewData?
+    
     private let webPageId: UUID?
     private let stepperDelegate = StepperDelegate()
     private var stepperValue: Int = 1
+    private lazy var dataMapper = DataMapper(viewData: viewData)
     
     init(coordinator: Coordinator?, dataService: IDataService, id: UUID?) {
         self.dataService = dataService
@@ -50,8 +53,14 @@ extension WebPagePresenter {
 extension WebPagePresenter: IWebPagePresenter {
     func saveButtonDidPressed() {
         guard let viewData else { return }
-        dataService.add(webPage: viewData)
-        
+        dataService.add(webPage: viewData) { [weak self] result in
+            switch result {
+            case .success(let message):
+                print(message)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     func deleteButtonDidPressed() {
@@ -105,7 +114,7 @@ private extension WebPagePresenter {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CarbonRatingCell.reuseIdentifier, for: indexPath) as? CarbonRatingCell else {
                 return UITableViewCell()
             }
-            cell.update(with: ratingColor, with: viewData.ratingLetter, description: ratingDescription, url: urlDescription, cleanerThan: cleanerThanDescription, date: "20.04.34")
+            cell.update(with: dataMapper.ratingColor, with: viewData.ratingLetter, description: dataMapper.ratingDescription, url: dataMapper.urlDescription, cleanerThan: dataMapper.cleanerThanDescription, date: dataMapper.lastTestDate)
             
             return cell
             
@@ -113,23 +122,19 @@ private extension WebPagePresenter {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RenewableCell.reuseIdentifier, for: indexPath) as? RenewableCell else {
                 return UITableViewCell()
             }
-            cell.update(with: co2PerPageviewDescription, energyType: greenDescription)
+            cell.update(with: dataMapper.co2PerPageviewDescription, energyType: dataMapper.greenDescription)
             return cell
             
         case .energyType:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: EnergyWasteTypeCell.reuseIdentifier, for: indexPath) as? EnergyWasteTypeCell else {
                 return UITableViewCell()
             }
-            cell.update(with: energy, stepperValue: stepperValue)
+            cell.update(with: dataMapper.energy, stepperValue: dataMapper.stepperValue)
             cell.configureStepperDelgate(with: stepperDelegate)
             return cell
         }
     }
-}
-
-// MARK: - Configure Descriptions for Table View
-
-private extension WebPagePresenter {
+    
     func convertGreenToString(_ isGreen: BoolOrString) -> String {
         switch isGreen {
         case .bool(let status):
@@ -143,53 +148,10 @@ private extension WebPagePresenter {
             return str
         }
     }
-    
-    var urlDescription: String {
-        guard let viewData else { return "No Data" }
-        return (DescriptionConstructor.shared.getDescription(for: "url") as? String ?? "") + " " + viewData.url
-    }
-    
-    var scaleDescription: [String: [String: Any]]? {
-        return DescriptionConstructor.shared.getScaleRating()
-    }
-    
-    var greenDescription: String {
-        guard let viewData else { return "No Data" }
-        return DescriptionConstructor.shared.getGreenDescription(isGreen: viewData.isGreen)
-    }
-    
-    var cleanerThanDescription: String {
-        guard let viewData else { return "No Data" }
-        return ((DescriptionConstructor.shared.getDescription(for: "cleanerThan") as? String ?? "") + "\(Int(viewData.cleanerThan * 100))" + "%")
-    }
-    
-    var co2PerPageviewDescription: String {
-        guard let viewData else { return "No Data" }
-        return (String(format: "%.2f", viewData.energy)) + " " + (DescriptionConstructor.shared.getDescription(for: "co2PerPageview") as? String ?? "").lowercased()
-    }
-    
-    var ratingColor: UIColor {
-        guard
-            let viewData,
-            let letterColour = DescriptionConstructor.shared.getRatingLetter(with: viewData.ratingLetter)?.lowercased(),
-            let colour = UIColor.init(hex: letterColour)
-        else { return UIColor.gray }
-        return colour
-    }
-    
-    var ratingDescription: String {
-        guard let viewData else { return "No Data" }
-        return DescriptionConstructor.shared.getRatingDescription(with: viewData.ratingLetter)
-    }
-    var energy: String {
-        guard let viewData else { return "No Data" }
-        return String(format: "%.2f", (viewData.energy * Double(stepperValue)))
-    }
 }
 
 extension WebPagePresenter: IStepperDelegate {
     func didChanged(with value: Int) {
-//        print("\(value)")
         stepperValue = value
         view?.updateEnergyWasteTypeCell()
     }

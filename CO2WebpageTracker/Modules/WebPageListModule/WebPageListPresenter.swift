@@ -18,6 +18,13 @@ final class WebPageListPresenter {
         self.coordinator = coordinator
         self.dataService = dataService
     }
+    
+    private lazy var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .medium
+        return dateFormatter
+    }()
 }
 
 extension WebPageListPresenter: IWebPageListPresenter {
@@ -101,8 +108,8 @@ private extension WebPageListPresenter {
             return UITableViewCell()
         }
         let data = viewData[indexPath.row]
-
-        cell.updateLabels(url: data.url, rating: data.rating, date: "12.05.23")
+        let testDate = dateFormatter.string(from: data.date)
+        cell.updateLabels(url: data.url, rating: data.rating, date: testDate)
         return cell
     }
 }

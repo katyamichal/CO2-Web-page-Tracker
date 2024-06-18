@@ -55,6 +55,8 @@
 		4EAC848B2C21A3A100F6CD8A /* WebPageInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC84892C21A3A100F6CD8A /* WebPageInfo+CoreDataClass.swift */; };
 		4EAC848C2C21A3A100F6CD8A /* WebPageInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC848A2C21A3A100F6CD8A /* WebPageInfo+CoreDataProperties.swift */; };
 		4EAC848E2C21C2F800F6CD8A /* StepperDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC848D2C21C2F800F6CD8A /* StepperDelegate.swift */; };
+		4EAC84912C21FC7300F6CD8A /* CoreDataErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC84902C21FC7300F6CD8A /* CoreDataErrors.swift */; };
+		4EAC84932C2201A400F6CD8A /* DataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC84922C2201A400F6CD8A /* DataMapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,6 +111,8 @@
 		4EAC84892C21A3A100F6CD8A /* WebPageInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebPageInfo+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		4EAC848A2C21A3A100F6CD8A /* WebPageInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebPageInfo+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4EAC848D2C21C2F800F6CD8A /* StepperDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperDelegate.swift; sourceTree = "<group>"; };
+		4EAC84902C21FC7300F6CD8A /* CoreDataErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataErrors.swift; sourceTree = "<group>"; };
+		4EAC84922C2201A400F6CD8A /* DataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,6 +264,7 @@
 				4EAC848A2C21A3A100F6CD8A /* WebPageInfo+CoreDataProperties.swift */,
 				4EABD5E72C1C25CB0089DF1D /* DataService.swift */,
 				4EABD5B32C182C210089DF1D /* CO2WebpageTracker.xcdatamodeld */,
+				4EAC84902C21FC7300F6CD8A /* CoreDataErrors.swift */,
 			);
 			path = DataService;
 			sourceTree = "<group>";
@@ -308,6 +313,7 @@
 				4EABD5FA2C1C93050089DF1D /* WebPageViewData.swift */,
 				4EABD5FC2C1C95240089DF1D /* WebPageSection.swift */,
 				4E34E03F2C1EEE66004D15A5 /* Cell */,
+				4EAC84922C2201A400F6CD8A /* DataMapper.swift */,
 			);
 			path = WebPageModule;
 			sourceTree = "<group>";
@@ -411,8 +417,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EABD5FB2C1C93050089DF1D /* WebPageViewData.swift in Sources */,
+				4EAC84912C21FC7300F6CD8A /* CoreDataErrors.swift in Sources */,
 				4EABD5F22C1C8CB40089DF1D /* WebPageViewController.swift in Sources */,
 				4EABD5F72C1C8F8F0089DF1D /* CarbonRatingCell.swift in Sources */,
+				4EAC84932C2201A400F6CD8A /* DataMapper.swift in Sources */,
 				4EAC848B2C21A3A100F6CD8A /* WebPageInfo+CoreDataClass.swift in Sources */,
 				4EABD5CD2C1AD6F10089DF1D /* CorboneDTO.swift in Sources */,
 				4EAC84822C20995F00F6CD8A /* UIFont + CustomFont.swift in Sources */,
