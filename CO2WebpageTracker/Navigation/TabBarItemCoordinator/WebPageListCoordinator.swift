@@ -31,7 +31,11 @@ final class WebPageListCoordinator: Coordinator {
         webPageCoordinator.parentCoordinator = self
         childCoordinators.append(webPageCoordinator)
         webPageCoordinator.start()
-        
+    }
+    
+    func dismiss(with coordinator: Coordinator?) {
+//        childCoordinators.removeAll(where: {$0 == coordinator})
+        navigationController.dismiss(animated: true)
     }
 }
 

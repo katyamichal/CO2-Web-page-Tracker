@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22222" systemVersion="23D60" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="WebPageInfo" representedClassName="WebPageInfo" syncable="YES">
-        <attribute name="cleanerThan" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="cleanerThan" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="energy" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="gramForVisit" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="gramForVisit" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="identifier" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="isGreen" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isGreen" attributeType="String"/>
         <attribute name="rating" attributeType="String"/>
         <attribute name="url" attributeType="String"/>
     </entity>

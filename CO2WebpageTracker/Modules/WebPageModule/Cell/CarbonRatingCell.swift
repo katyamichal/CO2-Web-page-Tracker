@@ -76,7 +76,7 @@ final class CarbonRatingCell: UITableViewCell {
         return label
     }()
     
-    private lazy var dirtierThatLabel: UILabel = {
+    private lazy var cleanerThanLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = Fonts.Body.descriptionFont
@@ -107,16 +107,16 @@ final class CarbonRatingCell: UITableViewCell {
         scaleLetterLabel.text = nil
         resultForLabel.text = nil
         descriptionLabel.text = nil
-        dirtierThatLabel.text = nil
+        cleanerThanLabel.text = nil
         super.prepareForReuse()
     }
     
-    func update(with colour: UIColor, with letter: String, description: String, url: String, diertierThan: String, date: String) {
+    func update(with colour: UIColor, with letter: String, description: String, url: String, cleanerThan: String, date: String) {
         scaleView.backgroundColor = colour
         resultForLabel.text = url
         scaleLetterLabel.text = letter
         descriptionLabel.text = description
-        dirtierThatLabel.text = "This is dirtier then \(diertierThan) of all web pages globally"
+        cleanerThanLabel.text = "This is cleaner then \(cleanerThan) of all web pages globally"
         dateLabel.text = "This page was tested on \(date)"
     }
 }
@@ -138,7 +138,7 @@ private extension CarbonRatingCell {
         stackView.addArrangedSubview(resultForLabel)
         stackView.addArrangedSubview(descriptionLabel)
         stackView.addArrangedSubview(ratingView)
-        stackView.addArrangedSubview(dirtierThatLabel)
+        stackView.addArrangedSubview(cleanerThanLabel)
         stackView.addArrangedSubview(dateLabel)
     }
     

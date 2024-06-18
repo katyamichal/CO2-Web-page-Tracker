@@ -5,6 +5,7 @@
 //  Created by Catarina Polakowsky on 14.06.2024.
 //
 
+
 import CoreData
 
 protocol IDataService: AnyObject {
@@ -93,7 +94,7 @@ final class DataService: IDataService {
             url: webPage.url,
             date: webPage.date,
             ratingLetter: webPage.rating,
-            diertierThan: Int(webPage.cleanerThan),
+            cleanerThan: webPage.cleanerThan,
             isGreen: webPage.isGreen,
             gramForVisit: webPage.gramForVisit,
             energy: webPage.energy
@@ -130,7 +131,7 @@ final class DataService: IDataService {
             newWebPage.rating = webPage.ratingLetter
             newWebPage.isGreen = webPage.isGreen
             newWebPage.gramForVisit = webPage.gramForVisit
-            newWebPage.cleanerThan = Int64((maxPercentage - webPage.diertierThan))
+            newWebPage.cleanerThan = webPage.cleanerThan
             newWebPage.energy = webPage.energy
             
             PersistantContainerStorage.saveContext()

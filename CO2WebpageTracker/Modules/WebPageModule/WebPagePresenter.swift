@@ -28,17 +28,22 @@ final class WebPagePresenter {
         self.dataService = dataService
         self.webPageId = id
         self.coordinator = coordinator
-//        dataService.add(webPage: WebPageViewData(url: "www.apple.com", date: Date(), diertierThan: 60, ratingLetter: "D", isGreen: false, gramForVisit: 0.3, energy: 0.1))
     }
 }
 
 extension WebPagePresenter {
     convenience init(coordinator: Coordinator, dataService: IDataService, data: WebsiteData) {
         self.init(coordinator: coordinator, dataService: dataService, id: nil)
-
-        self.viewData = WebPageViewData(url: data.url, date: Date(), diertierThan: Int(data.cleanerThan), ratingLetter: data.rating, isGreen: data.green, gramForVisit: Float(data.statistics.energy), energy: data.statistics.co2.renewable.grams
-        )
+        self.viewData = WebPageViewData(
+            url: data.url,
+            date: Date(),
+            cleanerThan: data.cleanerThan,
+            ratingLetter: data.rating,
+            isGreen: convertGreenToString(data.green),
+            gramForVisit: Double(data.statistics.energy),
+            energy: data.statistics.co2.renewable.grams)
     }
+   
 }
 
 extension WebPagePresenter: IWebPagePresenter {
@@ -51,21 +56,21 @@ extension WebPagePresenter: IWebPagePresenter {
     func deleteButtonDidPressed() {
         guard let webPageId else { return }
         dataService.deleteWebPage(with: webPageId)
-      // coordinator.parent.dismiss
+        (coordinator as? WebPageListCoordinator)?.dismiss(with: coordinator)
     }
     
-
+    
     func getSectionCount() -> Int {
         WebPageSection.allCases.count
-       }
+    }
     
     func getRowCountInSection(at section: Int) -> Int {
         let section = WebPageSection.allCases[section]
-         guard let viewData else { return 0 }
-         switch section {
-         case .energyType, .carbonRating, .renewable:
-             return 1
-         }
+        guard let viewData else { return 0 }
+        switch section {
+        case .energyType, .carbonRating, .renewable:
+            return 1
+        }
     }
     
     func rowForCell(tableView: UITableView, at index: IndexPath) -> UITableViewCell {
@@ -99,8 +104,7 @@ private extension WebPagePresenter {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CarbonRatingCell.reuseIdentifier, for: indexPath) as? CarbonRatingCell else {
                 return UITableViewCell()
             }
-            let color = UIColor.init(hex: viewData.ratingColor) ?? UIColor.gray
-            cell.update(with: color, with: viewData.ratingLetter, description: viewData.ratingDescription, url: viewData.urlDescription, diertierThan: String(describing: viewData.diertierThan), date: "20.04.34")
+            cell.update(with: ratingColor, with: viewData.ratingLetter, description: ratingDescription, url: urlDescription, cleanerThan: cleanerThanDescription, date: "20.04.34")
             
             return cell
             
@@ -117,9 +121,65 @@ private extension WebPagePresenter {
                 return UITableViewCell()
             }
             
-            cell.update(with: viewData.co2PerPageviewDescription, energyType: viewData.greenDescription)
+            cell.update(with: co2PerPageviewDescription, energyType: greenDescription)
             return cell
         }
+    }
+}
+
+// MARK: - Configure Descriptions for Table View
+
+private extension WebPagePresenter {
+    func convertGreenToString(_ isGreen: BoolOrString) -> String {
+        switch isGreen {
+        case .bool(let status):
+            switch status {
+            case true:
+                return "true"
+            case false:
+                return "false"
+            }
+        case .string(let str):
+            return str
+        }
+    }
+    
+    var urlDescription: String {
+        guard let viewData else { return "No Data" }
+        return (DescriptionConstructor.shared.getDescription(for: "url") as? String ?? "") + " " + viewData.url
+    }
+    
+    var scaleDescription: [String: [String: Any]]? {
+        return DescriptionConstructor.shared.getScaleRating()
+    }
+    
+    var greenDescription: String {
+        guard let viewData else { return "No Data" }
+        return DescriptionConstructor.shared.getGreenDescription(isGreen: viewData.isGreen)
+    }
+    
+    var cleanerThanDescription: String {
+        guard let viewData else { return "No Data" }
+        return ((DescriptionConstructor.shared.getDescription(for: "cleanerThan") as? String ?? "") + "\(Int(viewData.cleanerThan * 100))" + "%")
+    }
+    
+    var co2PerPageviewDescription: String {
+        guard let viewData else { return "No Data" }
+        return (String(format: "%.2f", viewData.energy)) + " " + (DescriptionConstructor.shared.getDescription(for: "co2PerPageview") as? String ?? "").lowercased()
+    }
+    
+    var ratingColor: UIColor {
+        guard
+            let viewData,
+            let letterColour = DescriptionConstructor.shared.getRatingLetter(with: viewData.ratingLetter)?.lowercased(),
+            let colour = UIColor.init(hex: letterColour)
+        else { return UIColor.gray }
+        return colour
+    }
+    
+    var ratingDescription: String {
+        guard let viewData else { return "No Data" }
+        return DescriptionConstructor.shared.getRatingDescription(with: viewData.ratingLetter)
     }
 }
 

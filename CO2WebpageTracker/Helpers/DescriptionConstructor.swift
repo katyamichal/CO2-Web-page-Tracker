@@ -27,18 +27,11 @@ struct DescriptionConstructor {
         return co2Description?[key]
     }
     
-    func getGreenDescription(isGreen: Bool?) -> String? {
+    func getGreenDescription(isGreen: String) -> String {
         guard let greenDescriptions = co2Description?["green"] as? [String: String] else {
-            return nil
+            return "unknown"
         }
-        switch isGreen {
-        case true:
-            return greenDescriptions["true"]
-        case false:
-            return greenDescriptions["false"]
-        default:
-            return greenDescriptions["unknown"]
-        }
+        return greenDescriptions[isGreen] ?? "unknown green status"
     }
     
     func getScaleRating() -> [String: [String: Any]]? {

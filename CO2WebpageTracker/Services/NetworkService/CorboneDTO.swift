@@ -10,21 +10,30 @@ import Foundation
 // MARK: - WebsiteData
 struct WebsiteData: Codable {
     let url: String
-    let green: Bool
+    let green: BoolOrString
     let bytes: Int
     let cleanerThan: Double
     let rating: String
     let statistics: WebsiteStatistics
-//    let timestamp: TimeInterval
-
 }
-//
-//
-//enum GreenState: Codable {
-//    case `false`
-//    case `true`
-//    case unknown
-//}
+
+enum BoolOrString: Codable {
+    case bool(Bool)
+    case string(String)
+}
+
+extension BoolOrString {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let boolValue = try? container.decode(Bool.self) {
+            self = .bool(boolValue)
+        } else if let stringValue = try? container.decode(String.self) {
+            self = .string(stringValue)
+        } else {
+            throw DecodingError.typeMismatch(BoolOrString.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Expected Bool or String"))
+        }
+    }
+}
 
 // MARK: - WebsiteStatistics
 struct WebsiteStatistics: Codable {
