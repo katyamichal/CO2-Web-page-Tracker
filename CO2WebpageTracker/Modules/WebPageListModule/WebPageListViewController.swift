@@ -124,7 +124,7 @@ private extension WebPageListViewController {
         let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, _ in
             self.deleteAction(tableView, at: indexPath)
         }
-        deleteAction.image = UIImage(systemName: Constants.UIElementNameStrings.deleteActionImage)
+        deleteAction.image = UIImage(systemName: Constants.UIElementSystemNames.deleteActionImage)
         deleteAction.backgroundColor = Colours.WebPageColours.red
         return deleteAction
     }

@@ -238,9 +238,9 @@
 			isa = PBXGroup;
 			children = (
 				4EABD5DC2C1C1DAE0089DF1D /* SearchWebPageViewController.swift */,
+				4EABD5DE2C1C1E130089DF1D /* WebPageSearchView.swift */,
 				4EABD5E42C1C23D60089DF1D /* SearchViewData.swift */,
 				4EABD5E22C1C23510089DF1D /* SearchWebPagePresenter.swift */,
-				4EABD5DE2C1C1E130089DF1D /* WebPageSearchView.swift */,
 				4EABD5EA2C1C26D10089DF1D /* Subviews */,
 			);
 			path = SearchModule;

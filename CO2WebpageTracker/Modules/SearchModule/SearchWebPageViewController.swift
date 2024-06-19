@@ -43,7 +43,7 @@ final  class SearchWebPageViewController: UIViewController {
         super.viewDidLoad()
         presenter.viewDidLoaded(view: self)
         setupKeyboardBehavior()
-        setupSearchBar()
+        setupSearchTextField()
         setupActions()
     }
 }
@@ -90,6 +90,7 @@ private extension SearchWebPageViewController {
     func setupActions() {
         setupTryAgainAction()
         setupCalculateAction()
+        setupPauseLoaingButton()
     }
     
     func setupTryAgainAction() {
@@ -100,7 +101,11 @@ private extension SearchWebPageViewController {
         searchView.setupActionForCalculateButton(target: self, action: #selector(calculate))
     }
     
-    func setupSearchBar() {
+    func setupPauseLoaingButton() {
+        searchView.setupActionForPauseButton(target: self, action: #selector(pauseLoading))
+    }
+    
+    func setupSearchTextField() {
         searchView.searchView.searchTextField.becomeFirstResponder()
         searchView.searchView.searchTextField.delegate = self
     }
@@ -123,6 +128,11 @@ private extension SearchWebPageViewController {
         }
     }
     
+    @objc
+    func pauseLoading() {
+        presenter.changeLoadingStatus()
+    }
+    
     func setupKeyboardBehavior() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHandling), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHandling), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -143,8 +153,8 @@ private extension SearchWebPageViewController {
         }
         let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? 0.25
         UIView.animate(withDuration: animationDuration) {
-            self.searchView.scrollView.contentInset = adjustedContentInset
-            self.searchView.scrollView.scrollIndicatorInsets = adjustedContentInset
+//            self.searchView.searchStackView.contentInset = adjustedContentInset
+//            self.searchView.searchStackView.scrollIndicatorInsets = adjustedContentInset
         }
     }
 }

@@ -17,12 +17,15 @@ enum Constants {
         static let searchBarPlaceholder = "Web Page URL"
     }
     
-    enum UIElementNameStrings {
+    enum UIElementSystemNames {
         static let deleteActionImage = "trash"
         static let pausedImage = "pause.circle"
         static let activeImage = "xmark.circle"
     }
-    
+    enum UIElementNames {
+        static let calculateButton = "Calculate"
+    }
+     
     enum SearchLoadingMessage {
         static let noInternetConnection = "Poor Internet Connection. Please check your network settings and try again."
         static let waitForLoad = "We're just loading your result..."

@@ -18,9 +18,9 @@ enum SearchStatus {
 
 enum LoadingStatus: Equatable, Hashable {
     case nonActive
-    case loading(message: String, image: UIImage?)
+    case loading(message: String)
     case completed(url: String)
-    case paused(image: UIImage?)
+    case paused
     case failed(message: String)
 }
 
