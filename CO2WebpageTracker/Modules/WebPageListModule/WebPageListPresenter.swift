@@ -58,7 +58,7 @@ extension WebPageListPresenter: IWebPageListPresenter {
     
     func actionDidSwipeToDelete(at index: Int) {
         guard index < viewData.count else { return }
-        dataService.deleteWebPage(with: viewData[index].id)
+        dataService.deleteWebPage(url: viewData[index].url)
     }
 }
 
@@ -101,6 +101,7 @@ private extension WebPageListPresenter {
             }
             self?.view?.update()
         }
+        print(viewData.count)
     }
     
     func cell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {

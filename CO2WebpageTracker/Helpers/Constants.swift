@@ -31,6 +31,10 @@ enum Constants {
         static let serverError = "Our server is currently unavailable. Please try again later."
     }
     
+    enum CoreDataMessage {
+        static let fetchError = "Sorry, we couldn't get your web pages, try later."
+    }
+    
     enum LabelPlaceHolders {
         static let searchLabel1 = "Estimate your web page carbon footprint:"
         static let searchLabel2 = "Your web page address"
@@ -38,11 +42,14 @@ enum Constants {
     
     enum AlerMessagesType {
         case emptyTextField
+        case webPageDublicated
         
         var title: String {
             switch self {
             case .emptyTextField:
                 return "The text field is empty"
+            case .webPageDublicated:
+                return "It seems that you've already had this web page in your list"
             }
         }
         
@@ -50,10 +57,26 @@ enum Constants {
             switch self {
             case .emptyTextField:
                 return "Please enter a URL"
+            case .webPageDublicated:
+                return "Do you want to resave it?"
             }
         }
-        var buttonTitle: String {
-            "Ok"
+        var cancelButtonTitle: String {
+            switch self {
+            case .emptyTextField:
+                return "OK"
+            case .webPageDublicated:
+                return "Leave"
+            }
+        }
+        
+        var actionButtonTitle: String {
+            switch self {
+            case .webPageDublicated:
+                return "Resave"
+            case .emptyTextField:
+                return ""
+            }
         }
     }
 }

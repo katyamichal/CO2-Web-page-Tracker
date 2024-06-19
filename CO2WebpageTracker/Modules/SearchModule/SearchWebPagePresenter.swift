@@ -102,5 +102,4 @@ private extension SearchWebPagePresenter {
             return Constants.SearchLoadingMessage.serverError
         }
     }
-    
 }

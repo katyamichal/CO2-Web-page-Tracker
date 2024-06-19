@@ -10,17 +10,17 @@ import UIKit
 enum Colours {
     
     enum WebPageColours {
-//        static let darkBlue = UIColor.rgba(red: 10, green: 11, blue: 122, alpha: 1)
-//        static let red = UIColor.rgba(red: 222, green: 135, blue: 134, alpha: 1)
-//        static let blue = UIColor.rgba(red: 21, green: 26, blue: 210, alpha: 1)
-//        static let defaultColour = UIColor.rgba(red: 240, green: 248, blue: 255, alpha: 1)
-//        static let yellow = UIColor.rgba(red: 255, green: 236, blue: 41, alpha: 1)
-        
-        static let khaki = UIColor.rgba(red: 89, green: 126, blue: 82, alpha: 1)
+        static let darkBlue = UIColor.rgba(red: 10, green: 11, blue: 122, alpha: 1)
         static let red = UIColor.rgba(red: 222, green: 135, blue: 134, alpha: 1)
-        static let blue = UIColor.rgba(red: 48, green: 129, blue: 208, alpha: 1)
-        static let defaultColour = UIColor.rgba(red: 255, green: 255, blue: 236, alpha: 1)
-        static let yellowish = UIColor.rgba(red: 183, green: 196, blue: 182, alpha: 1)
+        static let blue = UIColor.rgba(red: 13, green: 187, blue: 238, alpha: 1)
+        static let defaultColour = UIColor.rgba(red: 240, green: 248, blue: 255, alpha: 1)
+        static let green = UIColor.rgba(red: 0, green: 194, blue: 69, alpha: 1)
+//
+//        static let khaki = UIColor.rgba(red: 89, green: 126, blue: 82, alpha: 1)
+//        static let red = UIColor.rgba(red: 222, green: 135, blue: 134, alpha: 1)
+//        static let blue = UIColor.rgba(red: 48, green: 129, blue: 208, alpha: 1)
+//        static let defaultColour = UIColor.rgba(red: 255, green: 255, blue: 236, alpha: 1)
+//        static let yellowish = UIColor.rgba(red: 183, green: 196, blue: 182, alpha: 1)
     }
     
     enum BackgroundsColours {

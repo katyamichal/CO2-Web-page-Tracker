@@ -8,7 +8,7 @@
 import UIKit
 final class RenewableCell: UITableViewCell {
     private let spacing: CGFloat = 16
-    private let inset: CGFloat = 8
+    private let inset: CGFloat = 24
     
     static var reuseIdentifier: String {
         return String(describing: RenewableCell.self)

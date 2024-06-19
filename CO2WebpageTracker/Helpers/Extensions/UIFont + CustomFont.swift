@@ -10,15 +10,15 @@ import UIKit
 enum Fonts {
 
     enum Titles {
-        static let mainTitle = UIFont.cachedFont(name: "Georgia-Bold", size: 21)
-        static let subtitle = UIFont.cachedFont(name: "Georgia", size: 18)
+        static let mainTitle = UIFont.cachedFont(name: "Avenir Next Regular", size: 24)
+        static let subtitle = UIFont.cachedFont(name: "Avenir Next Regular", size: 21)
     }
 
     enum Body {
-        static let largeFont = UIFont.cachedFont(name: "Georgia-Bold", size: 60)
-        static let defaultFont = UIFont.cachedFont(name: "CourierNewPS-BoldMT", size: 16)
-        static let secondaryFont = UIFont.cachedFont(name: "CourierNewPS-BoldMT", size: 14)
-        static let descriptionFont = UIFont.cachedFont(name: "CourierNewPS-BoldMT", size: 21)
+        static let largeFont = UIFont.cachedFont(name: "Avenir Next Regular", size: 60)
+        static let defaultFont = UIFont.cachedFont(name: "Avenir Next Regular", size: 16)
+        static let secondaryFont = UIFont.cachedFont(name: "Avenir Next Regular", size: 14)
+        static let descriptionFont = UIFont.cachedFont(name: "Avenir Next Regular", size: 21)
     }
 
     enum Buttons {

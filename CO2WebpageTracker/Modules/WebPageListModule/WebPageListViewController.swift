@@ -86,7 +86,6 @@ extension WebPageListViewController: UITableViewDelegate {
 }
 
 extension WebPageListViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         presenter.getRowCountInSection()
     }
@@ -105,19 +104,6 @@ extension WebPageListViewController: UITableViewDataSource {
         swipe.performsFirstActionWithFullSwipe = false
         return swipe
     }
-    
-    
-    private func createDeleteAction(_ tableView: UITableView, at indexPath: IndexPath) -> UIContextualAction? {
-        let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, _ in
-            self.deleteAction(tableView, at: indexPath)
-        }
-        deleteAction.image = UIImage(systemName: "trash")
-        deleteAction.backgroundColor = Colours.WebPageColours.red
-        return deleteAction
-    }
-    private func deleteAction(_ tableView: UITableView, at indexPath: IndexPath) {
-        presenter.actionDidSwipeToDelete(at: indexPath.row)
-    }
 }
 
 
@@ -131,6 +117,19 @@ private extension WebPageListViewController {
     func setupNavigationBar() {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.tintColor = Colours.WebPageColours.yellowish
+        navigationController?.navigationBar.tintColor = .white
+    }
+    
+    func createDeleteAction(_ tableView: UITableView, at indexPath: IndexPath) -> UIContextualAction? {
+        let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, _ in
+            self.deleteAction(tableView, at: indexPath)
+        }
+        deleteAction.image = UIImage(systemName: Constants.UIElementNameStrings.deleteActionImage)
+        deleteAction.backgroundColor = Colours.WebPageColours.red
+        return deleteAction
+    }
+    
+    func deleteAction(_ tableView: UITableView, at indexPath: IndexPath) {
+        presenter.actionDidSwipeToDelete(at: indexPath.row)
     }
 }

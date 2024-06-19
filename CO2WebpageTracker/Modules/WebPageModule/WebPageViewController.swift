@@ -10,7 +10,8 @@ protocol IWebPageView: AnyObject {
     func update()
     func setupNavigationTitle(with title: String)
     func updateEnergyWasteTypeCell()
-    
+    func showAlert(with type: Constants.AlerMessagesType)
+    func showMessage(with message: String)
 }
 
 final class WebPageViewController: UIViewController {
@@ -44,18 +45,33 @@ final class WebPageViewController: UIViewController {
 }
 
 extension WebPageViewController: IWebPageView {
-    func updateEnergyWasteTypeCell() {
-        let indexPath = IndexPath(row: 0, section: WebPageSection.energyType.rawValue)
-        webPageView.tableView.reloadRows(at: [indexPath], with: .automatic)
-    }
-    
-    
     func update() {
         webPageView.tableView.reloadData()
     }
     
     func setupNavigationTitle(with title: String) {
         navigationItem.title = title
+    }
+    
+    func updateEnergyWasteTypeCell() {
+        let indexPath = IndexPath(row: 0, section: WebPageSection.energyType.rawValue)
+        webPageView.tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
+    func showAlert(with type: Constants.AlerMessagesType) {
+        let alert = UIAlertController(title: type.title, message: type.message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: type.cancelButtonTitle, style: .cancel)
+        let resaveAction = UIAlertAction(title: type.actionButtonTitle, style: .default) { _ in
+            self.presenter.saveWebPage()
+        }
+        alert.addAction(cancelAction)
+        alert.addAction(resaveAction)
+        self.present(alert, animated: true)
+    }
+    
+    func showMessage(with message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Ok", style: .cancel)
     }
 }
 
@@ -92,7 +108,7 @@ private extension WebPageViewController {
         let configuration = UIImage.SymbolConfiguration(pointSize: 20, weight: .light)
         let image = UIImage(systemName: "ellipsis.circle", withConfiguration: configuration)
         let rightBarItem = UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
-        rightBarItem.tintColor = Colours.WebPageColours.yellowish
+        rightBarItem.tintColor = .white
         
         barButtonMenu = UIMenu(title: "Menu", children: [
             UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up"), handler: shareWebPage),
@@ -104,7 +120,7 @@ private extension WebPageViewController {
     }
     
     func save(action: UIAction) {
-        presenter.saveButtonDidPressed()
+        presenter.prepareToSave()
     }
     
     func selectionHandler(action: UIAction) {

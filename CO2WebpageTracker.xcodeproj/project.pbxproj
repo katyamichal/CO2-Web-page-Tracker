@@ -288,7 +288,6 @@
 				4EABD5B82C182C240089DF1D /* LaunchScreen.storyboard */,
 				4EAC847A2C20349900F6CD8A /* Extensions */,
 				4EAC84782C20340E00F6CD8A /* DescriptionConstructor.swift */,
-				4EAC847F2C20550400F6CD8A /* UIColor + customColor.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -306,14 +305,14 @@
 		4EABD5F32C1C8CB80089DF1D /* WebPageModule */ = {
 			isa = PBXGroup;
 			children = (
-				4EAC848D2C21C2F800F6CD8A /* StepperDelegate.swift */,
 				4EABD5F12C1C8CB40089DF1D /* WebPageViewController.swift */,
 				4EABD5F42C1C8D530089DF1D /* WebPageView.swift */,
 				4EABD5F82C1C92490089DF1D /* WebPagePresenter.swift */,
 				4EABD5FA2C1C93050089DF1D /* WebPageViewData.swift */,
 				4EABD5FC2C1C95240089DF1D /* WebPageSection.swift */,
-				4E34E03F2C1EEE66004D15A5 /* Cell */,
+				4EAC848D2C21C2F800F6CD8A /* StepperDelegate.swift */,
 				4EAC84922C2201A400F6CD8A /* DataMapper.swift */,
+				4E34E03F2C1EEE66004D15A5 /* Cell */,
 			);
 			path = WebPageModule;
 			sourceTree = "<group>";
@@ -333,6 +332,7 @@
 			children = (
 				4EAC84762C202E7300F6CD8A /* UIColor + hex.swift */,
 				4EAC84812C20995F00F6CD8A /* UIFont + CustomFont.swift */,
+				4EAC847F2C20550400F6CD8A /* UIColor + customColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";

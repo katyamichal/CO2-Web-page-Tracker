@@ -14,9 +14,9 @@ protocol IDataService: AnyObject {
     func fetchWepPages(completionHandler: (Result<[WebPageListViewData],CoreDataErrors>) -> Void)
     func performFetch()
     func fetchWepPage(with webPageId: UUID, completionHandler: (WebPageViewData) -> Void)
-    
-    func add(webPage: WebPageViewData, completion: (Result<String, CoreDataErrors>) -> Void)
-    func deleteWebPage(with id: UUID)
+    func findDublicate(with webPage: WebPageViewData) -> Bool
+    func add(webPage: WebPageViewData, completion: (String) -> Void)
+    func deleteWebPage(url: String)
 }
 
 enum PersistantContainerStorage {
@@ -111,7 +111,7 @@ final class DataService: IDataService {
         do {
             let fetchResult = try context.fetch(request)
             if fetchResult.count > 0 {
-                assert(fetchResult.count == 1, "Dublicate has been found")
+              //  assert(fetchResult.count == 1, "Dublicate has been found")
                 isDublicated = true
             }
         } catch {
@@ -120,8 +120,11 @@ final class DataService: IDataService {
         return isDublicated
     }
 
-    func add(webPage: WebPageViewData, completion: (Result<String, CoreDataErrors>) -> Void) {
-        if findDublicate(with: webPage) == false {
+    func add(webPage: WebPageViewData, completion: (String) -> Void) {
+        if findDublicate(with: webPage) {
+            deleteWebPage(url: webPage.url)
+        }
+        print(webPage.url)
             let context = PersistantContainerStorage.persistentContainer.viewContext
             let newWebPage = WebPageInfo(context: context)
             newWebPage.identifier = webPage.id
@@ -133,18 +136,14 @@ final class DataService: IDataService {
             newWebPage.cleanerThan = webPage.cleanerThan
             newWebPage.energy = webPage.energy
             PersistantContainerStorage.saveContext()
-            completion(.success("We have added web page to the list"))
-        } else {
-            completion(.failure(.dublicate))
-        }
+            completion("Web Page succesefully save")
     }
     
-    func deleteWebPage(with id: UUID) {
-        print(id)
+    func deleteWebPage(url: String) {
         defer { PersistantContainerStorage.saveContext() }
         let context = PersistantContainerStorage.persistentContainer.viewContext
         let fetchRequest = WebPageInfo.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "identifier == %@", id.uuidString)
+        fetchRequest.predicate = NSPredicate(format: "url == %@", url)
         do {
             let webPages = try context.fetch(fetchRequest)
             print(webPages)
@@ -162,7 +161,6 @@ private extension DataService {
         let fetchRequest: NSFetchRequest<WebPageInfo>
         fetchRequest = WebPageInfo.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "identifier == %@" , id.uuidString)
-        
         do {
             let webPage = try context.fetch(fetchRequest)
             webPageToReturn = webPage.first

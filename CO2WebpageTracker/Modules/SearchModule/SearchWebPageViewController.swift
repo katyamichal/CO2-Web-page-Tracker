@@ -9,9 +9,7 @@ import UIKit
 
 protocol ISearchWebPageView: AnyObject {
     func updateView(with status: SearchStatus)
-    func prepareForRequest()
     func showAlert(with type: Constants.AlerMessagesType)
-    
 }
 
 final  class SearchWebPageViewController: UIViewController {
@@ -55,13 +53,9 @@ extension SearchWebPageViewController: ISearchWebPageView {
         searchView.update(with: status)
     }
     
-    func prepareForRequest() {
-        
-    }
-    
     func showAlert(with type: Constants.AlerMessagesType) {
         let alert = UIAlertController(title: type.title, message: type.message, preferredStyle: .alert)
-        let action = UIAlertAction(title: type.buttonTitle, style: .cancel)
+        let action = UIAlertAction(title: type.cancelButtonTitle, style: .cancel)
         alert.addAction(action)
         self.present(alert, animated: true)
     }

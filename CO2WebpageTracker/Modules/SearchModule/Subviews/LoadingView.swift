@@ -55,7 +55,7 @@ final class LoadingView: UIView {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.style = .large
-        activityIndicator.color = Colours.WebPageColours.yellowish
+        activityIndicator.color = .white
         activityIndicator.hidesWhenStopped = true
         return activityIndicator
     }()
@@ -63,7 +63,7 @@ final class LoadingView: UIView {
     private lazy var pauseLosdingButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.tintColor = Colours.WebPageColours.yellowish
+        button.tintColor = .white
         button.contentMode = .scaleAspectFit
         button.setImage(PauseLoadingImages.active, for: .normal)
         button.setImage(PauseLoadingImages.paused, for: .selected)
@@ -75,7 +75,7 @@ final class LoadingView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
-        label.font = Fonts.Titles.subtitle
+        label.font = Fonts.Titles.mainTitle
         label.textAlignment = .center
         return label
     }()

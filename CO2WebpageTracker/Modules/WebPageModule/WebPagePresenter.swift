@@ -13,7 +13,8 @@ protocol IWebPagePresenter: AnyObject {
     func getRowCountInSection(at section: Int) -> Int
     func rowForCell(tableView: UITableView, at index: IndexPath) -> UITableViewCell
     func deleteButtonDidPressed()
-    func saveButtonDidPressed()
+    func prepareToSave()
+    func saveWebPage()
 }
 
 final class WebPagePresenter {
@@ -49,23 +50,30 @@ extension WebPagePresenter {
             energy: data.statistics.co2.renewable.grams)
     }
 }
-
+#warning("ask for self.saveWebPage()")
 extension WebPagePresenter: IWebPagePresenter {
-    func saveButtonDidPressed() {
+    func prepareToSave() {
         guard let viewData else { return }
-        dataService.add(webPage: viewData) { [weak self] result in
-            switch result {
-            case .success(let message):
-                print(message)
-            case .failure(let error):
-                print(error)
-            }
+        let isDublicated = dataService.findDublicate(with: viewData)
+        switch isDublicated {
+        case true:
+            view?.showAlert(with: Constants.AlerMessagesType.webPageDublicated)
+        case false:
+            self.saveWebPage()
+        }
+    }
+    
+    func saveWebPage() {
+        guard let viewData else { return }
+        dataService.add(webPage: viewData) { [weak self] message in
+            self?.view?.showMessage(with: message)
+            self?.getData()
         }
     }
     
     func deleteButtonDidPressed() {
-        guard let webPageId else { return }
-        dataService.deleteWebPage(with: webPageId)
+        guard let viewData else { return }
+        dataService.deleteWebPage(url: viewData.url)
         (coordinator as? WebPageListCoordinator)?.dismiss(with: coordinator)
     }
     
@@ -76,7 +84,7 @@ extension WebPagePresenter: IWebPagePresenter {
     
     func getRowCountInSection(at section: Int) -> Int {
         let section = WebPageSection.allCases[section]
-        guard let viewData else { return 0 }
+        guard viewData != nil else { return 0 }
         switch section {
         case .energyType, .carbonRating, .renewable:
             return 1
@@ -146,6 +154,15 @@ private extension WebPagePresenter {
             }
         case .string(let str):
             return str
+        }
+    }
+    
+    func configureDataServiceResponse(with type: CoreDataErrors) -> String {
+        switch type {
+        case .fetchError:
+            return Constants.CoreDataMessage.fetchError
+        case .dublicate:
+            return Constants.CoreDataMessage.fetchError
         }
     }
 }

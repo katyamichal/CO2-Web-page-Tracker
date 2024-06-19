@@ -38,8 +38,6 @@ final class CarbonRatingCell: UITableViewCell {
         stackView.spacing = spacing
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layer.borderWidth = 4
-        stackView.layer.borderColor = UIColor.white.cgColor
         return stackView
     }()
     
