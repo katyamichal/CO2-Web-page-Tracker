@@ -9,6 +9,7 @@ import UIKit
 
 protocol ISearchWebPagePresenter: AnyObject {
     func viewDidLoaded(view: ISearchWebPageView)
+    func prepareToLoad(with url: String) -> Bool
     func loadData(with url: String)
     func updateViewData()
     func tryAgainButtonPressed()
@@ -31,6 +32,13 @@ final class SearchWebPagePresenter {
 }
 
 extension SearchWebPagePresenter: ISearchWebPagePresenter {
+    func prepareToLoad(with url: String) -> Bool {
+        guard checkForEmptyTextField(with: url) else {
+            return false
+        }
+        return true
+    }
+    
     func tryAgainButtonPressed() {
         viewData.searchStatus = .search
         view?.updateView(with: viewData.searchStatus)
@@ -41,7 +49,6 @@ extension SearchWebPagePresenter: ISearchWebPagePresenter {
     }
     
     func loadData(with url: String) {
-        guard checkForEmptyTextField(with: url) else { return }
         networkService.performRequest(with: url)
         updateViewData()
     }
@@ -67,7 +74,6 @@ private extension SearchWebPagePresenter {
         return true
     }
     
-    
     func configureServiceCompletionHandler() {
         networkService.backgroundCompletionHandler = { [weak self] (responseData, error) in
             guard let self else { return }
@@ -81,14 +87,11 @@ private extension SearchWebPagePresenter {
                 let failedMessage = self.configureErrorResponse(with: error!)
                 self.viewData.searchStatus = .load(status: .failed(message: failedMessage))
             }
-    
             DispatchQueue.main.async {
                 self.view?.updateView(with: self.viewData.searchStatus)
             }
         }
     }
-    
- ///   www.websitecarbon.com
     
     func configureErrorResponse(with type: APIError) -> String {
         switch type {

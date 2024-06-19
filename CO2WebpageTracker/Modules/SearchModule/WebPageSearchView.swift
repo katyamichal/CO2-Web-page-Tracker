@@ -10,7 +10,6 @@ import UIKit
 final class WebPageSearchView: UIView {
     private let inset: CGFloat = 8
     private let spacing: CGFloat = 16
-    var stackViewBottomConstraint: NSLayoutConstraint?
     
     // MARK: - Inits
     
@@ -26,7 +25,11 @@ final class WebPageSearchView: UIView {
     
     // MARK: - UIElement
     
-    // scroll view
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
     
      lazy var searchStackView: UIStackView = {
         let stackView = UIStackView()
@@ -53,8 +56,14 @@ final class WebPageSearchView: UIView {
         return view
     }()
     
+    // MARK: - Public methods
+
     func setupActionForTryAgainButton(target: Any?, action: Selector) {
         loadingView.setupActionForTryAgainButton(target: target, action: action)
+    }
+    
+    func setupActionForCalculateButton(target: Any?, action: Selector) {
+        searchView.setupActionForCalculateButton(target: target, action: action)
     }
     
     func update(with status: SearchStatus) {
@@ -78,19 +87,21 @@ private extension WebPageSearchView {
     }
     
     func setupViews() {
-        addSubview(searchStackView)
+        addSubview(scrollView)
+        scrollView.addSubview(searchStackView)
         searchStackView.addArrangedSubview(loadingView)
         searchStackView.addArrangedSubview(searchView)
     }
     
     func setupConstraints() {
-        let stackViewBottomConstraint = searchStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
-        searchStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
-        searchStackView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor).isActive = true
-        searchStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: inset).isActive = true
-        stackViewBottomConstraint.isActive = true
-        searchStackView.heightAnchor.constraint(equalToConstant: 400).isActive = true
         
-        self.stackViewBottomConstraint = stackViewBottomConstraint
+        scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor).isActive = true
+        scrollView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor).isActive = true
+        
+        searchStackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        searchStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        searchStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: inset).isActive = true
     }
 }

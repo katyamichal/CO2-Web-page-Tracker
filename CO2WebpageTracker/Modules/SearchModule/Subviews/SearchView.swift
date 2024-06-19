@@ -10,7 +10,9 @@ import UIKit
 final class SearchView: UIView {
     private let inset: CGFloat = 8
     private let searchFieldHeight: CGFloat = 40
-    private let spacing: CGFloat = 16
+    private let spacing: CGFloat = 32
+    private let buttonHeight: CGFloat = 50
+    private let searchTextFieldHeight: CGFloat = 50
     
     // MARK: - Inits
     
@@ -59,21 +61,44 @@ final class SearchView: UIView {
         return label
     }()
     
-    lazy var searchBar: UISearchBar = {
-        let searchBar = UISearchBar()
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.placeholder = Constants.PlaceholderStrings.searchBarPlaceholder
-        if let textField = searchBar.value(forKey: "searchField") as? UITextField {
-                 textField.autocapitalizationType = .none
-                 textField.autocorrectionType = .no
-                 textField.text = textField.text?.lowercased()
-                 textField.defaultTextAttributes = [
-                     NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14),
-                     NSAttributedString.Key.foregroundColor: UIColor.black
-                 ]
-             }
-        return searchBar
+    lazy var searchTextField: UISearchTextField = {
+        let searchTextField = UISearchTextField()
+        searchTextField.translatesAutoresizingMaskIntoConstraints = false
+        let placeholderAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.darkGray,
+            .font: Fonts.Body.defaultFont
+        ]
+        let attributedPlaceholder = NSAttributedString(string: Constants.PlaceholderStrings.searchBarPlaceholder, attributes: placeholderAttributes)
+        searchTextField.attributedPlaceholder = attributedPlaceholder
+        searchTextField.autocapitalizationType = .none
+        searchTextField.autocorrectionType = .no
+        searchTextField.defaultTextAttributes = [
+            NSAttributedString.Key.font: Fonts.Body.defaultFont,
+            NSAttributedString.Key.foregroundColor: UIColor.black
+        ]
+        searchTextField.borderStyle = .bezel
+        searchTextField.tintColor = .white
+        searchTextField.heightAnchor.constraint(equalToConstant: searchTextFieldHeight).isActive = true
+        return searchTextField
     }()
+    
+    private lazy var calculateButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(.tertiarySystemBackground, for: .normal)
+        button.titleLabel?.font = Fonts.Buttons.primaryButtonFont
+        button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
+        button.setTitle("Calculate", for: .normal)
+        button.backgroundColor = Colours.WebPageColours.green
+        button.layer.cornerRadius = 5
+        return button
+    }()
+    
+    // MARK: - Public - Setup method for Calculate Button
+    
+    func setupActionForCalculateButton(target: Any?, action: Selector, for event: UIControl.Event = .touchUpInside) {
+        calculateButton.addTarget(target, action: action, for: event)
+    }
 }
 
 private extension SearchView {
@@ -86,13 +111,16 @@ private extension SearchView {
         addSubview(searchStackView)
         searchStackView.addArrangedSubview(label1)
         searchStackView.addArrangedSubview(label2)
-        searchStackView.addArrangedSubview(searchBar)
+        searchStackView.addArrangedSubview(searchTextField)
+        searchStackView.addArrangedSubview(calculateButton)
     }
     
     func setupConstraints() {
         searchStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: inset).isActive = true
         searchStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -inset).isActive = true
         searchStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: inset).isActive = true
+        searchStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -inset).isActive = true
+        
     
     }
 }

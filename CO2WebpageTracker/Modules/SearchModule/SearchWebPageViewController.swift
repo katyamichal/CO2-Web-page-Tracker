@@ -44,7 +44,7 @@ final  class SearchWebPageViewController: UIViewController {
         presenter.viewDidLoaded(view: self)
         setupKeyboardBehavior()
         setupSearchBar()
-        setupAction()
+        setupActions()
     }
 }
 
@@ -52,46 +52,57 @@ extension SearchWebPageViewController: ISearchWebPageView {
     func updateView(with status: SearchStatus) {
         searchView.update(with: status)
     }
-    
+#warning("[weak self]????")
     func showAlert(with type: Constants.AlerMessagesType) {
         let alert = UIAlertController(title: type.title, message: type.message, preferredStyle: .alert)
-        let action = UIAlertAction(title: type.cancelButtonTitle, style: .cancel)
+        let action = UIAlertAction(title: type.cancelButtonTitle, style: .cancel) {_ in
+            self.searchView.searchView.searchTextField.becomeFirstResponder()
+        }
         alert.addAction(action)
         self.present(alert, animated: true)
     }
 }
 
-// MARK: - TextField Delegate Methods
+// MARK: - Search TextField Delegate Methods
 
-extension SearchWebPageViewController: UISearchBarDelegate {
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchBar.enablesReturnKeyAutomatically = false
+extension SearchWebPageViewController: UISearchTextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.enablesReturnKeyAutomatically = false
     }
+
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchView.searchView.searchBar.resignFirstResponder()
-        guard let str = searchBar.text else {
-            return
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchView.searchView.searchTextField.resignFirstResponder()
+        guard let str = textField.text else {
+            return false
         }
-        presenter.loadData(with: str)
+        if presenter.prepareToLoad(with: str) {
+            presenter.loadData(with: str)
+            return true
+        } else {
+            return false
+        }
     }
 }
 
+
 private extension SearchWebPageViewController {
+    func setupActions() {
+        setupTryAgainAction()
+        setupCalculateAction()
+    }
     
-    func setupAction() {
+    func setupTryAgainAction() {
         searchView.setupActionForTryAgainButton(target: self, action: #selector(searchAgain))
     }
     
-    func setupSearchBar() {
-        searchView.searchView.searchBar.becomeFirstResponder()
-        searchView.searchView.searchBar.delegate = self
+    func setupCalculateAction() {
+        searchView.setupActionForCalculateButton(target: self, action: #selector(calculate))
     }
     
-    func setupKeyboardBehavior() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
+    func setupSearchBar() {
+        searchView.searchView.searchTextField.becomeFirstResponder()
+        searchView.searchView.searchTextField.delegate = self
     }
     
     @objc
@@ -99,51 +110,41 @@ private extension SearchWebPageViewController {
         presenter.tryAgainButtonPressed()
     }
     
-    //    @objc
-    //    func keyboardHandeling(notification: NSNotification) {
-    //        guard let userInfo = notification.userInfo,
-    //              let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-    //            return
-    //        }
-    //        let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
-    //        let adjustedContentInset: UIEdgeInsets
-    //        if isKeyboardShowing {
-    //            adjustedContentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height, right: 0)
-    //        } else {
-    //            adjustedContentInset = .zero
-    //        }
-    //        let animationDuration: Double = 0.2
-    //        UIView.animate(withDuration: animationDuration) {
-    ////            self.searchView.searchStackView.layoutMargins.bottom= adjustedContentInset
-    ////            self.searchView.searchStackView.scrollIndicatorInsets = adjustedContentInset
-    //        }
-    //    }
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        adjustForKeyboard(notification: notification, isShowing: true)
+    @objc
+    func calculate() {
+        searchView.searchView.searchTextField.resignFirstResponder()
+        let str = searchView.searchView.searchTextField.text
+        guard let str else {
+            return
+        }
+        print(str)
+        if presenter.prepareToLoad(with: str) {
+            presenter.loadData(with: str)
+        }
     }
     
-    @objc func keyboardWillHide(notification: NSNotification) {
-        adjustForKeyboard(notification: notification, isShowing: false)
+    func setupKeyboardBehavior() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHandling), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHandling), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    func adjustForKeyboard(notification: NSNotification, isShowing: Bool) {
+    
+    @objc func keyboardHandling(notification: NSNotification) {
         guard let userInfo = notification.userInfo,
               let keyboardFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
             return
         }
-        
-        let keyboardHeight = keyboardFrame.height
-        let animationDuration = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double) ?? 0.2
-        
+        let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
+        let adjustedContentInset: UIEdgeInsets
+        if isKeyboardShowing {
+            adjustedContentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height, right: 0)
+        } else {
+            adjustedContentInset = .zero
+        }
+        let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? 0.25
         UIView.animate(withDuration: animationDuration) {
-            if isShowing {
-                self.searchView.stackViewBottomConstraint?.constant = -keyboardHeight
-            } else {
-                self.searchView.stackViewBottomConstraint?.constant = 0
-            }
-            
-            self.view.layoutIfNeeded()
+            self.searchView.scrollView.contentInset = adjustedContentInset
+            self.searchView.scrollView.scrollIndicatorInsets = adjustedContentInset
         }
     }
 }

@@ -93,7 +93,7 @@ final class LoadingView: UIView {
         return button
     }()
     
-    // MARK: -  Setup method for calculate button
+    // MARK: - Public - Setup method for Try Again Button
     
     func setupActionForTryAgainButton(target: Any?, action: Selector, for event: UIControl.Event = .touchUpInside) {
         tryAgainButton.addTarget(target, action: action, for: event)
