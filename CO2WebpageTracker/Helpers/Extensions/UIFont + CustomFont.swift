@@ -22,7 +22,7 @@ enum Fonts {
     }
     
     enum Buttons {
-        static let primaryButtonFont = UIFont.cachedFont(name: "Georgia-Bold", size: 24)
+        static let primaryButtonFont = UIFont.cachedFont(name: "Georgia-Bold", size: 21)
     }
 }
 

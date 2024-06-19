@@ -18,10 +18,24 @@ enum Constants {
     }
     
     enum UIElementSystemNames {
-        static let deleteActionImage = "trash"
+        static let delete = "trash"
         static let pausedImage = "pause.circle"
         static let activeImage = "xmark.circle"
+        static let co2 = "leaf.arrow.triangle.circlepath"
+        static let sortBy = "arrow.up.arrow.down"
+        static let actionMenu = "ellipsis.circle"
+        static let share =  "square.and.arrow.up"
+        static let save = "tray.full"
     }
+    
+    enum UIElementStrings {
+        static let delete = "Delete"
+        static let save = "Save"
+        static let share = "Share"
+        static let sortBy = "arrow.up.arrow.down"
+        static let actionMenu = "ellipsis.circle"
+    }
+    
     enum UIElementNames {
         static let calculateButton = "Calculate"
     }

@@ -117,14 +117,26 @@ private extension WebPageListViewController {
     func setupNavigationBar() {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.tintColor = .systemBackground
+        
+        let configuration = UIImage.SymbolConfiguration(pointSize: 20, weight: .light)
+        let image = UIImage(systemName: Constants.UIElementSystemNames.actionMenu, withConfiguration: configuration)
+        let rightBarItem = UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
+        rightBarItem.tintColor = .white
+        let barButtonMenu = UIMenu(title: "Menu", children: [
+            UIAction(title: "Sort by CO2", image: UIImage(systemName: Constants.UIElementSystemNames.sortBy ), handler: sortBySize),
+            UIAction(title: "Select Web Pages", image: UIImage(systemName: Constants.UIElementSystemNames.delete), handler: selectWebPages),
+            UIAction(title: "Group by CO2 rating", image: UIImage(systemName: Constants.UIElementSystemNames.co2), handler: groupWebPages)
+        ])
+        rightBarItem.menu = barButtonMenu
+        navigationItem.rightBarButtonItem = rightBarItem
     }
     
     func createDeleteAction(_ tableView: UITableView, at indexPath: IndexPath) -> UIContextualAction? {
         let deleteAction = UIContextualAction(style: .normal, title: nil) { _, _, _ in
             self.deleteAction(tableView, at: indexPath)
         }
-        deleteAction.image = UIImage(systemName: Constants.UIElementSystemNames.deleteActionImage)
+        deleteAction.image = UIImage(systemName: Constants.UIElementSystemNames.delete)
         deleteAction.backgroundColor = Colours.WebPageColours.red
         return deleteAction
     }
@@ -132,4 +144,8 @@ private extension WebPageListViewController {
     func deleteAction(_ tableView: UITableView, at indexPath: IndexPath) {
         presenter.actionDidSwipeToDelete(at: indexPath.row)
     }
+    
+    func sortBySize(_ action: UIAction) {}
+    func selectWebPages(_ action: UIAction) {}
+    func groupWebPages(_ action: UIAction) {}
 }

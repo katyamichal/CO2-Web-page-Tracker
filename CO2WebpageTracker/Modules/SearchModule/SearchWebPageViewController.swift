@@ -85,7 +85,6 @@ extension SearchWebPageViewController: UISearchTextFieldDelegate {
     }
 }
 
-
 private extension SearchWebPageViewController {
     func setupActions() {
         setupTryAgainAction()
@@ -136,6 +135,7 @@ private extension SearchWebPageViewController {
     func setupKeyboardBehavior() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHandling), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHandling), name: UIResponder.keyboardWillHideNotification, object: nil)
+        hideKeyboardWhenTappedAround()
     }
     
     
@@ -157,4 +157,15 @@ private extension SearchWebPageViewController {
 //            self.searchView.searchStackView.scrollIndicatorInsets = adjustedContentInset
         }
     }
+    
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
+

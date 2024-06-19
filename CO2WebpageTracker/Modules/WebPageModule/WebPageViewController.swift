@@ -17,7 +17,6 @@ protocol IWebPageView: AnyObject {
 final class WebPageViewController: UIViewController {
     private var webPageView: WebPageView { return self.view as! WebPageView }
     private let presenter: IWebPagePresenter
-    private var barButtonMenu = UIMenu()
     
     // MARK: - Inits
     
@@ -106,14 +105,14 @@ private extension WebPageViewController {
 //
         
         let configuration = UIImage.SymbolConfiguration(pointSize: 20, weight: .light)
-        let image = UIImage(systemName: "ellipsis.circle", withConfiguration: configuration)
+        let image = UIImage(systemName: Constants.UIElementSystemNames.actionMenu, withConfiguration: configuration)
         let rightBarItem = UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
         rightBarItem.tintColor = .white
         
-        barButtonMenu = UIMenu(title: "Menu", children: [
-            UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up"), handler: shareWebPage),
-            UIAction(title: "Save", image: UIImage(systemName: "tray.full"), handler: save),
-            UIAction(title: "Delete", image: UIImage(systemName: "trash"), handler: selectionHandler)
+        let barButtonMenu = UIMenu(title: "", children: [
+            UIAction(title: Constants.UIElementStrings.share, image: UIImage(systemName: Constants.UIElementSystemNames.share), handler: shareWebPage),
+            UIAction(title: Constants.UIElementStrings.save, image: UIImage(systemName: Constants.UIElementSystemNames.save), handler: save),
+            UIAction(title: Constants.UIElementStrings.delete, image: UIImage(systemName: Constants.UIElementSystemNames.delete), handler: selectionHandler)
         ])
         rightBarItem.menu = barButtonMenu
         navigationItem.rightBarButtonItem = rightBarItem
