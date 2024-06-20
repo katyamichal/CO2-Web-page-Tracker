@@ -85,11 +85,11 @@ final class SearchView: UIView {
     private lazy var calculateButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(.tertiarySystemBackground, for: .normal)
+        button.setTitleColor(.label, for: .normal)
         button.titleLabel?.font = Fonts.Buttons.primaryButtonFont
         button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
-        button.setTitle("Calculate", for: .normal)
-        button.backgroundColor = Colours.WebPageColours.green
+        button.setTitle(Constants.UIElementNames.calculateButton, for: .normal)
+        button.backgroundColor = .systemBackground
         button.layer.cornerRadius = 5
         return button
     }()

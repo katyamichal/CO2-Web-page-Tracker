@@ -13,6 +13,7 @@ protocol ISearchWebPagePresenter: AnyObject {
     func loadData(with url: String)
     func updateViewData()
     func tryAgainButtonPressed()
+    func changeLoadingStatus()
 }
 
 final class SearchWebPagePresenter {
@@ -32,6 +33,26 @@ final class SearchWebPagePresenter {
 }
 
 extension SearchWebPagePresenter: ISearchWebPagePresenter {
+    func changeLoadingStatus() {
+        let currentStatus = viewData.searchStatus
+        switch currentStatus {
+        case .load(let loadingStatus):
+            switch loadingStatus {
+            case .paused:
+                viewData.searchStatus = .load(status: .loading(message: "You have stopped loading"))
+                networkService.resumeLoading()
+            case .loading:
+                viewData.searchStatus = .load(status: .paused)
+                networkService.pauseLoading()
+            case .completed, .failed, .nonActive:
+                break
+            }
+        case .search:
+            break
+        }
+        view?.updateView(with: viewData.searchStatus)
+    }
+    
     func prepareToLoad(with url: String) -> Bool {
         guard checkForEmptyTextField(with: url) else {
             return false
@@ -54,15 +75,15 @@ extension SearchWebPagePresenter: ISearchWebPagePresenter {
     }
     
     func updateViewData()  {
-        viewData.searchStatus = .load(status: .loading(message: Constants.SearchLoadingMessage.waitForLoad, image: PauseLoadingImages.paused))
+        viewData.searchStatus = .load(status: .loading(message: Constants.SearchLoadingMessage.waitForLoad))
         view?.updateView(with: viewData.searchStatus)
     }
 }
 
 private extension SearchWebPagePresenter {
     enum PauseLoadingImages {
-        static let paused = UIImage(systemName: Constants.UIElementNameStrings.pausedImage)
-        static let active = UIImage(systemName: Constants.UIElementNameStrings.activeImage)
+        static let paused = UIImage(systemName: Constants.UIElementSystemNames.pausedImage)
+        static let active = UIImage(systemName: Constants.UIElementSystemNames.activeImage)
     }
     
     func checkForEmptyTextField(with keyword: String) -> Bool {

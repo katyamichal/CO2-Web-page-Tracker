@@ -238,9 +238,9 @@
 			isa = PBXGroup;
 			children = (
 				4EABD5DC2C1C1DAE0089DF1D /* SearchWebPageViewController.swift */,
+				4EABD5DE2C1C1E130089DF1D /* WebPageSearchView.swift */,
 				4EABD5E42C1C23D60089DF1D /* SearchViewData.swift */,
 				4EABD5E22C1C23510089DF1D /* SearchWebPagePresenter.swift */,
-				4EABD5DE2C1C1E130089DF1D /* WebPageSearchView.swift */,
 				4EABD5EA2C1C26D10089DF1D /* Subviews */,
 			);
 			path = SearchModule;
@@ -283,11 +283,11 @@
 			children = (
 				4EABD5B62C182C240089DF1D /* Assets.xcassets */,
 				4EABD5CA2C1AD3C80089DF1D /* Constants.swift */,
+				4EAC84782C20340E00F6CD8A /* DescriptionConstructor.swift */,
 				4E34E04E2C1F5DBA004D15A5 /* desc.md */,
 				4E34E04C2C1F5C2A004D15A5 /* Descriptions.plist */,
 				4EABD5B82C182C240089DF1D /* LaunchScreen.storyboard */,
 				4EAC847A2C20349900F6CD8A /* Extensions */,
-				4EAC84782C20340E00F6CD8A /* DescriptionConstructor.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";

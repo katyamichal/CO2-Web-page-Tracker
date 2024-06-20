@@ -18,13 +18,6 @@ final class LoadingView: UIView {
             updateState()
         }
     }
-    
-    enum PauseLoadingImages {
-        static let paused = UIImage(systemName: Constants.UIElementNameStrings.pausedImage)
-        static let active = UIImage(systemName: Constants.UIElementNameStrings.activeImage)
-    }
-    
-    
     // MARK: - Inits
     
     override init(frame: CGRect) {
@@ -36,7 +29,7 @@ final class LoadingView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+        
     // MARK: - UI Elements
     
     private lazy var loadingStackView: UIStackView = {
@@ -65,8 +58,12 @@ final class LoadingView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .white
         button.contentMode = .scaleAspectFit
-        button.setImage(PauseLoadingImages.active, for: .normal)
-        button.setImage(PauseLoadingImages.paused, for: .selected)
+        let font = UIFont.systemFont(ofSize: 40)
+        let configuration = UIImage.SymbolConfiguration(font: font)
+        let unselectedImage = UIImage(systemName: Constants.UIElementSystemNames.pausedImage, withConfiguration: configuration)
+        let selectedImage = UIImage(systemName: Constants.UIElementSystemNames.activeImage, withConfiguration: configuration)
+        button.setImage(unselectedImage, for: .normal)
+        button.setImage(selectedImage, for: .selected)
         return button
     }()
     
@@ -98,6 +95,10 @@ final class LoadingView: UIView {
     func setupActionForTryAgainButton(target: Any?, action: Selector, for event: UIControl.Event = .touchUpInside) {
         tryAgainButton.addTarget(target, action: action, for: event)
     }
+    
+    func setupActionForPauseButton(target: Any?, action: Selector, for event: UIControl.Event = .touchUpInside) {
+        pauseLosdingButton.addTarget(target, action: action, for: event)
+    }
 }
 
 // MARK: - Setup methods
@@ -120,22 +121,22 @@ private extension LoadingView {
         loadingStackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
         loadingStackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         loadingStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        loadingStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
     
     private func updateState() {
         switch currentState {
         
-        case .loading(let message, let image):
-           // activityIndicator.isHidden = false
+        case .loading(let message):
             activityIndicator.startAnimating()
             messageLabel.isHidden = false
             messageLabel.text = message
             pauseLosdingButton.isHidden = false
             pauseLosdingButton.isHidden = false
             tryAgainButton.isHidden = true
+            pauseLosdingButton.isSelected = false
             
         case .completed(let url):
-           // activityIndicator.isHidden = true
             pauseLosdingButton.isHidden = true
             messageLabel.isHidden = false
             messageLabel.text = url
@@ -143,7 +144,6 @@ private extension LoadingView {
             activityIndicator.stopAnimating()
             
         case .failed(let message):
-          //  activityIndicator.isHidden = true
             pauseLosdingButton.isHidden = true
             messageLabel.isHidden = false
             messageLabel.text = message
@@ -151,15 +151,13 @@ private extension LoadingView {
             tryAgainButton.isHidden = false
             
         case .nonActive:
-          //  activityIndicator.isHidden = true
             pauseLosdingButton.isHidden = true
             messageLabel.isHidden = true
             tryAgainButton.isHidden = true
             
-        case .paused(let image):
-           // activityIndicator.isHidden = true
+        case .paused:
             pauseLosdingButton.isHidden = false
-            //pauseLosdingButton.image = image
+            pauseLosdingButton.isSelected = true
             messageLabel.isHidden = false
             activityIndicator.stopAnimating()
         }
