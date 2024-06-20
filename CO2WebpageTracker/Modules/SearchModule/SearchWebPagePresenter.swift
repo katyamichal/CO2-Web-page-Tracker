@@ -70,8 +70,8 @@ extension SearchWebPagePresenter: ISearchWebPagePresenter {
     }
     
     func loadData(with url: String) {
-        networkService.performRequest(with: url)
         updateViewData()
+        networkService.performRequest(with: url)
     }
     
     func updateViewData()  {
@@ -98,7 +98,6 @@ private extension SearchWebPagePresenter {
     func configureServiceCompletionHandler() {
         networkService.backgroundCompletionHandler = { [weak self] (responseData, error) in
             guard let self else { return }
-            
             if let responseData {
                 self.viewData.searchStatus = .search
                 DispatchQueue.main.async {
@@ -110,6 +109,7 @@ private extension SearchWebPagePresenter {
             }
             DispatchQueue.main.async {
                 self.view?.updateView(with: self.viewData.searchStatus)
+                print(self.viewData.searchStatus)
             }
         }
     }

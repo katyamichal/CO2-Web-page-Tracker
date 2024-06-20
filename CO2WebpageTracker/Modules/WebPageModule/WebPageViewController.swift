@@ -91,6 +91,8 @@ extension WebPageViewController: IWebPageView {
     func showMessage(with message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Ok", style: .cancel)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true)
     }
 }
 
@@ -118,12 +120,6 @@ private extension WebPageViewController {
     
     
     func setupNavigationBar() {
-//        let config2 = UIImage.SymbolConfiguration(pointSize: 18, weight: .light)
-//        let image2 = UIImage(systemName: "square.and.arrow.up", withConfiguration: config2)
-//        let rightBarButton = UIBarButtonItem(image: image2, style: .plain, target: self, action: #selector(shareProduct))
-//        navigationItem.rightBarButtonItem = rightBarButton
-//
-        
         let configuration = UIImage.SymbolConfiguration(pointSize: 20, weight: .light)
         let image = UIImage(systemName: Constants.UIElementSystemNames.actionMenu, withConfiguration: configuration)
         let rightBarItem = UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
@@ -163,6 +159,7 @@ private extension WebPageViewController {
         choosePhotoFromLibrary()
     }
 }
+// MARK: - Image Picker Delegates
 
 extension WebPageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -174,7 +171,6 @@ extension WebPageViewController: UIImagePickerControllerDelegate, UINavigationCo
         present(imagePicker, animated: true, completion: nil)
     }
     
-    // MARK: - Image Picker Delegates
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
         if let theImage = image {
