@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 enum Constants {
     
     enum URLSessionsIndentifiers {
@@ -26,14 +25,17 @@ enum Constants {
         static let actionMenu = "ellipsis.circle"
         static let share =  "square.and.arrow.up"
         static let save = "tray.full"
+        static let select = "checkmark.circle"
     }
     
-    enum UIElementStrings {
+    enum UIElementTitle {
         static let delete = "Delete"
         static let save = "Save"
         static let share = "Share"
-        static let sortBy = "arrow.up.arrow.down"
-        static let actionMenu = "ellipsis.circle"
+        static let sortBy = "Sort by CO2"
+        static let selectWebPage = "Select Web Pages"
+        static let groubByCO2 = "Group by CO2 rating"
+        static let webPageList = "Wep Pages"
     }
     
     enum UIElementNames {
@@ -46,6 +48,7 @@ enum Constants {
         static let failFetchData = "We're sorry but something hasn't worked. Please check the URL and try testing again."
         static let urlSessionError = "Oops! Something went wrong while getting your result. Please try again."
         static let serverError = "Our server is currently unavailable. Please try again later."
+        static let testAgain = "Try testing again"
     }
     
     enum CoreDataMessage {

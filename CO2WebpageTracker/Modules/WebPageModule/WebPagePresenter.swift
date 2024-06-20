@@ -26,7 +26,7 @@ final class WebPagePresenter {
     
     private let webPageId: UUID?
     private let stepperDelegate = StepperDelegate()
-    private var stepperValue: Int = 1
+    //private var stepperValue: Int = 1
     private lazy var dataMapper = DataMapper(viewData: viewData)
     
     init(coordinator: Coordinator?, dataService: IDataService, id: UUID?) {
@@ -169,7 +169,7 @@ private extension WebPagePresenter {
 
 extension WebPagePresenter: IStepperDelegate {
     func didChanged(with value: Int) {
-        stepperValue = value
+        dataMapper.stepperValue = value
         view?.updateEnergyWasteTypeCell()
     }
 }

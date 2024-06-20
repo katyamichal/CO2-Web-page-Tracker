@@ -110,9 +110,9 @@ private extension WebPageViewController {
         rightBarItem.tintColor = .white
         
         let barButtonMenu = UIMenu(title: "", children: [
-            UIAction(title: Constants.UIElementStrings.share, image: UIImage(systemName: Constants.UIElementSystemNames.share), handler: shareWebPage),
-            UIAction(title: Constants.UIElementStrings.save, image: UIImage(systemName: Constants.UIElementSystemNames.save), handler: save),
-            UIAction(title: Constants.UIElementStrings.delete, image: UIImage(systemName: Constants.UIElementSystemNames.delete), handler: selectionHandler)
+            UIAction(title: Constants.UIElementTitle.share, image: UIImage(systemName: Constants.UIElementSystemNames.share), handler: shareWebPage),
+            UIAction(title: Constants.UIElementTitle.save, image: UIImage(systemName: Constants.UIElementSystemNames.save), handler: save),
+            UIAction(title: Constants.UIElementTitle.delete, image: UIImage(systemName: Constants.UIElementSystemNames.delete), handler: selectionHandler)
         ])
         rightBarItem.menu = barButtonMenu
         navigationItem.rightBarButtonItem = rightBarItem

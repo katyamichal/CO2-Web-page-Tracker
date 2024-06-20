@@ -28,6 +28,11 @@ final class WebPageListPresenter {
 }
 
 extension WebPageListPresenter: IWebPageListPresenter {
+    func sortByCO2() {
+        viewData.sort(by: {$0.rating < $1.rating})
+        view?.update()
+    }
+    
     func showDetailView(at index: Int) {
         let id = viewData[index].id
         (coordinator as? WebPageListCoordinator)?.showWebPageDetail(with: id)

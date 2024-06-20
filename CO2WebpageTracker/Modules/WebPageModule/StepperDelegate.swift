@@ -13,8 +13,17 @@ protocol IStepperDelegate: AnyObject {
 
 final class StepperDelegate: UIStepperViewDelegate {
     weak var delegate: IStepperDelegate?
+    private var previousValue: Int = 1
     
     func stepperValueChanged(_ sender: UIStepper) {
-        delegate?.didChanged(with: Int(sender.value))
+        var value: Int
+
+        if sender.value < sender.maximumValue && Int(sender.value) > previousValue {
+            value = Int(sender.value - 1) * 10
+        } else {
+            value = Int(sender.value + 1) / 10
+        }
+          delegate?.didChanged(with: value)
+          previousValue = value
     }
 }

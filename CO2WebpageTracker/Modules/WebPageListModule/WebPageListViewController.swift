@@ -19,7 +19,8 @@ final class WebPageListViewController: UIViewController {
     
     private var webPageListView: WebPageListView { return self.view as! WebPageListView }
     private let presenter: IWebPageListPresenter
-    
+    var selectedIndexPaths = Set<IndexPath>()
+
     // MARK: - Inits
     
     init(presenter: IWebPageListPresenter) {
@@ -81,6 +82,7 @@ extension WebPageListViewController: IWebPageListView {
 extension WebPageListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        selectedIndexPaths.insert(indexPath)
         presenter.showDetailView(at: indexPath.row)
     }
 }
@@ -106,8 +108,6 @@ extension WebPageListViewController: UITableViewDataSource {
     }
 }
 
-
-
 private extension WebPageListViewController {
     func setupTableViewDelegates() {
         webPageListView.tableView.delegate = self
@@ -123,10 +123,10 @@ private extension WebPageListViewController {
         let image = UIImage(systemName: Constants.UIElementSystemNames.actionMenu, withConfiguration: configuration)
         let rightBarItem = UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
         rightBarItem.tintColor = .white
-        let barButtonMenu = UIMenu(title: "Menu", children: [
-            UIAction(title: "Sort by CO2", image: UIImage(systemName: Constants.UIElementSystemNames.sortBy ), handler: sortBySize),
-            UIAction(title: "Select Web Pages", image: UIImage(systemName: Constants.UIElementSystemNames.delete), handler: selectWebPages),
-            UIAction(title: "Group by CO2 rating", image: UIImage(systemName: Constants.UIElementSystemNames.co2), handler: groupWebPages)
+        let barButtonMenu = UIMenu(title: "", children: [
+            UIAction(title: Constants.UIElementTitle.sortBy, image: UIImage(systemName: Constants.UIElementSystemNames.sortBy ), handler: sortByCO2),
+            UIAction(title: Constants.UIElementTitle.selectWebPage, image: UIImage(systemName: Constants.UIElementSystemNames.select), handler: selectWebPages),
+            UIAction(title: Constants.UIElementTitle.groubByCO2, image: UIImage(systemName: Constants.UIElementSystemNames.co2), handler: groupWebPages)
         ])
         rightBarItem.menu = barButtonMenu
         navigationItem.rightBarButtonItem = rightBarItem
@@ -145,7 +145,20 @@ private extension WebPageListViewController {
         presenter.actionDidSwipeToDelete(at: indexPath.row)
     }
     
-    func sortBySize(_ action: UIAction) {}
-    func selectWebPages(_ action: UIAction) {}
+    func sortByCO2(_ action: UIAction) {
+        presenter.sortByCO2()
+    }
+    func selectWebPages(_ action: UIAction) {
+        selectedIndexPaths.removeAll()
+        
+        // Add all indexPaths to the selectedIndexPaths set
+        for section in 0..<webPageListView.tableView.numberOfSections {
+            for row in 0..<webPageListView.tableView.numberOfRows(inSection: section) {
+                let indexPath = IndexPath(row: row, section: section)
+                selectedIndexPaths.insert(indexPath)
+            }
+        }
+    }
+    
     func groupWebPages(_ action: UIAction) {}
 }

@@ -23,6 +23,7 @@ protocol IWebPageListTableViewHandler: AnyObject {
     func permitDeleting(at index: IndexPath) -> Bool
     func actionDidSwipeToDelete(at index: Int)
     func showDetailView(at index: Int)
+    func sortByCO2()
 }
 
 
