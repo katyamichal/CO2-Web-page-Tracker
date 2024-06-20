@@ -15,8 +15,8 @@ enum Fonts {
     }
 
     enum Body {
-        static let largeFont = UIFont.cachedFont(name: "Avenir Next Regular", size: 60)
-        static let defaultFont = UIFont.cachedFont(name: "Avenir Next Regular", size: 16)
+        static let largeFont = UIFont.cachedFont(name: "American Typewriter", size: 70)
+        static let defaultFont = UIFont.cachedFont(name: "Avenir Next Regular", size: 24)
         static let secondaryFont = UIFont.cachedFont(name: "Avenir Next Regular", size: 14)
         static let descriptionFont = UIFont.cachedFont(name: "Avenir Next Regular", size: 21)
     }

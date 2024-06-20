@@ -83,7 +83,9 @@ final class CarbonRatingCell: UITableViewCell {
     }()
     
     private lazy var ratingView: GradientRatingView = {
-        let view = GradientRatingView(frame: CGRect(origin: .zero, size: CGSize(width: 300, height: 40)))
+        let view = GradientRatingView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.heightAnchor.constraint(equalToConstant: 110).isActive = true
         return view
     }()
     

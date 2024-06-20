@@ -7,16 +7,6 @@
 
 import UIKit
 
-protocol IWebPagePresenter: AnyObject {
-    func viewDidLoaded(view: IWebPageView)
-    func getSectionCount() -> Int
-    func getRowCountInSection(at section: Int) -> Int
-    func rowForCell(tableView: UITableView, at index: IndexPath) -> UITableViewCell
-    func deleteButtonDidPressed()
-    func prepareToSave()
-    func saveWebPage()
-}
-
 final class WebPagePresenter {
     
     private weak var coordinator: Coordinator?
@@ -26,8 +16,7 @@ final class WebPagePresenter {
     
     private let webPageId: UUID?
     private let stepperDelegate = StepperDelegate()
-    //private var stepperValue: Int = 1
-    private lazy var dataMapper = DataMapper(viewData: viewData)
+    private lazy var viewDataConstructor = ViewDataConstructor(viewData: viewData)
     
     init(coordinator: Coordinator?, dataService: IDataService, id: UUID?) {
         self.dataService = dataService
@@ -70,13 +59,12 @@ extension WebPagePresenter: IWebPagePresenter {
             self?.getData()
         }
     }
-    
+    #warning("dismiss")
     func deleteButtonDidPressed() {
         guard let viewData else { return }
         dataService.deleteWebPage(url: viewData.url)
         (coordinator as? WebPageListCoordinator)?.dismiss(with: coordinator)
     }
-    
     
     func getSectionCount() -> Int {
         WebPageSection.allCases.count
@@ -105,6 +93,13 @@ extension WebPagePresenter: IWebPagePresenter {
     }
 }
 
+extension WebPagePresenter: IStepperDelegate {
+    func didChanged(with value: Int) {
+        viewDataConstructor.stepperValue = value
+        view?.updateEnergyWasteTypeCell()
+    }
+}
+
 private extension WebPagePresenter {
     func getData() {
         guard let webPageId else { return }
@@ -122,7 +117,7 @@ private extension WebPagePresenter {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CarbonRatingCell.reuseIdentifier, for: indexPath) as? CarbonRatingCell else {
                 return UITableViewCell()
             }
-            cell.update(with: dataMapper.ratingColor, with: viewData.ratingLetter, description: dataMapper.ratingDescription, url: dataMapper.urlDescription, cleanerThan: dataMapper.cleanerThanDescription, date: dataMapper.lastTestDate)
+            cell.update(with: viewDataConstructor.ratingColor, with: viewData.ratingLetter, description: viewDataConstructor.ratingDescription, url: viewDataConstructor.urlDescription, cleanerThan: viewDataConstructor.cleanerThanDescription, date: viewDataConstructor.lastTestDate)
             
             return cell
             
@@ -130,14 +125,14 @@ private extension WebPagePresenter {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RenewableCell.reuseIdentifier, for: indexPath) as? RenewableCell else {
                 return UITableViewCell()
             }
-            cell.update(with: dataMapper.co2PerPageviewDescription, energyType: dataMapper.greenDescription)
+            cell.update(with: viewDataConstructor.co2PerPageviewDescription, energyType: viewDataConstructor.greenDescription)
             return cell
             
         case .energyType:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: EnergyWasteTypeCell.reuseIdentifier, for: indexPath) as? EnergyWasteTypeCell else {
                 return UITableViewCell()
             }
-            cell.update(with: dataMapper.energy, stepperValue: dataMapper.stepperValue)
+            cell.update(with: viewDataConstructor.energy, stepperValue: viewDataConstructor.stepperValue)
             cell.configureStepperDelgate(with: stepperDelegate)
             return cell
         }
@@ -164,12 +159,5 @@ private extension WebPagePresenter {
         case .dublicate:
             return Constants.CoreDataMessage.fetchError
         }
-    }
-}
-
-extension WebPagePresenter: IStepperDelegate {
-    func didChanged(with value: Int) {
-        dataMapper.stepperValue = value
-        view?.updateEnergyWasteTypeCell()
     }
 }

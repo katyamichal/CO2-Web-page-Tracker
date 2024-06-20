@@ -9,27 +9,25 @@ import UIKit
 
 final class GradientRatingView: UIView {
     
-//    init(with frame: CGRect = CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width - 40, height: 40))) {
-//        super.init(frame: frame)
-//        setupGradient()
-//        setupLabels()
-//        setupMarker()
-//    }
-    
-    override init(frame: CGRect) {
+    init(with frame: CGRect = CGRect(origin: .zero, size: CGSize(width: UIScreen.main.bounds.size.width - 40, height: 40))) {
         super.init(frame: frame)
-        setupGradient()
-        setupLabels()
-        setupMarker()
+        setupView()
     }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+private extension GradientRatingView {
+    func setupView() {
+        setupGradient()
+        setupLabels()
+        setupMarker()
+        setupAverageLabel()
+    }
     
- 
-    private func setupGradient() {
+    func setupGradient() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [
             UIColor.systemGreen.cgColor,
@@ -37,7 +35,6 @@ final class GradientRatingView: UIView {
             UIColor.orange.cgColor,
             UIColor.red.cgColor
         ]
-        
         gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
         gradientLayer.frame = self.bounds
@@ -45,12 +42,11 @@ final class GradientRatingView: UIView {
         gradientLayer.cornerRadius = 20
     }
     
-    private func setupLabels() {
+    func setupLabels() {
         let labels = ["A+", "A", "B", "C", "D", "E", "F"]
         let labelCount = labels.count
         let labelWidth = self.bounds.width / CGFloat(labelCount)
-        
-        for (index, labelText) in labels.enumerated() {
+        labels.enumerated().map { (index, labelText) in
             let label = UILabel()
             label.text = labelText
             label.textAlignment = .center
@@ -59,11 +55,24 @@ final class GradientRatingView: UIView {
         }
     }
     
-    private func setupMarker() {
-        let marker = UIImageView(image: UIImage(systemName: "globe"))
-        marker.tintColor = .blue
-        marker.frame = CGRect(x: self.bounds.width * 0.75, y: 0, width: 30, height: 30)
+    func setupMarker() {
+        let marker = UIImageView(image: UIImage(systemName: Constants.UIElementSystemNames.globe))
+        marker.tintColor = .systemBackground
+        marker.frame = CGRect(x: self.bounds.width * 0.75, y: self.bounds.height + 10, width: 30, height: 30)
         self.addSubview(marker)
     }
+    
+    func setupAverageLabel() {
+        let label = UILabel()
+        let labelWidth = self.bounds.width / 0.4
+        label.frame = CGRect(x: self.bounds.width * 0.4, y: self.bounds.height + 30, width: labelWidth, height: 30)
+        label.text = "Global Average"
+        label.numberOfLines = 0
+        label.font = UIFont(name: "Bradley Hand", size: 19)
+        label.textColor = .white
+        self.addSubview(label)
+    }
 }
+
+
 

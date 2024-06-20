@@ -26,6 +26,7 @@ enum Constants {
         static let share =  "square.and.arrow.up"
         static let save = "tray.full"
         static let select = "checkmark.circle"
+        static let globe = "globe.asia.australia.fill"
     }
     
     enum UIElementTitle {

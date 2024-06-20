@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class DataMapper {
+final class ViewDataConstructor {
     private var viewData: WebPageViewData?
     var stepperValue: Int = 1
     
@@ -65,6 +65,7 @@ final class DataMapper {
         guard let viewData else { return "No Data" }
         return DescriptionConstructor.shared.getRatingDescription(with: viewData.ratingLetter)
     }
+    
     var energy: String {
         guard let viewData else { return "No Data" }
         return String(format: "%.2f", (viewData.energy * Double(stepperValue)))
