@@ -16,5 +16,3 @@ enum APIError: Error {
     case invalidURL(String = "Invalid URL")
 }
 
-
-//www.websitecarbon.com

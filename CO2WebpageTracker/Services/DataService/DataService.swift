@@ -21,6 +21,7 @@ protocol IDataService: AnyObject {
 }
 
 enum PersistantContainerStorage {
+    
    static let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "CO2WebpageTracker")
         container.loadPersistentStores { _, error in
@@ -84,7 +85,6 @@ final class DataService: IDataService {
                 WebPageListViewData(id: webPage.identifier, url: webPage.url, date: webPage.date, rating: webPage.rating)
             }))
         } catch {
-            let error = error as NSError
             completionHandler(.failure(.fetchError))
         }
     }

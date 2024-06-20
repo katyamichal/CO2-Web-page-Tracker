@@ -68,6 +68,6 @@ final class ViewDataConstructor {
     
     var energy: String {
         guard let viewData else { return "No Data" }
-        return String(format: "%.2f", (viewData.energy * Double(stepperValue)))
+        return String(format: "%.3f", (viewData.gramForVisit * Double(stepperValue)))
     }
 }

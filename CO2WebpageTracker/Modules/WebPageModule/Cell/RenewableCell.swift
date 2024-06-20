@@ -44,7 +44,7 @@ final class RenewableCell: UITableViewCell {
     private lazy var gramsLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 21)
+        label.font = Fonts.Body.defaultFont
         label.textColor = .white
         return label
     }()
@@ -52,7 +52,7 @@ final class RenewableCell: UITableViewCell {
     private lazy var greenEnergyStatusLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = UIFont(name: "Avenir Next Regular", size: 21)
+        label.font = Fonts.Body.defaultFont
         label.textColor = .white
         return label
     }()
