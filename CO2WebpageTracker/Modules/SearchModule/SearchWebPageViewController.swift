@@ -13,7 +13,6 @@ protocol ISearchWebPageView: AnyObject {
 }
 
 final  class SearchWebPageViewController: UIViewController {
-    
     private var searchView: WebPageSearchView { return self.view as! WebPageSearchView }
     private let presenter: ISearchWebPagePresenter
     
@@ -39,6 +38,7 @@ final  class SearchWebPageViewController: UIViewController {
     override func loadView() {
         view = WebPageSearchView()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoaded(view: self)
@@ -52,7 +52,7 @@ extension SearchWebPageViewController: ISearchWebPageView {
     func updateView(with status: SearchStatus) {
         searchView.update(with: status)
     }
-#warning("[weak self]????")
+    
     func showAlert(with type: Constants.AlerMessagesType) {
         let alert = UIAlertController(title: type.title, message: type.message, preferredStyle: .alert)
         let action = UIAlertAction(title: type.cancelButtonTitle, style: .cancel) {_ in
@@ -69,7 +69,6 @@ extension SearchWebPageViewController: UISearchTextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.enablesReturnKeyAutomatically = false
     }
-
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchView.searchView.searchTextField.resignFirstResponder()
@@ -144,16 +143,10 @@ private extension SearchWebPageViewController {
             return
         }
         let isKeyboardShowing = notification.name == UIResponder.keyboardWillShowNotification
-        let adjustedContentInset: UIEdgeInsets
-        if isKeyboardShowing {
-            adjustedContentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrame.height, right: 0)
-        } else {
-            adjustedContentInset = .zero
-        }
+        let adjustedInset: CGFloat = isKeyboardShowing ? keyboardFrame.height : 0
         let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? 0.25
         UIView.animate(withDuration: animationDuration) {
-//            self.searchView.searchStackView.contentInset = adjustedContentInset
-//            self.searchView.searchStackView.scrollIndicatorInsets = adjustedContentInset
+            self.searchView.searchStackView.layoutMargins.bottom = adjustedInset
         }
     }
     

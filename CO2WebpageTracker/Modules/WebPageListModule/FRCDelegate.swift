@@ -35,9 +35,9 @@ final class FRCDelegate: NSObject, NSFetchedResultsControllerDelegate {
                 delegate?.insertObject(at: indexPath, with: WebPageListViewData(id: webPage.identifier, url: webPage.url, date: webPage.date, rating: webPage.rating))
             }
         case .update:
-                if let indexPath = indexPath, let webPage = anObject as? WebPageInfo {
-                    delegate?.objectDidChange(at: indexPath, with: WebPageListViewData(id: webPage.identifier, url: webPage.url, date: webPage.date, rating: webPage.rating))
-                }
+            if let indexPath = indexPath, let webPage = anObject as? WebPageInfo {
+                delegate?.objectDidChange(at: indexPath, with: WebPageListViewData(id: webPage.identifier, url: webPage.url, date: webPage.date, rating: webPage.rating))
+            }
         case .delete:
             if let indexPath {
                 delegate?.deleteRow(at: indexPath)

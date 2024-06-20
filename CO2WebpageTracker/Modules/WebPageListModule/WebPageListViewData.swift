@@ -8,12 +8,12 @@
 import UIKit
 
 struct WebPageListViewData {
-//    var image: String?
     let id: UUID
     let url: String
     let date: Date
     let rating: String
 }
+
 extension WebPageListViewData {
     init(url: String, date: Date, rating: String) {
         self.id = UUID()

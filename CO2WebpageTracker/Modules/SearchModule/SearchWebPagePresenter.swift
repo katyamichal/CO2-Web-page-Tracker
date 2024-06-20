@@ -7,15 +7,6 @@
 
 import UIKit
 
-protocol ISearchWebPagePresenter: AnyObject {
-    func viewDidLoaded(view: ISearchWebPageView)
-    func prepareToLoad(with url: String) -> Bool
-    func loadData(with url: String)
-    func updateViewData()
-    func tryAgainButtonPressed()
-    func changeLoadingStatus()
-}
-
 final class SearchWebPagePresenter {
     
     private let networkService: INetworkService
@@ -24,7 +15,7 @@ final class SearchWebPagePresenter {
     private var viewData = SearchViewData(searchStatus: .search)
     
     // MARK: - Init
-
+    
     init(coordinator: Coordinator, networkService: INetworkService) {
         self.coordinator = coordinator
         self.networkService = networkService
@@ -39,7 +30,7 @@ extension SearchWebPagePresenter: ISearchWebPagePresenter {
         case .load(let loadingStatus):
             switch loadingStatus {
             case .paused:
-                viewData.searchStatus = .load(status: .loading(message: "We're loading you result. The test requires a full load of the page, so the bigger the webpage, the longer it takes."))
+                viewData.searchStatus = .load(status: .loading(message: Constants.SearchLoadingMessage.loading))
                 networkService.resumeLoading()
             case .loading:
                 viewData.searchStatus = .load(status: .paused)
@@ -64,7 +55,7 @@ extension SearchWebPagePresenter: ISearchWebPagePresenter {
         viewData.searchStatus = .search
         view?.updateView(with: viewData.searchStatus)
     }
-
+    
     func viewDidLoaded(view: ISearchWebPageView) {
         self.view = view
     }
@@ -80,12 +71,7 @@ extension SearchWebPagePresenter: ISearchWebPagePresenter {
     }
 }
 
-private extension SearchWebPagePresenter {
-    enum PauseLoadingImages {
-        static let paused = UIImage(systemName: Constants.UIElementSystemNames.pausedImage)
-        static let active = UIImage(systemName: Constants.UIElementSystemNames.activeImage)
-    }
-    
+private extension SearchWebPagePresenter {    
     func checkForEmptyTextField(with keyword: String) -> Bool {
         let searchKeyword = keyword.trimmingCharacters(in: .whitespaces)
         guard !searchKeyword.isEmpty else {

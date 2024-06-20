@@ -25,13 +25,7 @@ final class WebPageSearchView: UIView {
     
     // MARK: - UIElement
     
-//    lazy var scrollView: UIScrollView = {
-//        let scrollView = UIScrollView()
-//        scrollView.translatesAutoresizingMaskIntoConstraints = false
-//        return scrollView
-//    }()
-//    
-     lazy var searchStackView: UIStackView = {
+    lazy var searchStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -39,7 +33,7 @@ final class WebPageSearchView: UIView {
         stackView.alignment = .fill
         stackView.spacing = spacing
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
-         stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.isLayoutMarginsRelativeArrangement = true
         return stackView
     }()
     
@@ -50,14 +44,14 @@ final class WebPageSearchView: UIView {
         return view
     }()
     
-     lazy var searchView: SearchView = {
+    lazy var searchView: SearchView = {
         let view = SearchView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     // MARK: - Public methods
-
+    
     func setupActionForTryAgainButton(target: Any?, action: Selector) {
         loadingView.setupActionForTryAgainButton(target: target, action: action)
     }

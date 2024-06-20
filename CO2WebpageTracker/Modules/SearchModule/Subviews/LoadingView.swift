@@ -12,6 +12,8 @@ final class LoadingView: UIView {
     private let spacing: CGFloat = 32
     private let inset: CGFloat = 8
     private let buttonHeight: CGFloat = 50
+    private let buttonCornerRadius: CGFloat = 5
+    private let pauseLoadingButtonFontSize: CGFloat = 40
     
     var currentState: LoadingStatus = .nonActive {
         didSet {
@@ -29,7 +31,7 @@ final class LoadingView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
+    
     // MARK: - UI Elements
     
     private lazy var loadingStackView: UIStackView = {
@@ -58,7 +60,7 @@ final class LoadingView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .white
         button.contentMode = .scaleAspectFit
-        let font = UIFont.systemFont(ofSize: 40)
+        let font = UIFont.systemFont(ofSize: pauseLoadingButtonFontSize)
         let configuration = UIImage.SymbolConfiguration(font: font)
         let unselectedImage = UIImage(systemName: Constants.UIElementSystemNames.pausedImage, withConfiguration: configuration)
         let selectedImage = UIImage(systemName: Constants.UIElementSystemNames.activeImage, withConfiguration: configuration)
@@ -82,15 +84,15 @@ final class LoadingView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.tertiarySystemBackground, for: .normal)
-        button.titleLabel?.font = Fonts.Buttons.primaryButtonFont
-        button.setTitle("Try testing again", for: .normal)
+        button.titleLabel?.font = Fonts.Titles.subtitle
+        button.setTitle(Constants.SearchLoadingMessage.testAgain, for: .normal)
         button.backgroundColor = .black
-        button.layer.cornerRadius = buttonHeight / 2
+        button.layer.cornerRadius = buttonCornerRadius
         button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
         return button
     }()
     
-    // MARK: - Public - Setup method for Try Again Button
+    // MARK: - Public - Setup method for subviews' buttons
     
     func setupActionForTryAgainButton(target: Any?, action: Selector, for event: UIControl.Event = .touchUpInside) {
         tryAgainButton.addTarget(target, action: action, for: event)
@@ -126,7 +128,7 @@ private extension LoadingView {
     
     private func updateState() {
         switch currentState {
-        
+            
         case .loading(let message):
             activityIndicator.startAnimating()
             messageLabel.isHidden = false

@@ -12,6 +12,7 @@ final class WebPageListTableViewCell: UITableViewCell {
     
     private let spacing: CGFloat = 16
     private let inset: CGFloat = 8
+    private let buttonCornerRadius: CGFloat = 10
     
     static var reuseIdentifier: String {
         return String(describing: WebPageListTableViewCell.self)
@@ -41,7 +42,7 @@ final class WebPageListTableViewCell: UITableViewCell {
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.backgroundColor = .systemBackground
-        stackView.layer.cornerRadius = 10
+        stackView.layer.cornerRadius = buttonCornerRadius
         return stackView
     }()
 

@@ -20,6 +20,10 @@ enum Constants {
         static let searchBarPlaceholder = "Web Page URL"
     }
     
+    enum NavifationTitles {
+        static let webPageNavigationTitle = "Web Pages"
+    }
+    
     enum UIElementSystemNames {
         static let delete = "trash"
         static let pausedImage = "pause.circle"
@@ -56,6 +60,7 @@ enum Constants {
         static let urlSessionError = "Oops! Something went wrong while getting your result. Please try again."
         static let serverError = "Our server is currently unavailable. Please try again later."
         static let testAgain = "Try testing again"
+        static let loading = "We're loading you result. The test requires a full load of the page, so the bigger the webpage, the longer it takes."
     }
     
     enum CoreDataMessage {

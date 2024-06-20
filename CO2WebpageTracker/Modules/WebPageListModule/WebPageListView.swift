@@ -52,8 +52,4 @@ private extension WebPageListView {
         tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor).isActive = true
     }
-
 }
-
-#warning("Bug to solve")
-/// Warning once only: UITableView was told to layout its visible cells and other contents without being in the view hierarchy (the table view or one of its superviews has not been added to a window). This may cause bugs by forcing views inside the table view to load and perform layout without accurate information (e.g. table view bounds, trait collection, layout margins, safe area insets, etc), and will also cause unnecessary performance overhead due to extra layout passes. Make a symbolic breakpoint at UITableViewAlertForLayoutOutsideViewHierarchy to catch this in the debugger and see what caused this to occur, so you can avoid this action altogether if possible, or defer it until the table view has been added to a window. Table view: <UITableView: 0x11206bc00; frame = (0 157.667; 393 611.333); clipsToBounds = YES; gestureRecognizers = <NSArray: 0x600000ce56b0>; backgroundColor = UIExtendedGrayColorSpace 0 0; layer = <CALayer: 0x6000002eed00>; contentOffset: {0, 0}; contentSize: {393, 103.33333333333333}; adjustedContentInset: {0, 0, 0, 0}; dataSource: <CO2WebpageTracker.WebPageListViewController: 0x10b704830>>

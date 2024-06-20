@@ -13,6 +13,7 @@ final class SearchView: UIView {
     private let spacing: CGFloat = 32
     private let buttonHeight: CGFloat = 50
     private let searchTextFieldHeight: CGFloat = 50
+    private let buttonCornerRadius: CGFloat = 5
     
     // MARK: - Inits
     
@@ -90,7 +91,7 @@ final class SearchView: UIView {
         button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
         button.setTitle(Constants.UIElementNames.calculateButton, for: .normal)
         button.backgroundColor = .systemBackground
-        button.layer.cornerRadius = 5
+        button.layer.cornerRadius = buttonCornerRadius
         return button
     }()
     
@@ -120,7 +121,5 @@ private extension SearchView {
         searchStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -inset).isActive = true
         searchStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: inset).isActive = true
         searchStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -inset).isActive = true
-        
-    
     }
 }

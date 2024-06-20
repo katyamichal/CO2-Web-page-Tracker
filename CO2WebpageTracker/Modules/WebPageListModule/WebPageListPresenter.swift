@@ -13,7 +13,7 @@ final class WebPageListPresenter {
     private let dataService: IDataService
     private weak var coordinator: Coordinator?
     private var viewData: [WebPageListViewData] = []
-
+    
     init(coordinator: Coordinator, dataService: IDataService) {
         self.coordinator = coordinator
         self.dataService = dataService
@@ -28,6 +28,26 @@ final class WebPageListPresenter {
 }
 
 extension WebPageListPresenter: IWebPageListPresenter {
+    func viewDidLoaded(view: IWebPageListView) {
+        self.view = view
+        self.view?.setupNavigationBar(with: Constants.NavifationTitles.webPageNavigationTitle)
+        dataService.addFetchDelegate(self)
+        getData()
+    }
+    
+    func getRowCountInSection() -> Int {
+        viewData.count
+    }
+    
+    func rowForCell(tableView: UITableView, at index: IndexPath) -> UITableViewCell {
+        cell(for: tableView, at: index)
+    }
+    
+    func actionDidSwipeToDelete(at index: Int) {
+        guard index < viewData.count else { return }
+        dataService.deleteWebPage(url: viewData[index].url)
+    }
+    
     func sortByDate() {
         viewData.sort(by: {$0.date > $1.date})
         view?.update()
@@ -42,36 +62,9 @@ extension WebPageListPresenter: IWebPageListPresenter {
         let id = viewData[index].id
         (coordinator as? WebPageListCoordinator)?.showWebPageDetail(with: id)
     }
-    
-    func viewDidLoaded(view: IWebPageListView) {
-        self.view = view
-        self.view?.setupNavigationBar(with: "Web Pages")
-        dataService.addFetchDelegate(self)
-        getData()
-    }
-    
-    func getRowCountInSection() -> Int {
-        viewData.count
-    }
-    
-    func rowForCell(tableView: UITableView, at index: IndexPath) -> UITableViewCell {
-        cell(for: tableView, at: index)
-    }
-    
-    func updateRow(at index: Int) {
-        
-    }
-    
-    func permitDeleting(at index: IndexPath) -> Bool {
-        true
-    }
-    
-    func actionDidSwipeToDelete(at index: Int) {
-        guard index < viewData.count else { return }
-        dataService.deleteWebPage(url: viewData[index].url)
-    }
 }
 
+// MARK: - Fetch Result Delegate
 
 extension WebPageListPresenter: IFetchResultControllerDelegate {
     func beginUpdating() {
@@ -91,14 +84,13 @@ extension WebPageListPresenter: IFetchResultControllerDelegate {
         viewData[index.row] = object
         view?.update()
     }
-        
+    
     func deleteRow(at index: IndexPath) {
         viewData.remove(at: index.row)
         view?.deleteRow(at: index)
     }
 }
 
-#warning("Ask about     self.dataService.performFetch()")
 private extension WebPageListPresenter {
     func getData() {
         dataService.fetchWepPages { [weak self] result in

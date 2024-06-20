@@ -5,7 +5,7 @@
 //  Created by Catarina Polakowsky on 14.06.2024.
 //
 
-import UIKit
+import Foundation
 
 struct SearchViewData {
     var searchStatus: SearchStatus

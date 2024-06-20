@@ -19,7 +19,6 @@ final class WebPageListViewController: UIViewController {
     
     private var webPageListView: WebPageListView { return self.view as! WebPageListView }
     private let presenter: IWebPageListPresenter
-    var selectedIndexPaths = Set<IndexPath>()
 
     // MARK: - Inits
     
@@ -52,20 +51,20 @@ final class WebPageListViewController: UIViewController {
 }
 
 extension WebPageListViewController: IWebPageListView {
-    func update() {
-        webPageListView.tableView.reloadData()
-    }
-    
-    func setupNavigationBar(with title: String) {
-        navigationItem.title = title
-    }
-    
     func beginUpdate() {
         webPageListView.tableView.beginUpdates()
     }
     
     func endUpdate() {
         webPageListView.tableView.endUpdates()
+    }
+    
+    func update() {
+        webPageListView.tableView.reloadData()
+    }
+    
+    func setupNavigationBar(with title: String) {
+        navigationItem.title = title
     }
     
     func insertRow(at index: IndexPath) {
@@ -82,7 +81,6 @@ extension WebPageListViewController: IWebPageListView {
 extension WebPageListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        selectedIndexPaths.insert(indexPath)
         presenter.showDetailView(at: indexPath.row)
     }
 }
@@ -118,8 +116,8 @@ private extension WebPageListViewController {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.tintColor = .systemBackground
-        
-        let configuration = UIImage.SymbolConfiguration(pointSize: 20, weight: .light)
+        let pointSize: CGFloat = 20
+        let configuration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .light)
         let image = UIImage(systemName: Constants.UIElementSystemNames.actionMenu, withConfiguration: configuration)
         let rightBarItem = UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
         rightBarItem.tintColor = .white
