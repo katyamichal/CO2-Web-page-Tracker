@@ -8,11 +8,9 @@
 import UIKit
 
 final class WebPageCoordinator: Coordinator {
-    
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     private let navigationController: UINavigationController
-    
     private let dataService: IDataService
     private let dataDTO: WebsiteData?
     private let webPageId: UUID?

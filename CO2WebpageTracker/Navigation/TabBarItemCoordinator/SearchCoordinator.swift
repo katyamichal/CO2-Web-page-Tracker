@@ -6,25 +6,16 @@
 //
 
 import UIKit
-#warning("прокинуть дата сервис")
 final class SearchCoordinator: Coordinator, CoordinatorDetail {
-    func showDetail(with id: UUID) {
-        let detailCoordinator = WebPageCoordinator(navigationController: navigationController, dataService: DataService(), webPageId: id)
-        childCoordinators.append(detailCoordinator)
-        detailCoordinator.start()
-    }
-    
-    
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
-    let navigationController: UINavigationController
+    private let navigationController: UINavigationController
+    private let networkService: INetworkService
+    private let dataService: IDataService
     
-    let networkService: INetworkService
-    
-    init(navigationController: UINavigationController, networkService: INetworkService) {
+    init(navigationController: UINavigationController, networkService: INetworkService, dataService: IDataService) {
         self.navigationController = navigationController
-//        self.factory = factory
-//        self.dataService = dataService
+        self.dataService = dataService
         self.networkService = networkService
     }
     
@@ -37,6 +28,12 @@ final class SearchCoordinator: Coordinator, CoordinatorDetail {
         childCoordinators.append(detailCoordinator)
         detailCoordinator.start()
         
+    }
+    
+    func showDetail(with id: UUID) {
+        let detailCoordinator = WebPageCoordinator(navigationController: navigationController, dataService: dataService, webPageId: id)
+        childCoordinators.append(detailCoordinator)
+        detailCoordinator.start()
     }
 }
 

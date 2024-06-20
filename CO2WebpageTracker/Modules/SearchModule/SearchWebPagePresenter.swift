@@ -109,7 +109,6 @@ private extension SearchWebPagePresenter {
             }
             DispatchQueue.main.async {
                 self.view?.updateView(with: self.viewData.searchStatus)
-                print(self.viewData.searchStatus)
             }
         }
     }

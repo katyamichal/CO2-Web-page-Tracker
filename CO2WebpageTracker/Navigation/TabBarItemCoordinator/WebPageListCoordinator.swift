@@ -8,22 +8,14 @@
 import UIKit
 
 final class WebPageListCoordinator: Coordinator, CoordinatorDetail {
-    func showDetail(with id: UUID) {
-        showWebPageDetail(with: id)
-    }
-    
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
-    let navigationController: UINavigationController
-//    let factory: ScreenFactory
-    let dataService: IDataService
-//    let networkService: INetworkService
+    private let navigationController: UINavigationController
+    private  let dataService: IDataService
     
     init(navigationController: UINavigationController, dataService: IDataService) {
         self.navigationController = navigationController
-//        self.factory = factory
         self.dataService = dataService
-      //  self.networkService = networkService
     }
     
     func start() {
@@ -35,6 +27,10 @@ final class WebPageListCoordinator: Coordinator, CoordinatorDetail {
         webPageCoordinator.parentCoordinator = self
         childCoordinators.append(webPageCoordinator)
         webPageCoordinator.start()
+    }
+    
+    func showDetail(with id: UUID) {
+        showWebPageDetail(with: id)
     }
 }
 

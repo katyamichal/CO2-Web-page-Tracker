@@ -17,7 +17,6 @@ final class TabBarCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     private var window: UIWindow
-   // private let factory: ScreenFactory?
     private let networkService: INetworkService
     private let dataService: IDataService
     private var tabBarController: TabBarController?
@@ -26,7 +25,6 @@ final class TabBarCoordinator: Coordinator {
 
     init(window: UIWindow, networkService: INetworkService, dataService: IDataService) {
         self.window = window
-        //self.factory = factory
         self.networkService = networkService
         self.dataService = dataService
     }
@@ -38,14 +36,13 @@ final class TabBarCoordinator: Coordinator {
 
 private extension TabBarCoordinator {
     func showTabBarFlow() {
-        // 1
         let searchImage = UIImage(systemName: TabBarImageView.search.rawValue)
         let searchNavigationController = UINavigationController()
         searchNavigationController.tabBarItem = UITabBarItem(title: "Search", image: searchImage, selectedImage: searchImage)
-        let searchCoordinator = SearchCoordinator(navigationController: searchNavigationController, networkService: networkService)
+        let searchCoordinator = SearchCoordinator(navigationController: searchNavigationController, networkService: networkService, dataService: dataService)
         searchCoordinator.parentCoordinator = self
         searchCoordinator.start()
-        // 2
+        
         let listImage = UIImage(systemName: TabBarImageView.list.rawValue)
         let webPageListNavigationController = UINavigationController()
         webPageListNavigationController.tabBarItem = UITabBarItem(title: "Web Pages", image: listImage, selectedImage: listImage)
@@ -53,11 +50,9 @@ private extension TabBarCoordinator {
         webPageListCoordinator.parentCoordinator = self
         webPageListCoordinator.start()
         
-        // 3
         childCoordinators.append(searchCoordinator)
         childCoordinators.append(webPageListCoordinator)
         
-        //4
         let tabBarControllers = [searchNavigationController, webPageListNavigationController]
         tabBarController = TabBarController(tabBarControllers: tabBarControllers)
         let appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
