@@ -36,11 +36,6 @@ final class WebPageListCoordinator: Coordinator, CoordinatorDetail {
         childCoordinators.append(webPageCoordinator)
         webPageCoordinator.start()
     }
-    
-    func dismiss(with coordinator: Coordinator?) {
-//        childCoordinators.removeAll(where: {$0 == coordinator})
-        navigationController.dismiss(animated: true)
-    }
 }
 
 private extension WebPageListCoordinator {

@@ -39,7 +39,7 @@ extension SearchWebPagePresenter: ISearchWebPagePresenter {
         case .load(let loadingStatus):
             switch loadingStatus {
             case .paused:
-                viewData.searchStatus = .load(status: .loading(message: "You have stopped loading"))
+                viewData.searchStatus = .load(status: .loading(message: "We're loading you result. The test requires a full load of the page, so the bigger the webpage, the longer it takes."))
                 networkService.resumeLoading()
             case .loading:
                 viewData.searchStatus = .load(status: .paused)

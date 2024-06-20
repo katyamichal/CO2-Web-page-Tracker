@@ -75,7 +75,7 @@ extension WebPagePresenter: IWebPagePresenter {
     func deleteButtonDidPressed() {
         guard let viewData else { return }
         dataService.deleteWebPage(url: viewData.url)
-        (coordinator as? WebPageListCoordinator)?.dismiss(with: coordinator)
+        (coordinator as? WebPageCoordinator)?.dismiss()
     }
     
     func getSectionCount() -> Int {

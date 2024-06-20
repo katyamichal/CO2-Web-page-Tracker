@@ -124,9 +124,8 @@ private extension WebPageListViewController {
         let rightBarItem = UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
         rightBarItem.tintColor = .white
         let barButtonMenu = UIMenu(title: "", children: [
-            UIAction(title: Constants.UIElementTitle.sortBy, image: UIImage(systemName: Constants.UIElementSystemNames.sortBy ), handler: sortByCO2),
-            UIAction(title: Constants.UIElementTitle.selectWebPage, image: UIImage(systemName: Constants.UIElementSystemNames.select), handler: selectWebPages),
-            UIAction(title: Constants.UIElementTitle.groubByCO2, image: UIImage(systemName: Constants.UIElementSystemNames.co2), handler: groupWebPages)
+            UIAction(title: Constants.UIElementTitle.sortByCO2, image: UIImage(systemName: Constants.UIElementSystemNames.co2), handler: sortByCO2),
+            UIAction(title: Constants.UIElementTitle.sortByDate, image: UIImage(systemName: Constants.UIElementSystemNames.calendar), handler: sortByDate)
         ])
         rightBarItem.menu = barButtonMenu
         navigationItem.rightBarButtonItem = rightBarItem
@@ -148,17 +147,7 @@ private extension WebPageListViewController {
     func sortByCO2(_ action: UIAction) {
         presenter.sortByCO2()
     }
-    func selectWebPages(_ action: UIAction) {
-        selectedIndexPaths.removeAll()
-        
-        // Add all indexPaths to the selectedIndexPaths set
-        for section in 0..<webPageListView.tableView.numberOfSections {
-            for row in 0..<webPageListView.tableView.numberOfRows(inSection: section) {
-                let indexPath = IndexPath(row: row, section: section)
-                selectedIndexPaths.insert(indexPath)
-            }
-        }
+    func sortByDate(_ action: UIAction) {
+        presenter.sortByDate()
     }
-    
-    func groupWebPages(_ action: UIAction) {}
 }

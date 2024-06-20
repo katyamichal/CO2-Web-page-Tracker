@@ -32,15 +32,15 @@ enum Constants {
         static let select = "checkmark.circle"
         static let globe = "globe.asia.australia.fill"
         static let camera = "camera"
+        static let calendar = "calendar"
     }
     
     enum UIElementTitle {
         static let delete = "Delete"
         static let save = "Save"
         static let share = "Share"
-        static let sortBy = "Sort by CO2"
-        static let selectWebPage = "Select Web Pages"
-        static let groubByCO2 = "Group by CO2 rating"
+        static let sortByCO2 = "Sort by CO2"
+        static let sortByDate = "Sort by Date"
         static let webPageList = "Wep Pages"
         static let addPhoto = "Add Photo"
     }

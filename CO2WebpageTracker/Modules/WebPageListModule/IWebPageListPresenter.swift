@@ -24,6 +24,7 @@ protocol IWebPageListTableViewHandler: AnyObject {
     func actionDidSwipeToDelete(at index: Int)
     func showDetailView(at index: Int)
     func sortByCO2()
+    func sortByDate()
 }
 
 

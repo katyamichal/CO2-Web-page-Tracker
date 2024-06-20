@@ -27,6 +27,10 @@ final class WebPageCoordinator: Coordinator {
     func start() {
         showModule()
     }
+    
+    func dismiss() {
+        navigationController.popViewController(animated: true)
+    }
 }
 
 private extension WebPageCoordinator {

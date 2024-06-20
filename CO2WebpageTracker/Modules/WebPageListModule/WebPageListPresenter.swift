@@ -28,6 +28,11 @@ final class WebPageListPresenter {
 }
 
 extension WebPageListPresenter: IWebPageListPresenter {
+    func sortByDate() {
+        viewData.sort(by: {$0.date > $1.date})
+        view?.update()
+    }
+    
     func sortByCO2() {
         viewData.sort(by: {$0.rating < $1.rating})
         view?.update()
