@@ -121,7 +121,6 @@ private extension SearchWebPageViewController {
         guard let str else {
             return
         }
-        print(str)
         if presenter.prepareToLoad(with: str) {
             presenter.loadData(with: str)
         }

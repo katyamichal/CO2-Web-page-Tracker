@@ -7,7 +7,13 @@
 
 import UIKit
 #warning("прокинуть дата сервис")
-final class SearchCoordinator: Coordinator {
+final class SearchCoordinator: Coordinator, CoordinatorDetail {
+    func showDetail(with id: UUID) {
+        let detailCoordinator = WebPageCoordinator(navigationController: navigationController, dataService: DataService(), webPageId: id)
+        childCoordinators.append(detailCoordinator)
+        detailCoordinator.start()
+    }
+    
     
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []

@@ -62,6 +62,7 @@ final class CarbonRatingCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = Fonts.Body.descriptionFont
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         return label
     }()
@@ -70,6 +71,7 @@ final class CarbonRatingCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = Fonts.Body.descriptionFont
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         return label
     }()
@@ -78,6 +80,7 @@ final class CarbonRatingCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = Fonts.Body.descriptionFont
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         return label
     }()
@@ -95,6 +98,7 @@ final class CarbonRatingCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = Fonts.Body.defaultFont
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         return label
     }()
@@ -104,6 +108,7 @@ final class CarbonRatingCell: UITableViewCell {
         resultForLabel.text = nil
         descriptionLabel.text = nil
         cleanerThanLabel.text = nil
+        dateLabel.text = nil
         super.prepareForReuse()
     }
     
@@ -126,11 +131,10 @@ private extension CarbonRatingCell {
     }
     
     func setupViews() {
-        contentView.addSubview(stackView)
- 
         contentView.addSubview(scaleView)
         scaleView.addSubview(scaleLetterLabel)
-    
+        
+        contentView.addSubview(stackView)
         stackView.addArrangedSubview(resultForLabel)
         stackView.addArrangedSubview(descriptionLabel)
         stackView.addArrangedSubview(ratingView)
@@ -151,5 +155,6 @@ private extension CarbonRatingCell {
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -inset).isActive = true
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        //stackView.heightAnchor.constraint(equalToConstant: 500).isActive = true
     }
 }

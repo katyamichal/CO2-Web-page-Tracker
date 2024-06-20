@@ -12,6 +12,10 @@ enum Constants {
         static let session = "URLSearchSession"
     }
     
+    enum UserDefaultKeys {
+        static let appState = "appState"
+    }
+    
     enum PlaceholderStrings {
         static let searchBarPlaceholder = "Web Page URL"
     }
@@ -27,6 +31,7 @@ enum Constants {
         static let save = "tray.full"
         static let select = "checkmark.circle"
         static let globe = "globe.asia.australia.fill"
+        static let camera = "camera"
     }
     
     enum UIElementTitle {
@@ -37,6 +42,7 @@ enum Constants {
         static let selectWebPage = "Select Web Pages"
         static let groubByCO2 = "Group by CO2 rating"
         static let webPageList = "Wep Pages"
+        static let addPhoto = "Add Photo"
     }
     
     enum UIElementNames {

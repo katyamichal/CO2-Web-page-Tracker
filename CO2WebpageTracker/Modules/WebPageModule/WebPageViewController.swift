@@ -18,6 +18,8 @@ final class WebPageViewController: UIViewController {
     private var webPageView: WebPageView { return self.view as! WebPageView }
     private let presenter: IWebPagePresenter
     
+    private var isEdited: Bool = false
+    
     // MARK: - Inits
     
     init(presenter: IWebPagePresenter) {
@@ -40,6 +42,24 @@ final class WebPageViewController: UIViewController {
         presenter.viewDidLoaded(view: self)
         setupTableViewDelegates()
         setupNavigationBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
+        if appState?.isEditingMode == .edinitig {
+            isEdited = true
+            presenter.recoverEditingState()
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if isEdited {
+            var appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
+            appState?.isEditingMode = .edinitig
+            UserDefaults.standard.setValue(appState, forKey: Constants.UserDefaultKeys.appState)
+        }
     }
 }
 
@@ -112,7 +132,8 @@ private extension WebPageViewController {
         let barButtonMenu = UIMenu(title: "", children: [
             UIAction(title: Constants.UIElementTitle.share, image: UIImage(systemName: Constants.UIElementSystemNames.share), handler: shareWebPage),
             UIAction(title: Constants.UIElementTitle.save, image: UIImage(systemName: Constants.UIElementSystemNames.save), handler: save),
-            UIAction(title: Constants.UIElementTitle.delete, image: UIImage(systemName: Constants.UIElementSystemNames.delete), handler: selectionHandler)
+            UIAction(title: Constants.UIElementTitle.delete, image: UIImage(systemName: Constants.UIElementSystemNames.delete), handler: selectionHandler),
+            UIAction(title: Constants.UIElementTitle.addPhoto, image: UIImage(systemName: Constants.UIElementSystemNames.camera), handler: addPhoto)
         ])
         rightBarItem.menu = barButtonMenu
         navigationItem.rightBarButtonItem = rightBarItem
@@ -125,13 +146,48 @@ private extension WebPageViewController {
     func selectionHandler(action: UIAction) {
         presenter.deleteButtonDidPressed()
     }
-    
+    #warning("спросить!!!")
     func shareWebPage(action: UIAction) {
-        //
-        let url = URL(string: "https://www.websitecarbon.com/website/instagram.com/")!
-        let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-        activityVC.title = "Instagram"
-        activityVC.excludedActivityTypes = [.airDrop]
-        self.present(activityVC, animated: true)
+        DispatchQueue.global().async {
+            let url = URL(string: "https://www.websitecarbon.com/website/instagram.com/")!
+            DispatchQueue.main.async {
+                let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                activityVC.title = "Instagram"
+                activityVC.excludedActivityTypes = [.airDrop]
+                self.present(activityVC, animated: true)
+            }
+        }
+    }
+    
+    func addPhoto(action: UIAction) {
+        choosePhotoFromLibrary()
+    }
+}
+
+extension WebPageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func choosePhotoFromLibrary() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    // MARK: - Image Picker Delegates
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
+        if let theImage = image {
+            addPhoto(with: theImage)
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func addPhoto(with image: UIImage) {
+        presenter.updateData(with: image)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }

@@ -10,4 +10,5 @@ enum WebPageSection: Int, CaseIterable {
     case carbonRating = 0
     case renewable
     case energyType
+    case image
 }

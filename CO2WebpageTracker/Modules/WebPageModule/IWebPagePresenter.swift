@@ -15,4 +15,6 @@ protocol IWebPagePresenter: AnyObject {
     func deleteButtonDidPressed()
     func prepareToSave()
     func saveWebPage()
+    func recoverEditingState()
+    func updateData(with image: UIImage)
 }

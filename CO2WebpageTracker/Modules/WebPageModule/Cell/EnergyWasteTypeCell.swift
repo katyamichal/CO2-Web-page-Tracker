@@ -52,6 +52,7 @@ final class EnergyWasteTypeCell: UITableViewCell {
         label.numberOfLines = 0
         label.text = "Over a year, with"
         label.font = Fonts.Body.defaultFont
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         return label
     }()
@@ -60,6 +61,7 @@ final class EnergyWasteTypeCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = Fonts.Body.defaultFont
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         return label
     }()
@@ -78,12 +80,14 @@ final class EnergyWasteTypeCell: UITableViewCell {
         label.numberOfLines = 0
         label.text = "monthly page views, this page produces"
         label.font = Fonts.Body.defaultFont
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         return label
     }()
     
     private lazy var energyLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = Fonts.Body.defaultFont
         label.textColor = .white

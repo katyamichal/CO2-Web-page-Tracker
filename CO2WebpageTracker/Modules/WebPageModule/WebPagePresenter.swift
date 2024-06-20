@@ -17,6 +17,7 @@ final class WebPagePresenter {
     private let webPageId: UUID?
     private let stepperDelegate = StepperDelegate()
     private lazy var viewDataConstructor = ViewDataConstructor(viewData: viewData)
+    var currentImage = UIImage(systemName: "globe")
     
     init(coordinator: Coordinator?, dataService: IDataService, id: UUID?) {
         self.dataService = dataService
@@ -41,6 +42,17 @@ extension WebPagePresenter {
 }
 #warning("ask for self.saveWebPage()")
 extension WebPagePresenter: IWebPagePresenter {
+    
+    func updateData(with image: UIImage) {
+        viewData?.image = image
+        view?.update()
+    }
+    
+    func recoverEditingState() {
+        let appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
+      //  image = appState?.image
+    }
+    
     func prepareToSave() {
         guard let viewData else { return }
         let isDublicated = dataService.findDublicate(with: viewData)
@@ -76,6 +88,8 @@ extension WebPagePresenter: IWebPagePresenter {
         switch section {
         case .energyType, .carbonRating, .renewable:
             return 1
+        case .image:
+            return (viewData?.image != nil) ? 1 : 0
         }
     }
     
@@ -135,8 +149,15 @@ private extension WebPagePresenter {
             cell.update(with: viewDataConstructor.energy, stepperValue: viewDataConstructor.stepperValue)
             cell.configureStepperDelgate(with: stepperDelegate)
             return cell
+        case .image:
+            guard let image = viewData.image, let cell = tableView.dequeueReusableCell(withIdentifier: ImageCell.reuseIdentifier, for: indexPath) as? ImageCell else {
+                return UITableViewCell()
+            }
+            cell.update(with: viewData.url, and: image)
+            return cell
         }
     }
+}
     
     func convertGreenToString(_ isGreen: BoolOrString) -> String {
         switch isGreen {
@@ -160,4 +181,4 @@ private extension WebPagePresenter {
             return Constants.CoreDataMessage.fetchError
         }
     }
-}
+

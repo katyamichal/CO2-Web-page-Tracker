@@ -31,6 +31,7 @@ final class WebPageView: UIView {
         tableView.register(CarbonRatingCell.self, forCellReuseIdentifier: CarbonRatingCell.reuseIdentifier)
         tableView.register(EnergyWasteTypeCell.self, forCellReuseIdentifier: EnergyWasteTypeCell.reuseIdentifier)
         tableView.register(RenewableCell.self, forCellReuseIdentifier: RenewableCell.reuseIdentifier)
+        tableView.register(ImageCell.self, forCellReuseIdentifier: ImageCell.reuseIdentifier)
         return tableView
     }()
 }

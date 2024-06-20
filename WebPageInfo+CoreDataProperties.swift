@@ -2,7 +2,7 @@
 //  WebPageInfo+CoreDataProperties.swift
 //  CO2WebpageTracker
 //
-//  Created by Catarina Polakowsky on 18.06.2024.
+//  Created by Catarina Polakowsky on 20.06.2024.
 //
 //
 
@@ -24,6 +24,8 @@ extension WebPageInfo {
     @NSManaged public var isGreen: String
     @NSManaged public var rating: String
     @NSManaged public var url: String
+    @NSManaged public var image: Data?
+
 }
 
 extension WebPageInfo : Identifiable {

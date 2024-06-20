@@ -12,3 +12,7 @@ protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
     func start()
 }
+
+protocol CoordinatorDetail: AnyObject {
+    func showDetail(with id: UUID)
+}

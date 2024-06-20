@@ -7,7 +7,11 @@
 
 import UIKit
 
-final class WebPageListCoordinator: Coordinator {
+final class WebPageListCoordinator: Coordinator, CoordinatorDetail {
+    func showDetail(with id: UUID) {
+        showWebPageDetail(with: id)
+    }
+    
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     let navigationController: UINavigationController

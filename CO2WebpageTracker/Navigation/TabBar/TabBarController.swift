@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 final class TabBarController: UITabBarController {
     
     init(tabBarControllers: [UIViewController]) {
@@ -24,6 +25,12 @@ final class TabBarController: UITabBarController {
         super.viewDidLoad()
         setupTabBarStyle()
     }
+    
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+       var appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
+        appState?.currentTab = Tab(rawValue: selectedIndex) ?? .search
+        UserDefaults.standard.setValue(appState, forKey: Constants.UserDefaultKeys.appState)
+    }
 }
 
 private extension TabBarController {
@@ -34,3 +41,5 @@ private extension TabBarController {
         tabBar.unselectedItemTintColor = .white
     }
 }
+
+

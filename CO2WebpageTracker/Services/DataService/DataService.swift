@@ -7,6 +7,7 @@
 
 
 import CoreData
+import UIKit
 
 protocol IDataService: AnyObject {
     func addFetchDelegate(_ delegate: IFetchResultControllerDelegate)
@@ -90,6 +91,10 @@ final class DataService: IDataService {
     
     func fetchWepPage(with webPageId: UUID, completionHandler: (WebPageViewData) -> Void) {
         guard let webPage = getWebPage(with: webPageId) else { return }
+        var image: UIImage?
+        if let imageData = webPage.image {
+            image = UIImage(data: imageData)
+        }
         completionHandler(WebPageViewData(
             id: webPage.identifier,
             url: webPage.url,
@@ -98,7 +103,8 @@ final class DataService: IDataService {
             cleanerThan: webPage.cleanerThan,
             isGreen: webPage.isGreen,
             gramForVisit: webPage.gramForVisit,
-            energy: webPage.energy
+            energy: webPage.energy, 
+            image: image
         ))
     }
     // MARK: - Add
@@ -119,24 +125,33 @@ final class DataService: IDataService {
         }
         return isDublicated
     }
-
+    
     func add(webPage: WebPageViewData, completion: (String) -> Void) {
         if findDublicate(with: webPage) {
             deleteWebPage(url: webPage.url)
         }
-        print(webPage.url)
-            let context = PersistantContainerStorage.persistentContainer.viewContext
-            let newWebPage = WebPageInfo(context: context)
-            newWebPage.identifier = webPage.id
-            newWebPage.url = webPage.url
-            newWebPage.date = webPage.date
-            newWebPage.rating = webPage.ratingLetter
-            newWebPage.isGreen = webPage.isGreen
-            newWebPage.gramForVisit = webPage.gramForVisit
-            newWebPage.cleanerThan = webPage.cleanerThan
-            newWebPage.energy = webPage.energy
-            PersistantContainerStorage.saveContext()
-            completion("Web Page succesefully save")
+        let context = PersistantContainerStorage.persistentContainer.viewContext
+        let newWebPage = WebPageInfo(context: context)
+        var binaryImageData: Data?
+        if let image = webPage.image {
+            if let imageData = image.jpegData(compressionQuality: 1.0) {
+                binaryImageData = imageData
+            } else {
+                print("Error converting image to data")
+            }
+        }
+
+        newWebPage.identifier = webPage.id
+        newWebPage.url = webPage.url
+        newWebPage.date = webPage.date
+        newWebPage.rating = webPage.ratingLetter
+        newWebPage.isGreen = webPage.isGreen
+        newWebPage.gramForVisit = webPage.gramForVisit
+        newWebPage.cleanerThan = webPage.cleanerThan
+        newWebPage.energy = webPage.energy
+        newWebPage.image = binaryImageData
+        PersistantContainerStorage.saveContext()
+        completion("Web Page succesefully save")
     }
     
     func deleteWebPage(url: String) {
@@ -146,7 +161,6 @@ final class DataService: IDataService {
         fetchRequest.predicate = NSPredicate(format: "url == %@", url)
         do {
             let webPages = try context.fetch(fetchRequest)
-            print(webPages)
             webPages.forEach { context.delete($0) }
         } catch let error as NSError {
             print("Error to delete: \(error)")

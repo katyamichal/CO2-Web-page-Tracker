@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 // energy == over a year, with 1 monthly page views, this web page produces
 #warning("private set??")
@@ -18,10 +19,11 @@ struct WebPageViewData {
     let isGreen: String
     let gramForVisit: Double
     let energy: Double
+    var image: UIImage?
 }
 
 extension WebPageViewData {
-    init(url: String, date: Date, cleanerThan: Double, ratingLetter: String, isGreen: String, gramForVisit: Double, energy: Double) {
+    init(url: String, date: Date, cleanerThan: Double, ratingLetter: String, isGreen: String, gramForVisit: Double, energy: Double, image: UIImage? = nil) {
         self.id = UUID()
         self.url = url
         self.date = date
@@ -30,5 +32,6 @@ extension WebPageViewData {
         self.isGreen = isGreen
         self.gramForVisit = gramForVisit
         self.energy = energy
+        self.image = image
     }
 }
