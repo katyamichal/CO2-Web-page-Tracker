@@ -25,13 +25,6 @@ final class TabBarController: UITabBarController {
         super.viewDidLoad()
         setupTabBarStyle()
     }
-    
-//    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-//        var appState = AppStateService.shared.retrieve()
-//        appState?.currentTab = Tab(rawValue: selectedIndex) ?? .search
-//        guard let appState else { return }
-//        AppStateService.shared.save(appState: appState)
-//    }
 }
 
 private extension TabBarController {

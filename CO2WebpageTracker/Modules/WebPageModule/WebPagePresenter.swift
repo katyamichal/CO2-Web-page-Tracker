@@ -77,11 +77,6 @@ extension WebPagePresenter: IWebPagePresenter {
         viewData?.image = image
         saveWebPage()
     }
-
-    func recoverEditingState(with stepperValue: Int, and previosValue: Int) {
-        viewDataConstructor.stepperValue = stepperValue
-        viewDataConstructor.previousValue = previosValue
-    }
     
     func prepareToSave() {
         guard let viewData else { return }
@@ -98,9 +93,9 @@ extension WebPagePresenter: IWebPagePresenter {
         guard let viewData else { return }
         dataService.add(webPage: viewData) { [weak self] _ in
             self?.getData()
+            self?.view?.update()
         }
     }
-#warning("dismiss")
     func deleteButtonDidPressed() {
         guard let viewData else { return }
         dataService.deleteWebPage(url: viewData.url)
@@ -188,7 +183,6 @@ private extension WebPagePresenter {
             return cell
         }
     }
-}
     
     func convertGreenToString(_ isGreen: BoolOrString) -> String {
         switch isGreen {
@@ -212,4 +206,13 @@ private extension WebPagePresenter {
             return Constants.CoreDataMessage.fetchError
         }
     }
+    
+    func recoverEditingState(with stepperValue: Int, and previosValue: Int) {
+        viewDataConstructor.stepperValue = stepperValue
+        viewDataConstructor.previousValue = previosValue
+    }
+}
+
+
+
 

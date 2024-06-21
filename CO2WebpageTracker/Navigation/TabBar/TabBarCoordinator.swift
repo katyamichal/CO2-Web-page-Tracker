@@ -55,13 +55,6 @@ private extension TabBarCoordinator {
         
         let tabBarControllers = [searchNavigationController, webPageListNavigationController]
         tabBarController = TabBarController(tabBarControllers: tabBarControllers)
-        
-//        let appState = AppStateService.shared.retrieve()
-//        let curTab = appState?.currentTab.rawValue ?? 0
-//        tabBarController?.selectedIndex = curTab
-//        if let appState, appState.isEditingMode == .edinitig, let url = appState.url {
-//            (childCoordinators[curTab] as? CoordinatorDetail)?.showDetail(with: url)
-//        }
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
     }

@@ -6,10 +6,6 @@
 //
 
 import Foundation
-//protocol IAppStateService {
-//    func save(appState: AppState)
-//    func retrieve() -> [LocaleProduct]?
-//}
 
 final class AppStateService  {
     static let shared = AppStateService()
@@ -23,13 +19,9 @@ final class AppStateService  {
     func save(appState: AppState) {
         do {
             var appStates = retrieveAll() ?? []
-            
-            // Check if appState for the URL already exists
             if let index = appStates.firstIndex(where: { $0.url == appState.url }) {
-                // Update the existing appState
                 appStates[index] = appState
             } else {
-                // Append the new appState
                 appStates.append(appState)
             }
             
@@ -62,7 +54,6 @@ private extension AppStateService {
         guard let data = userDefaults.data(forKey: key) else { return nil }
         do {
             let appStates = try decoder.decode([AppState].self, from: data)
-            print(appStates)
             return appStates
         } catch {
             print("Failed to retrieve app states: \(error)")

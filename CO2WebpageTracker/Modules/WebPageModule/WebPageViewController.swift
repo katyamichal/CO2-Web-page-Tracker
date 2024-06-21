@@ -33,7 +33,7 @@ final class WebPageViewController: UIViewController {
     }
     
     // MARK: - Cycle
-
+    
     override func loadView() {
         view = WebPageView()
     }
@@ -134,7 +134,7 @@ private extension WebPageViewController {
     func selectionHandler(action: UIAction) {
         presenter.deleteButtonDidPressed()
     }
-    #warning("спросить!!!")
+#warning("переделать")
     func shareWebPage(action: UIAction) {
         DispatchQueue.global().async {
             let url = URL(string: "https://www.websitecarbon.com/website/instagram.com/")!
