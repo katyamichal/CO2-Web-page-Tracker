@@ -110,12 +110,12 @@ private extension WebPageViewController {
         webPageView.tableView.delegate = self
     }
     
-    
     func setupNavigationBar() {
-        let configuration = UIImage.SymbolConfiguration(pointSize: 20, weight: .light)
+        let pointSize: CGFloat = 20
+        let configuration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .light)
         let image = UIImage(systemName: Constants.UIElementSystemNames.actionMenu, withConfiguration: configuration)
         let rightBarItem = UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
-        rightBarItem.tintColor = .white
+        rightBarItem.tintColor = .systemBackground
         
         let barButtonMenu = UIMenu(title: "", children: [
             UIAction(title: Constants.UIElementTitle.share, image: UIImage(systemName: Constants.UIElementSystemNames.share), handler: shareWebPage),
@@ -123,6 +123,7 @@ private extension WebPageViewController {
             UIAction(title: Constants.UIElementTitle.delete, image: UIImage(systemName: Constants.UIElementSystemNames.delete), handler: selectionHandler),
             UIAction(title: Constants.UIElementTitle.addPhoto, image: UIImage(systemName: Constants.UIElementSystemNames.camera), handler: addPhoto)
         ])
+        rightBarItem.tintColor = .label
         rightBarItem.menu = barButtonMenu
         navigationItem.rightBarButtonItem = rightBarItem
     }

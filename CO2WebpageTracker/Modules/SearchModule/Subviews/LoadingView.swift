@@ -83,10 +83,10 @@ final class LoadingView: UIView {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(.tertiarySystemBackground, for: .normal)
+        button.setTitleColor(.label, for: .normal)
         button.titleLabel?.font = Fonts.Titles.subtitle
         button.setTitle(Constants.SearchLoadingMessage.testAgain, for: .normal)
-        button.backgroundColor = .black
+        button.backgroundColor = .systemBackground
         button.layer.cornerRadius = buttonCornerRadius
         button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
         return button

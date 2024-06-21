@@ -58,7 +58,7 @@ private extension GradientRatingView {
     
     func setupMarker() {
         let marker = UIImageView(image: UIImage(systemName: Constants.UIElementSystemNames.globe))
-        marker.tintColor = .systemBackground
+        marker.tintColor = .white
         marker.frame = CGRect(x: self.bounds.width * 0.75, y: self.bounds.height + 10, width: 30, height: 30)
         self.addSubview(marker)
     }

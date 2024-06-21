@@ -116,7 +116,7 @@ private extension WebPageListViewController {
     func setupNavigationBar() {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.tintColor = .systemBackground
+        navigationController?.navigationBar.tintColor = .label
         let pointSize: CGFloat = 20
         let configuration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .light)
         let image = UIImage(systemName: Constants.UIElementSystemNames.actionMenu, withConfiguration: configuration)
@@ -126,6 +126,7 @@ private extension WebPageListViewController {
             UIAction(title: Constants.UIElementTitle.sortByCO2, image: UIImage(systemName: Constants.UIElementSystemNames.co2), handler: sortByCO2),
             UIAction(title: Constants.UIElementTitle.sortByDate, image: UIImage(systemName: Constants.UIElementSystemNames.calendar), handler: sortByDate)
         ])
+        rightBarItem.tintColor = .label
         rightBarItem.menu = barButtonMenu
         navigationItem.rightBarButtonItem = rightBarItem
     }
@@ -135,7 +136,7 @@ private extension WebPageListViewController {
             self.deleteAction(tableView, at: indexPath)
         }
         deleteAction.image = UIImage(systemName: Constants.UIElementSystemNames.delete)
-        deleteAction.backgroundColor = .systemBackground
+        deleteAction.backgroundColor = .black
         return deleteAction
     }
     
