@@ -56,7 +56,7 @@ private extension TabBarCoordinator {
         let tabBarControllers = [searchNavigationController, webPageListNavigationController]
         tabBarController = TabBarController(tabBarControllers: tabBarControllers)
         
-        let appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
+        let appState = AppStateService.shared.retrieve()
         let curTab = appState?.currentTab.rawValue ?? 0
         tabBarController?.selectedIndex = curTab
         if let appState, appState.isEditingMode == .edinitig, let id = appState.id {

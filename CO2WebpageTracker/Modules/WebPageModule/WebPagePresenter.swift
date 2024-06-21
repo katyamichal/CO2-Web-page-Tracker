@@ -13,7 +13,7 @@ final class WebPagePresenter {
     private weak var view: IWebPageView?
     private var dataService: IDataService
     private var viewData: WebPageViewData?
-    
+    private let appStateService = AppStateService.shared
     private let webPageId: UUID?
     private let stepperDelegate = StepperDelegate()
     private lazy var viewDataConstructor = ViewDataConstructor(viewData: viewData)
@@ -46,14 +46,13 @@ extension WebPagePresenter: IWebPagePresenter {
         viewData?.image = image
         view?.update()
         if let webPageId {
-            var appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
-            appState?.id = webPageId
-            appState?.image = image
+            var appState = AppState(with: webPageId, isEditing: .edinitig, currentTab: .webPageList, image: image)
+            appStateService.save(appState: appState)
         }
     }
     
     func recoverEditingState() {
-        let appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
+        let appState = appStateService.retrieve()
         viewData?.image = appState?.image
         view?.update()
     }
@@ -65,10 +64,12 @@ extension WebPagePresenter: IWebPagePresenter {
         case true:
             view?.showAlert(with: Constants.AlerMessagesType.webPageDublicated)
         case false:
+            if let webPageId {
+                var appState = appStateService.retrieve()
+                appStateService.delete()
+                
+            }
             self.saveWebPage()
-            var appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
-            appState?.image = nil
-            appState?.id = nil
         }
     }
     

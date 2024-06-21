@@ -8,7 +8,7 @@
 import UIKit
 protocol IWebPageView: AnyObject {
     func update()
-    func setupNavigationTitle(with: String)
+    func setupNavigationTitle(with title: String)
     func updateEnergyWasteTypeCell()
     func showAlert(with type: Constants.AlerMessagesType)
     func showMessage(with message: String)
@@ -17,7 +17,7 @@ protocol IWebPageView: AnyObject {
 final class WebPageViewController: UIViewController {
     private var webPageView: WebPageView { return self.view as! WebPageView }
     private let presenter: IWebPagePresenter
-    
+    private let appStateService = AppStateService.shared
     private var isEdited: Bool = false
     
     // MARK: - Inits
@@ -46,9 +46,7 @@ final class WebPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
-        print(appState?.isEditingMode)
-        print(isEdited)
+        let appState = appStateService.retrieve()
         if appState?.isEditingMode == .edinitig {
             isEdited = true
             presenter.recoverEditingState()
@@ -57,15 +55,10 @@ final class WebPageViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        var appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
-        if isEdited {
-            appState?.isEditingMode = .edinitig
-            
-        } else {
-            appState?.isEditingMode = .none
-        }
-        UserDefaults.standard.setValue(appState, forKey: Constants.UserDefaultKeys.appState)
-        print(appState?.isEditingMode)
+//        var appState = appStateService.retrieve()
+//        guard let appState, appState.isEditingMode == .edinitig else {return}
+//        appStateService.save(appState: appState)
+//        print(appState.isEditingMode)
     }
 }
 

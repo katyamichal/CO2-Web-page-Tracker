@@ -60,6 +60,7 @@
 		4EAC848E2C21C2F800F6CD8A /* StepperDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC848D2C21C2F800F6CD8A /* StepperDelegate.swift */; };
 		4EAC84912C21FC7300F6CD8A /* CoreDataErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC84902C21FC7300F6CD8A /* CoreDataErrors.swift */; };
 		4EAC84932C2201A400F6CD8A /* ViewDataConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC84922C2201A400F6CD8A /* ViewDataConstructor.swift */; };
+		4EB2FD7B2C255A13000FD988 /* AppStateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB2FD7A2C255A13000FD988 /* AppStateService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -119,6 +120,7 @@
 		4EAC848D2C21C2F800F6CD8A /* StepperDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperDelegate.swift; sourceTree = "<group>"; };
 		4EAC84902C21FC7300F6CD8A /* CoreDataErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataErrors.swift; sourceTree = "<group>"; };
 		4EAC84922C2201A400F6CD8A /* ViewDataConstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewDataConstructor.swift; sourceTree = "<group>"; };
+		4EB2FD7A2C255A13000FD988 /* AppStateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,6 +352,7 @@
 			isa = PBXGroup;
 			children = (
 				4E0D1CCC2C242D0A004B09B4 /* AppState.swift */,
+				4EB2FD7A2C255A13000FD988 /* AppStateService.swift */,
 			);
 			path = AppStatePersistenceService;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				4E34E03E2C1ED983004D15A5 /* FRCDelegate.swift in Sources */,
 				4EABD5EC2C1C285C0089DF1D /* SearchView.swift in Sources */,
 				4EABD5AD2C182C210089DF1D /* SceneDelegate.swift in Sources */,
+				4EB2FD7B2C255A13000FD988 /* AppStateService.swift in Sources */,
 				4EABD5FD2C1C95240089DF1D /* WebPageSection.swift in Sources */,
 				4EABD5C72C1AD3420089DF1D /* APIErrors.swift in Sources */,
 				4EABD5D52C1AE2CC0089DF1D /* WebPageListPresenter.swift in Sources */,

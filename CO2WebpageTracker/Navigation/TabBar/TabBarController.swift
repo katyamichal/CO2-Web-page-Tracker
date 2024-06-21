@@ -27,9 +27,10 @@ final class TabBarController: UITabBarController {
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-       var appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
+        var appState = AppStateService.shared.retrieve()
         appState?.currentTab = Tab(rawValue: selectedIndex) ?? .search
-        UserDefaults.standard.setValue(appState, forKey: Constants.UserDefaultKeys.appState)
+        guard let appState else { return }
+        AppStateService.shared.save(appState: appState)
     }
 }
 
