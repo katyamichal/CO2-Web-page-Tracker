@@ -117,8 +117,8 @@ final class CarbonRatingCell: UITableViewCell {
         resultForLabel.text = url
         scaleLetterLabel.text = letter
         descriptionLabel.text = description
-        cleanerThanLabel.text = "This is cleaner then \(cleanerThan) of all web pages globally"
-        dateLabel.text = "This page was tested on \(date)"
+        cleanerThanLabel.text = cleanerThan
+        dateLabel.text = date
     }
 }
 
@@ -143,7 +143,7 @@ private extension CarbonRatingCell {
     }
     
     func setupConstraints() {
-        scaleView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        scaleView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: inset).isActive = true
         scaleView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
         scaleView.widthAnchor.constraint(equalToConstant: letterViewHeight).isActive = true
         scaleView.heightAnchor.constraint(equalToConstant: letterViewHeight).isActive = true
@@ -155,6 +155,5 @@ private extension CarbonRatingCell {
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -inset).isActive = true
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        //stackView.heightAnchor.constraint(equalToConstant: 500).isActive = true
     }
 }

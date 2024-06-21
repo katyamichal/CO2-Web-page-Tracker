@@ -19,6 +19,7 @@ final class GradientRatingView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
 private extension GradientRatingView {
     func setupView() {
         setupGradient()

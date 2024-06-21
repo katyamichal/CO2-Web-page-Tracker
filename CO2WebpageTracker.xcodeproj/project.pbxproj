@@ -64,7 +64,7 @@
 
 /* Begin PBXFileReference section */
 		4E0D1CCA2C2422F6004B09B4 /* IWebPagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IWebPagePresenter.swift; sourceTree = "<group>"; };
-		4E0D1CCC2C242D0A004B09B4 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		4E0D1CCC2C242D0A004B09B4 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppState.swift; path = ../../Helpers/AppState.swift; sourceTree = "<group>"; };
 		4E0D1CD22C245BD9004B09B4 /* WebPageInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebPageInfo+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		4E0D1CD32C245BD9004B09B4 /* WebPageInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WebPageInfo+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		4E0D1CD62C2468A1004B09B4 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
@@ -219,6 +219,7 @@
 		4EABD5C52C1AD0CF0089DF1D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				4EB2FD772C254C57000FD988 /* AppStatePersistenceService */,
 				4EABD5E62C1C25B30089DF1D /* NetworkService */,
 				4EABD5E92C1C25D00089DF1D /* DataService */,
 			);
@@ -288,7 +289,6 @@
 				4E34E04C2C1F5C2A004D15A5 /* Descriptions.plist */,
 				4EABD5B82C182C240089DF1D /* LaunchScreen.storyboard */,
 				4EAC847A2C20349900F6CD8A /* Extensions */,
-				4E0D1CCC2C242D0A004B09B4 /* AppState.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -344,6 +344,14 @@
 				4EAC84832C215BC700F6CD8A /* GradientRatingView.swift */,
 			);
 			path = CarbonCellSubview;
+			sourceTree = "<group>";
+		};
+		4EB2FD772C254C57000FD988 /* AppStatePersistenceService */ = {
+			isa = PBXGroup;
+			children = (
+				4E0D1CCC2C242D0A004B09B4 /* AppState.swift */,
+			);
+			path = AppStatePersistenceService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -617,8 +625,8 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Do you want to give an access to CO2 Web Page Tracker to use your Photo Library";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -647,8 +655,8 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Do you want to give an access to CO2 Web Page Tracker to use your Photo Library";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

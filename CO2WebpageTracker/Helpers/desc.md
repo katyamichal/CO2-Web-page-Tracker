@@ -31,7 +31,7 @@
         <real>0.847</real>
     </dict>
     <key>co2PerPageview</key>
-    <string>The grams of CO2 produced every time someone visits this web page.</string>
+    <string>the grams of CO2 produced every time someone visits this web page.</string>
 </dict>
 </plist>
 

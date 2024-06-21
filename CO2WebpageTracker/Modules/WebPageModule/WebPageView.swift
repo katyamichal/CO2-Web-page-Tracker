@@ -26,7 +26,6 @@ final class WebPageView: UIView {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.register(CarbonRatingCell.self, forCellReuseIdentifier: CarbonRatingCell.reuseIdentifier)
         tableView.register(EnergyWasteTypeCell.self, forCellReuseIdentifier: EnergyWasteTypeCell.reuseIdentifier)

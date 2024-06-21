@@ -17,7 +17,6 @@ final class WebPagePresenter {
     private let webPageId: UUID?
     private let stepperDelegate = StepperDelegate()
     private lazy var viewDataConstructor = ViewDataConstructor(viewData: viewData)
-    var currentImage = UIImage(systemName: "globe")
     
     init(coordinator: Coordinator?, dataService: IDataService, id: UUID?) {
         self.dataService = dataService
@@ -46,11 +45,17 @@ extension WebPagePresenter: IWebPagePresenter {
     func updateData(with image: UIImage) {
         viewData?.image = image
         view?.update()
+        if let webPageId {
+            var appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
+            appState?.id = webPageId
+            appState?.image = image
+        }
     }
     
     func recoverEditingState() {
         let appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
-      //  image = appState?.image
+        viewData?.image = appState?.image
+        view?.update()
     }
     
     func prepareToSave() {
@@ -61,6 +66,9 @@ extension WebPagePresenter: IWebPagePresenter {
             view?.showAlert(with: Constants.AlerMessagesType.webPageDublicated)
         case false:
             self.saveWebPage()
+            var appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
+            appState?.image = nil
+            appState?.id = nil
         }
     }
     
@@ -146,14 +154,14 @@ private extension WebPagePresenter {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: EnergyWasteTypeCell.reuseIdentifier, for: indexPath) as? EnergyWasteTypeCell else {
                 return UITableViewCell()
             }
-            cell.update(with: viewDataConstructor.energy, stepperValue: viewDataConstructor.stepperValue)
+            cell.update(visitCount: viewDataConstructor.energyHeadTitle, energy: viewDataConstructor.energy, stepperValue: viewDataConstructor.stepperValue)
             cell.configureStepperDelgate(with: stepperDelegate)
             return cell
         case .image:
             guard let image = viewData.image, let cell = tableView.dequeueReusableCell(withIdentifier: ImageCell.reuseIdentifier, for: indexPath) as? ImageCell else {
                 return UITableViewCell()
             }
-            cell.update(with: viewData.url, and: image)
+            cell.update(with: viewDataConstructor.urlTitle, and: image)
             return cell
         }
     }

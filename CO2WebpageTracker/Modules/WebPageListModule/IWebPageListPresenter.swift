@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 typealias IWebPageListPresenter = IWebPageListViewLifeCycle & IWebPageListTableViewHandler
 
 protocol IWebPageListViewLifeCycle: AnyObject {

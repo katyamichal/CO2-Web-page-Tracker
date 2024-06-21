@@ -16,7 +16,7 @@ enum Tab: Int {
 }
 
 struct AppState {
-    var id: UUID
+    var id: UUID?
     var isEditingMode: Mode
     var currentTab: Tab
     var image: UIImage?

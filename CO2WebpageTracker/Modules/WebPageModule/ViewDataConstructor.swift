@@ -9,7 +9,17 @@ import UIKit
 
 final class ViewDataConstructor {
     private var viewData: WebPageViewData?
-    var stepperValue: Int = 1
+    
+    private enum WebPageHelperStrings {
+        static let noData = "no data"
+        static let cleanerThan = "This is cleaner then "
+        static let globally = " of all web pages globally"
+        static let testOn = "This page was tested on "
+        static let overAYear = "Over a year, with "
+        static let monthlyView = "monthly page views, this page produces "
+        static let co2Equivalent = " of CO2 equivalent"
+        static let urlTitle = "Web page screen with URL: "
+    }
     
     init(viewData: WebPageViewData?) {
         self.viewData = viewData
@@ -22,34 +32,10 @@ final class ViewDataConstructor {
         return dateFormatter
     }()
     
-    
-    var lastTestDate: String {
-        guard let viewData else { return "No Data" }
-        return dateFormatter.string(from: viewData.date)
-    }
-    
-    var urlDescription: String {
-        guard let viewData else { return "No Data" }
-        return (DescriptionConstructor.shared.getDescription(for: "url") as? String ?? "") + " " + viewData.url
-    }
+    // MARK: - Data for Carbon Rating Cell
     
     var scaleDescription: [String: [String: Any]]? {
         return DescriptionConstructor.shared.getScaleRating()
-    }
-    
-    var greenDescription: String {
-        guard let viewData else { return "No Data" }
-        return DescriptionConstructor.shared.getGreenDescription(isGreen: viewData.isGreen)
-    }
-    
-    var cleanerThanDescription: String {
-        guard let viewData else { return "No Data" }
-        return ((DescriptionConstructor.shared.getDescription(for: "cleanerThan") as? String ?? "") + "\(Int(viewData.cleanerThan * 100))" + "%")
-    }
-    
-    var co2PerPageviewDescription: String {
-        guard let viewData else { return "No Data" }
-        return (String(format: "%.2f", viewData.energy)) + " " + (DescriptionConstructor.shared.getDescription(for: "co2PerPageview") as? String ?? "").lowercased()
     }
     
     var ratingColor: UIColor {
@@ -62,12 +48,67 @@ final class ViewDataConstructor {
     }
     
     var ratingDescription: String {
-        guard let viewData else { return "No Data" }
+        guard let viewData else { return WebPageHelperStrings.noData}
         return DescriptionConstructor.shared.getRatingDescription(with: viewData.ratingLetter)
     }
     
+    var urlDescription: String {
+        guard let viewData else { return WebPageHelperStrings.noData}
+        return (DescriptionConstructor.shared.getDescription(for: "url") as? String ?? "") + " " + viewData.url
+    }
+    
+    var cleanerThanDescription: String {
+        guard let viewData else { return WebPageHelperStrings.noData}
+        let headString = WebPageHelperStrings.cleanerThan
+        let midString = ((DescriptionConstructor.shared.getDescription(for: "cleanerThan") as? String ?? "") + "\(Int(viewData.cleanerThan * 100))" + "%")
+        let tailString = WebPageHelperStrings.globally
+        var fullString = headString + midString + tailString
+        return fullString
+    }
+    
+    var lastTestDate: String {
+        guard let viewData else { return WebPageHelperStrings.noData}
+        let headString = WebPageHelperStrings.testOn
+        let tailString = dateFormatter.string(from: viewData.date)
+        return headString + tailString
+    }
+    
+    // MARK: - Data for Renewable Cell
+
+    var co2PerPageviewDescription: String {
+        guard let viewData else { return WebPageHelperStrings.noData}
+        return (String(format: "%.2f", viewData.energy)) + " " + (DescriptionConstructor.shared.getDescription(for: "co2PerPageview") as? String ?? "")
+    }
+    
+    var greenDescription: String {
+        guard let viewData else { return WebPageHelperStrings.noData}
+        return DescriptionConstructor.shared.getGreenDescription(isGreen: viewData.isGreen)
+    }
+    
+    // MARK: - Data for Energy Waste Type Cell
+    
+    var stepperValue: Int = 1
+    
+    var energyHeadTitle: String {
+        guard let viewData else { return WebPageHelperStrings.noData}
+        let headString = WebPageHelperStrings.overAYear
+        let valueString = String(stepperValue)
+        return headString + valueString
+    }
+   
     var energy: String {
-        guard let viewData else { return "No Data" }
-        return String(format: "%.3f", (viewData.gramForVisit * Double(stepperValue)))
+        guard let viewData else { return WebPageHelperStrings.noData}
+        let headString = WebPageHelperStrings.monthlyView
+        let midString = String(format: "%.3f", (viewData.gramForVisit * Double(stepperValue)))
+        let tailString = WebPageHelperStrings.co2Equivalent
+        let fullString = headString + midString + tailString
+        return fullString
+    }
+    
+    // MARK: - Data for Energy Waste Type Cell
+    
+    var urlTitle: String {
+        guard let viewData else { return WebPageHelperStrings.noData}
+        return WebPageHelperStrings.urlTitle + "\(viewData.url)"
     }
 }

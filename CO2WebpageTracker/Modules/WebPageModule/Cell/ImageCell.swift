@@ -71,10 +71,9 @@ private extension ImageCell {
     }
     
     func setupConstraints() {
-        titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: inset).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: inset).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset).isActive = true
-        titleLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         webPageImage.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
         webPageImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: inset).isActive = true

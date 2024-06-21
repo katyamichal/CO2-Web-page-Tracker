@@ -7,8 +7,13 @@
 
 import UIKit
 
-protocol IWebPagePresenter: AnyObject {
+typealias IWebPagePresenter = IWebPageViewLifeCycle & IWebPageTableViewHandler
+
+protocol IWebPageViewLifeCycle: AnyObject {
     func viewDidLoaded(view: IWebPageView)
+}
+
+protocol IWebPageTableViewHandler: AnyObject {
     func getSectionCount() -> Int
     func getRowCountInSection(at section: Int) -> Int
     func rowForCell(tableView: UITableView, at index: IndexPath) -> UITableViewCell

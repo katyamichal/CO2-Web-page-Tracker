@@ -8,7 +8,7 @@
 import UIKit
 protocol IWebPageView: AnyObject {
     func update()
-    func setupNavigationTitle(with title: String)
+    func setupNavigationTitle(with: String)
     func updateEnergyWasteTypeCell()
     func showAlert(with type: Constants.AlerMessagesType)
     func showMessage(with message: String)
@@ -47,6 +47,8 @@ final class WebPageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
+        print(appState?.isEditingMode)
+        print(isEdited)
         if appState?.isEditingMode == .edinitig {
             isEdited = true
             presenter.recoverEditingState()
@@ -55,11 +57,15 @@ final class WebPageViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        var appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
         if isEdited {
-            var appState = UserDefaults.standard.object(forKey: Constants.UserDefaultKeys.appState) as? AppState
             appState?.isEditingMode = .edinitig
-            UserDefaults.standard.setValue(appState, forKey: Constants.UserDefaultKeys.appState)
+            
+        } else {
+            appState?.isEditingMode = .none
         }
+        UserDefaults.standard.setValue(appState, forKey: Constants.UserDefaultKeys.appState)
+        print(appState?.isEditingMode)
     }
 }
 
@@ -82,6 +88,7 @@ extension WebPageViewController: IWebPageView {
         let cancelAction = UIAlertAction(title: type.cancelButtonTitle, style: .cancel)
         let resaveAction = UIAlertAction(title: type.actionButtonTitle, style: .default) { _ in
             self.presenter.saveWebPage()
+            self.isEdited = false
         }
         alert.addAction(cancelAction)
         alert.addAction(resaveAction)
@@ -156,6 +163,7 @@ private extension WebPageViewController {
     }
     
     func addPhoto(action: UIAction) {
+        isEdited = true
         choosePhotoFromLibrary()
     }
 }

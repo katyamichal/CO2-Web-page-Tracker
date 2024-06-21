@@ -47,16 +47,6 @@ final class EnergyWasteTypeCell: UITableViewCell {
         return stackView
     }()
     
-    private lazy var helperLabel1: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.text = "Over a year, with"
-        label.font = Fonts.Body.defaultFont
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .white
-        return label
-    }()
-    
     private lazy var stepperValueLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -75,16 +65,6 @@ final class EnergyWasteTypeCell: UITableViewCell {
         return stepper
     }()
     
-    private lazy var helperLabel2: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.text = "monthly page views, this page produces"
-        label.font = Fonts.Body.defaultFont
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .white
-        return label
-    }()
-    
     private lazy var energyLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -94,22 +74,24 @@ final class EnergyWasteTypeCell: UITableViewCell {
         return label
     }()
     
+    override func prepareForReuse() {
+        stepperValueLabel.text = nil
+        stepper.value = 1
+        energyLabel.text = nil
+        super.prepareForReuse()
+    }
+    
     func configureStepperDelgate(with delegate: UIStepperViewDelegate) {
         stepperDelegate = delegate
     }
     
     
-    override func prepareForReuse() {
-        energyLabel.text = nil
-        super.prepareForReuse()
-    }
-    
     // MARK: - Public
     
-    func update(with energy: String, stepperValue: Int) {
-        stepperValueLabel.text = "\(stepperValue)"
+    func update(visitCount: String, energy: String, stepperValue: Int) {
+        stepperValueLabel.text = visitCount
         stepper.value = Double(stepperValue)
-        energyLabel.text = energy + " " + "of CO2 equivalent"
+        energyLabel.text = energy
     }
 }
 
@@ -123,12 +105,9 @@ private extension EnergyWasteTypeCell {
     
     func setupViews() {
         contentView.addSubview(stackView)
-        stackView.addArrangedSubview(helperLabel1)
         stackView.addArrangedSubview(stepperValueLabel)
         stackView.addArrangedSubview(stepper)
-        stackView.addArrangedSubview(helperLabel2)
         stackView.addArrangedSubview(energyLabel)
-        
     }
     
     func setupConstraints() {
