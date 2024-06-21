@@ -30,7 +30,7 @@ final class WebPageListPresenter {
 extension WebPageListPresenter: IWebPageListPresenter {
     func viewDidLoaded(view: IWebPageListView) {
         self.view = view
-        self.view?.setupNavigationBar(with: Constants.NavifationTitles.webPageNavigationTitle)
+        self.view?.setupNavigationBar(with: Constants.NavigationTitles.webPageNavigationTitle)
         dataService.addFetchDelegate(self)
         getData()
     }

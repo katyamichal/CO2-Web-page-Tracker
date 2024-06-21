@@ -37,6 +37,10 @@ final class WebPageCoordinator: Coordinator {
     func dismissImagePicker() {
         navigationController.dismiss(animated: true)
     }
+    
+    func presentView(with activity: UIActivityViewController) {
+        navigationController.present(activity, animated: true)
+    }
 }
 
 private extension WebPageCoordinator {

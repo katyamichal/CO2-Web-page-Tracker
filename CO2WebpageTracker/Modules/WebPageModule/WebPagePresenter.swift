@@ -40,8 +40,9 @@ extension WebPagePresenter {
     }
 }
 
+// MARK: - Delegate methods
+
 extension WebPagePresenter: IWebPagePresenter {
-    
     func viewDidLoaded(view: IWebPageView) {
         self.view = view
         if webPageURL == nil {
@@ -75,13 +76,7 @@ extension WebPagePresenter: IWebPagePresenter {
             self?.view?.update()
         }
     }
-    
-    func deleteButtonDidPressed() {
-        guard let viewData else { return }
-        dataService.deleteWebPage(url: viewData.url)
-        (coordinator as? WebPageCoordinator)?.backToDetail()
-    }
-    
+
     func getSectionCount() -> Int {
         WebPageSection.allCases.count
     }
@@ -99,6 +94,12 @@ extension WebPagePresenter: IWebPagePresenter {
     
     func rowForCell(tableView: UITableView, at index: IndexPath) -> UITableViewCell {
         cell(for: tableView, at: index)
+    }
+    
+    func deleteButtonDidPressed() {
+        guard let viewData else { return }
+        dataService.deleteWebPage(url: viewData.url)
+        (coordinator as? WebPageCoordinator)?.backToDetail()
     }
     
     func saveState() {
@@ -131,6 +132,23 @@ extension WebPagePresenter: IWebPagePresenter {
     func showImagePicker(with imagePicker: UIImagePickerController) {
         (coordinator as? WebPageCoordinator)?.showImagePicker(with: imagePicker)
     }
+    
+    func shareWebPage() {
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            guard let url = self.createURLForShare() else {
+                DispatchQueue.main.async {
+                    self.view?.showMessage(with: "We couldn'n create URL to share")
+                }
+                return
+            }
+            DispatchQueue.main.async {
+                let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                activityVC.excludedActivityTypes = [.airDrop]
+                (self.coordinator as? WebPageCoordinator)?.presentView(with: activityVC)
+            }
+        }
+    }
 }
 
 // MARK: - Stepper Delegate
@@ -151,9 +169,9 @@ extension WebPagePresenter: IStepperDelegate {
     }
 }
 
+// MARK: - Private methods
+
 private extension WebPagePresenter {
-    
-    
     func getData() {
         guard let webPageURL else { return }
         dataService.fetchWepPage(with: webPageURL) { [weak self] data in
@@ -224,6 +242,29 @@ private extension WebPagePresenter {
     func recoverEditingState(with stepperValue: Int, and previosValue: Int) {
         viewDataConstructor.stepperValue = stepperValue
         viewDataConstructor.previousValue = previosValue
+    }
+    
+    func createURLForShare() -> URL? {
+      guard let viewDataURLString = viewData?.url,
+            let viewDataURL = URL(string: viewDataURLString) else {
+                print("viewData or url is nil or invalid")
+                return nil
+            }
+        let baseURLString = Constants.BaseUrls.websitecarbon
+        guard var host = viewDataURL.host else {
+            print("Invalid URL host")
+            return nil
+        }
+        if host.hasPrefix("www.") {
+            host.removeFirst(4)
+        }
+        
+        let urlString = baseURLString + "\(host)/"
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return nil
+        }
+        return url
     }
 }
 

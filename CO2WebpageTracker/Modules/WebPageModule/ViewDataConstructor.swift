@@ -62,7 +62,7 @@ final class ViewDataConstructor {
         let headString = WebPageHelperStrings.cleanerThan
         let midString = ((DescriptionConstructor.shared.getDescription(for: "cleanerThan") as? String ?? "") + "\(Int(viewData.cleanerThan * 100))" + "%")
         let tailString = WebPageHelperStrings.globally
-        var fullString = headString + midString + tailString
+        let fullString = headString + midString + tailString
         return fullString
     }
     

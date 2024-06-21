@@ -135,17 +135,9 @@ private extension WebPageViewController {
     func selectionHandler(action: UIAction) {
         presenter.deleteButtonDidPressed()
     }
-#warning("переделать")
+
     func shareWebPage(action: UIAction) {
-        DispatchQueue.global().async {
-            let url = URL(string: "https://www.websitecarbon.com/website/instagram.com/")!
-            DispatchQueue.main.async {
-                let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-                activityVC.title = "Instagram"
-                activityVC.excludedActivityTypes = [.airDrop]
-                self.present(activityVC, animated: true)
-            }
-        }
+        presenter.shareWebPage()
     }
     
     func addPhoto(action: UIAction) {

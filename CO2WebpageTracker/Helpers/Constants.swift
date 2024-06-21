@@ -20,8 +20,12 @@ enum Constants {
         static let searchBarPlaceholder = "Web Page URL"
     }
     
-    enum NavifationTitles {
+    enum NavigationTitles {
         static let webPageNavigationTitle = "Web Pages"
+    }
+    
+    enum BaseUrls {
+        static let websitecarbon = "https://www.websitecarbon.com/website/"
     }
     
     enum UIElementSystemNames {
