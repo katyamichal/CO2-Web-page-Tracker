@@ -1,39 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>url</key>
-    <string>Website catbon result for:.</string>
-    <key>green</key>
-    <dict>
-        <key>true</key>
-        <string>This web page appears to be running on sustainable energy.</string>
-        <key>false</key>
-        <string>Oh no, it looks like this web page uses bog standard energy.</string>
-        <key>unknown</key>
-        <string>The environmental status of the website is unknown.</string>
-    </dict>
-    <key>scale</key>
-    <dict>
-        <key>A+</key>
-        <real>0.095</real>
-        <key>A</key>
-        <real>0.186</real>
-        <key>B</key>
-        <real>0.341</real>
-        <key>C</key>
-        <real>0.493</real>
-        <key>D</key>
-        <real>0.656</real>
-        <key>E</key>
-        <real>0.846</real>
-        <key>F</key>
-        <real>0.847</real>
-    </dict>
-    <key>co2PerPageview</key>
-    <string>the grams of CO2 produced every time someone visits this web page.</string>
-</dict>
-</plist>
 
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -120,3 +84,4 @@
     <string>The grams of CO2 produced every time someone visits this web page.</string>
 </dict>
 </plist>
+
