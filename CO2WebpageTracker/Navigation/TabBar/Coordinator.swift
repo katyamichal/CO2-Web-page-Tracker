@@ -14,5 +14,5 @@ protocol Coordinator: AnyObject {
 }
 
 protocol CoordinatorDetail: AnyObject {
-    func showDetail(with id: UUID)
+    func showDetail(with url: String)
 }

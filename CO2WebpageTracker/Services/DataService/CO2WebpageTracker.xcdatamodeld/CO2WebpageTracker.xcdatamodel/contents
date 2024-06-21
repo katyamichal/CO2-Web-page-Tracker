@@ -5,7 +5,6 @@
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="energy" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="gramForVisit" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="identifier" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="image" optional="YES" attributeType="Binary"/>
         <attribute name="isGreen" attributeType="String"/>
         <attribute name="rating" attributeType="String"/>

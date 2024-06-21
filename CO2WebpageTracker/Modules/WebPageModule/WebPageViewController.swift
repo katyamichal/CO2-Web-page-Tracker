@@ -7,6 +7,7 @@
 
 import UIKit
 protocol IWebPageView: AnyObject {
+    var isEdited: Bool { get set }
     func update()
     func setupNavigationTitle(with title: String)
     func updateEnergyWasteTypeCell()
@@ -17,8 +18,7 @@ protocol IWebPageView: AnyObject {
 final class WebPageViewController: UIViewController {
     private var webPageView: WebPageView { return self.view as! WebPageView }
     private let presenter: IWebPagePresenter
-    private let appStateService = AppStateService.shared
-    private var isEdited: Bool = false
+    var isEdited: Bool = false
     
     // MARK: - Inits
     
@@ -46,19 +46,12 @@ final class WebPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let appState = appStateService.retrieve()
-        if appState?.isEditingMode == .edinitig {
-            isEdited = true
-            presenter.recoverEditingState()
-        }
+        presenter.checkForSafedState()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-//        var appState = appStateService.retrieve()
-//        guard let appState, appState.isEditingMode == .edinitig else {return}
-//        appStateService.save(appState: appState)
-//        print(appState.isEditingMode)
+        presenter.saveState()
     }
 }
 
@@ -81,7 +74,6 @@ extension WebPageViewController: IWebPageView {
         let cancelAction = UIAlertAction(title: type.cancelButtonTitle, style: .cancel)
         let resaveAction = UIAlertAction(title: type.actionButtonTitle, style: .default) { _ in
             self.presenter.saveWebPage()
-            self.isEdited = false
         }
         alert.addAction(cancelAction)
         alert.addAction(resaveAction)
@@ -156,7 +148,6 @@ private extension WebPageViewController {
     }
     
     func addPhoto(action: UIAction) {
-        isEdited = true
         choosePhotoFromLibrary()
     }
 }

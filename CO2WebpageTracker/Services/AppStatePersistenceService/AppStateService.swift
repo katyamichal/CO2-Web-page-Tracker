@@ -22,26 +22,51 @@ final class AppStateService  {
     
     func save(appState: AppState) {
         do {
-            let data = try encoder.encode(appState)
+            var appStates = retrieveAll() ?? []
+            
+            // Check if appState for the URL already exists
+            if let index = appStates.firstIndex(where: { $0.url == appState.url }) {
+                // Update the existing appState
+                appStates[index] = appState
+            } else {
+                // Append the new appState
+                appStates.append(appState)
+            }
+            
+            let data = try encoder.encode(appStates)
             userDefaults.set(data, forKey: key)
         } catch {
-            print(error)
+            print("Failed to save app state: \(error)")
         }
     }
     
-    func retrieve() -> AppState? {
+    func retrieve(with url: String) -> AppState? {
+        guard let appStates = retrieveAll() else { return nil }
+        return appStates.first { $0.url == url }
+    }
+    
+    func delete(with url: String) {
+        guard var appStates = retrieveAll() else { return }
+        appStates.removeAll { $0.url == url }
+        do {
+            let data = try encoder.encode(appStates)
+            userDefaults.set(data, forKey: key)
+        } catch {
+            print("Failed to delete app state: \(error)")
+        }
+    }
+}
+
+private extension AppStateService {
+    func retrieveAll() -> [AppState]? {
         guard let data = userDefaults.data(forKey: key) else { return nil }
         do {
-            let appState = try decoder.decode(AppState.self, from: data)
-            return appState
-            
+            let appStates = try decoder.decode([AppState].self, from: data)
+            print(appStates)
+            return appStates
         } catch {
-            print("Error to retrieve data from User Defaults")
+            print("Failed to retrieve app states: \(error)")
         }
         return nil
     }
-    
-    func delete() {
-         userDefaults.removeObject(forKey: key)
-     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class WebPageListCoordinator: Coordinator, CoordinatorDetail {
+final class WebPageListCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     private let navigationController: UINavigationController
@@ -22,15 +22,11 @@ final class WebPageListCoordinator: Coordinator, CoordinatorDetail {
        showModule()
     }
     
-    func showWebPageDetail(with id: UUID) {
-        let webPageCoordinator = WebPageCoordinator(navigationController: navigationController, dataService: dataService, webPageId: id)
+    func showWebPageDetail(with url: String) {
+        let webPageCoordinator = WebPageCoordinator(navigationController: navigationController, dataService: dataService, webPageURL: url)
         webPageCoordinator.parentCoordinator = self
         childCoordinators.append(webPageCoordinator)
         webPageCoordinator.start()
-    }
-    
-    func showDetail(with id: UUID) {
-        showWebPageDetail(with: id)
     }
 }
 

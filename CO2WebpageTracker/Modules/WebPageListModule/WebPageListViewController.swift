@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 protocol IWebPageListView: AnyObject {
     func update()
     func setupNavigationBar(with title: String)
@@ -24,7 +25,6 @@ final class WebPageListViewController: UIViewController {
     
     init(presenter: IWebPageListPresenter) {
         self.presenter = presenter
-
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -38,6 +38,7 @@ final class WebPageListViewController: UIViewController {
     override func loadView() {
         view = WebPageListView()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoaded(view: self)
@@ -134,7 +135,7 @@ private extension WebPageListViewController {
             self.deleteAction(tableView, at: indexPath)
         }
         deleteAction.image = UIImage(systemName: Constants.UIElementSystemNames.delete)
-        deleteAction.backgroundColor = Colours.WebPageColours.red
+        deleteAction.backgroundColor = .systemBackground
         return deleteAction
     }
     

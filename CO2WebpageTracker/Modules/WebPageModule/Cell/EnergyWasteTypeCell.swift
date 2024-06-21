@@ -76,7 +76,7 @@ final class EnergyWasteTypeCell: UITableViewCell {
     
     override func prepareForReuse() {
         stepperValueLabel.text = nil
-        stepper.value = 1
+        stepper.value = 0
         energyLabel.text = nil
         super.prepareForReuse()
     }

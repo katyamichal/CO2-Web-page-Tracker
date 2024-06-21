@@ -88,6 +88,7 @@ final class ViewDataConstructor {
     // MARK: - Data for Energy Waste Type Cell
     
     var stepperValue: Int = 1
+    var previousValue: Int = 1
     
     var energyHeadTitle: String {
         guard let viewData else { return WebPageHelperStrings.noData}

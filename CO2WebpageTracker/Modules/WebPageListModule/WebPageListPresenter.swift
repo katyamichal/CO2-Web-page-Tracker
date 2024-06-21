@@ -59,7 +59,7 @@ extension WebPageListPresenter: IWebPageListPresenter {
     }
     
     func showDetailView(at index: Int) {
-        let id = viewData[index].id
+        let id = viewData[index].url
         (coordinator as? WebPageListCoordinator)?.showWebPageDetail(with: id)
     }
 }

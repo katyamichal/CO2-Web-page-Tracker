@@ -14,7 +14,7 @@ protocol IDataService: AnyObject {
     
     func fetchWepPages(completionHandler: (Result<[WebPageListViewData],CoreDataErrors>) -> Void)
     func performFetch()
-    func fetchWepPage(with webPageId: UUID, completionHandler: (WebPageViewData) -> Void)
+    func fetchWepPage(with webPageURL: String, completionHandler: (WebPageViewData) -> Void)
     func findDublicate(with webPage: WebPageViewData) -> Bool
     func add(webPage: WebPageViewData, completion: (String) -> Void)
     func deleteWebPage(url: String)
@@ -82,25 +82,24 @@ final class DataService: IDataService {
         do {
             let webPages = try context.fetch(fetchRequest)
             completionHandler(.success(webPages.map { webPage in
-                WebPageListViewData(id: webPage.identifier, url: webPage.url, date: webPage.date, rating: webPage.rating)
+                WebPageListViewData(url: webPage.url, date: webPage.date, rating: webPage.rating)
             }))
         } catch {
             completionHandler(.failure(.fetchError))
         }
     }
     
-    func fetchWepPage(with webPageId: UUID, completionHandler: (WebPageViewData) -> Void) {
-        guard let webPage = getWebPage(with: webPageId) else { return }
+    func fetchWepPage(with webPageURL: String, completionHandler: (WebPageViewData) -> Void) {
+        guard let webPage = getWebPage(with: webPageURL) else { return }
         var image: UIImage?
         if let imageData = webPage.image {
             image = UIImage(data: imageData)
         }
         completionHandler(WebPageViewData(
-            id: webPage.identifier,
             url: webPage.url,
             date: webPage.date,
+            cleanerThan: webPage.cleanerThan, 
             ratingLetter: webPage.rating,
-            cleanerThan: webPage.cleanerThan,
             isGreen: webPage.isGreen,
             gramForVisit: webPage.gramForVisit,
             energy: webPage.energy, 
@@ -140,8 +139,6 @@ final class DataService: IDataService {
                 print("Error converting image to data")
             }
         }
-
-        newWebPage.identifier = webPage.id
         newWebPage.url = webPage.url
         newWebPage.date = webPage.date
         newWebPage.rating = webPage.ratingLetter
@@ -169,12 +166,12 @@ final class DataService: IDataService {
 }
 
 private extension DataService {
-    func getWebPage(with id: UUID) -> WebPageInfo? {
+    func getWebPage(with url: String) -> WebPageInfo? {
         let webPageToReturn: WebPageInfo?
         let context = PersistantContainerStorage.persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<WebPageInfo>
         fetchRequest = WebPageInfo.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "identifier == %@" , id.uuidString)
+        fetchRequest.predicate = NSPredicate(format: "url == %@" , url)
         do {
             let webPage = try context.fetch(fetchRequest)
             webPageToReturn = webPage.first

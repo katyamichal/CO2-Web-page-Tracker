@@ -13,21 +13,22 @@ final class WebPageCoordinator: Coordinator {
     private let navigationController: UINavigationController
     private let dataService: IDataService
     private let dataDTO: WebsiteData?
-    private let webPageId: UUID?
+    private let webPageURL: String?
     
-    init(navigationController: UINavigationController, dataService: IDataService, dataDto: WebsiteData? = nil, webPageId: UUID? = nil) {
+    init(navigationController: UINavigationController, dataService: IDataService, dataDto: WebsiteData? = nil, webPageURL: String? = nil) {
         self.navigationController = navigationController
         self.dataService = dataService
         self.dataDTO = dataDto
-        self.webPageId = webPageId
+        self.webPageURL = webPageURL
     }
     
     func start() {
         showModule()
     }
     
-    func dismiss() {
-        navigationController.popViewController(animated: true)
+    func backToDetail() {
+        navigationController.popToRootViewController(animated: true)
+
     }
 }
 
@@ -37,7 +38,7 @@ private extension WebPageCoordinator {
         if let dataDTO {
         presenter = WebPagePresenter(coordinator: self, dataService: dataService, data: dataDTO)
         } else {
-            presenter = WebPagePresenter(coordinator: self, dataService: dataService, id: webPageId)
+            presenter = WebPagePresenter(coordinator: self, dataService: dataService, webPageURL: webPageURL)
         }
         let viewController = WebPageViewController(presenter: presenter)
         navigationController.pushViewController(viewController, animated: true)

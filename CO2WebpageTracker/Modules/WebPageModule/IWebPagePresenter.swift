@@ -11,6 +11,8 @@ typealias IWebPagePresenter = IWebPageViewLifeCycle & IWebPageTableViewHandler
 
 protocol IWebPageViewLifeCycle: AnyObject {
     func viewDidLoaded(view: IWebPageView)
+    func checkForSafedState()
+    func saveState()
 }
 
 protocol IWebPageTableViewHandler: AnyObject {
@@ -20,6 +22,5 @@ protocol IWebPageTableViewHandler: AnyObject {
     func deleteButtonDidPressed()
     func prepareToSave()
     func saveWebPage()
-    func recoverEditingState()
     func updateData(with image: UIImage)
 }

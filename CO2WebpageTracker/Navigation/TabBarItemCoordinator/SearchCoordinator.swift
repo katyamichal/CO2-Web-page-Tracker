@@ -6,7 +6,7 @@
 //
 
 import UIKit
-final class SearchCoordinator: Coordinator, CoordinatorDetail {
+final class SearchCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     private let navigationController: UINavigationController
@@ -24,14 +24,14 @@ final class SearchCoordinator: Coordinator, CoordinatorDetail {
     }
     
     func showDetail(with dataDTO: WebsiteData) {
-        let detailCoordinator = WebPageCoordinator(navigationController: navigationController, dataService: DataService(), dataDto: dataDTO)
+        let detailCoordinator = WebPageCoordinator(navigationController: navigationController, dataService: dataService, dataDto: dataDTO)
         childCoordinators.append(detailCoordinator)
         detailCoordinator.start()
         
     }
     
-    func showDetail(with id: UUID) {
-        let detailCoordinator = WebPageCoordinator(navigationController: navigationController, dataService: dataService, webPageId: id)
+    func showDetail(with url: String) {
+        let detailCoordinator = WebPageCoordinator(navigationController: navigationController, dataService: dataService, webPageURL: url)
         childCoordinators.append(detailCoordinator)
         detailCoordinator.start()
     }

@@ -14,13 +14,13 @@ final class WebPagePresenter {
     private var dataService: IDataService
     private var viewData: WebPageViewData?
     private let appStateService = AppStateService.shared
-    private let webPageId: UUID?
+    private let webPageURL: String?
     private let stepperDelegate = StepperDelegate()
     private lazy var viewDataConstructor = ViewDataConstructor(viewData: viewData)
     
-    init(coordinator: Coordinator?, dataService: IDataService, id: UUID?) {
+    init(coordinator: Coordinator?, dataService: IDataService, webPageURL: String?) {
         self.dataService = dataService
-        self.webPageId = id
+        self.webPageURL = webPageURL
         self.coordinator = coordinator
         self.stepperDelegate.delegate = self
     }
@@ -28,7 +28,7 @@ final class WebPagePresenter {
 
 extension WebPagePresenter {
     convenience init(coordinator: Coordinator, dataService: IDataService, data: WebsiteData) {
-        self.init(coordinator: coordinator, dataService: dataService, id: nil)
+        self.init(coordinator: coordinator, dataService: dataService, webPageURL: nil)
         self.viewData = WebPageViewData(
             url: data.url,
             date: Date(),
@@ -39,22 +39,48 @@ extension WebPagePresenter {
             energy: data.statistics.co2.renewable.grams)
     }
 }
-#warning("ask for self.saveWebPage()")
+
 extension WebPagePresenter: IWebPagePresenter {
-    
-    func updateData(with image: UIImage) {
-        viewData?.image = image
-        view?.update()
-        if let webPageId {
-            var appState = AppState(with: webPageId, isEditing: .edinitig, currentTab: .webPageList, image: image)
-            appStateService.save(appState: appState)
+    func saveState() {
+        guard let webPageURL = webPageURL else { return }
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            var appState = self.appStateService.retrieve(with: webPageURL)
+            if appState == nil {
+                appState = AppState(url: webPageURL, isEditingMode: .edinitig, stepperValue: viewDataConstructor.stepperValue, previosValue: viewDataConstructor.previousValue)
+            } else {
+                appState?.stepperValue = viewDataConstructor.stepperValue
+                appState?.previosValue = viewDataConstructor.previousValue
+            }
+            if let appState = appState {
+                self.appStateService.save(appState: appState)
+            }
         }
     }
     
-    func recoverEditingState() {
-        let appState = appStateService.retrieve()
-        viewData?.image = appState?.image
-        view?.update()
+    func checkForSafedState() {
+        guard let webPageURL, let state = appStateService.retrieve(with: webPageURL), state.isEditingMode == .edinitig else { return }
+        view?.isEdited = true
+        recoverEditingState(with: state.stepperValue, and: state.previosValue)
+    }
+    
+    func viewDidLoaded(view: IWebPageView) {
+        self.view = view
+        if webPageURL == nil {
+            self.view?.update()
+        } else {
+            getData()
+        }
+    }
+    
+    func updateData(with image: UIImage) {
+        viewData?.image = image
+        saveWebPage()
+    }
+
+    func recoverEditingState(with stepperValue: Int, and previosValue: Int) {
+        viewDataConstructor.stepperValue = stepperValue
+        viewDataConstructor.previousValue = previosValue
     }
     
     func prepareToSave() {
@@ -64,27 +90,21 @@ extension WebPagePresenter: IWebPagePresenter {
         case true:
             view?.showAlert(with: Constants.AlerMessagesType.webPageDublicated)
         case false:
-            if let webPageId {
-                var appState = appStateService.retrieve()
-                appStateService.delete()
-                
-            }
-            self.saveWebPage()
+            saveWebPage()
         }
     }
     
     func saveWebPage() {
         guard let viewData else { return }
-        dataService.add(webPage: viewData) { [weak self] message in
-            self?.view?.showMessage(with: message)
+        dataService.add(webPage: viewData) { [weak self] _ in
             self?.getData()
         }
     }
-    #warning("dismiss")
+#warning("dismiss")
     func deleteButtonDidPressed() {
         guard let viewData else { return }
         dataService.deleteWebPage(url: viewData.url)
-        (coordinator as? WebPageCoordinator)?.dismiss()
+        (coordinator as? WebPageCoordinator)?.backToDetail()
     }
     
     func getSectionCount() -> Int {
@@ -106,27 +126,29 @@ extension WebPagePresenter: IWebPagePresenter {
         cell(for: tableView, at: index)
     }
     
-    func viewDidLoaded(view: IWebPageView) {
-        self.view = view
-        if webPageId == nil {
-            self.view?.update()
-        } else {
-            getData()
-        }
-    }
 }
+// MARK: - Stepper Delegate
 
 extension WebPagePresenter: IStepperDelegate {
-    func didChanged(with value: Int) {
-        viewDataConstructor.stepperValue = value
+    func didChanged(with value: Int, and maxValue: Int) {
+        let previousValue: Int = viewDataConstructor.previousValue
+        var currentvValue: Int
+        
+        if value < maxValue && value > previousValue  {
+            currentvValue = Int(value - 1) * 10
+        } else {
+            currentvValue = Int(value + 1) / 10
+        }
+        viewDataConstructor.stepperValue = currentvValue
+        viewDataConstructor.previousValue = currentvValue
         view?.updateEnergyWasteTypeCell()
     }
 }
 
 private extension WebPagePresenter {
     func getData() {
-        guard let webPageId else { return }
-        dataService.fetchWepPage(with: webPageId) { [weak self] data in
+        guard let webPageURL else { return }
+        dataService.fetchWepPage(with: webPageURL) { [weak self] data in
             self?.viewData = data
             self?.view?.update()
         }
