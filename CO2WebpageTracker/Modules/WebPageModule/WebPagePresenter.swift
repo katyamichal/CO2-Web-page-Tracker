@@ -193,7 +193,6 @@ private extension WebPagePresenter {
                 return UITableViewCell()
             }
             cell.update(with: viewDataConstructor.ratingColor, with: viewData.ratingLetter, description: viewDataConstructor.ratingDescription, url: viewDataConstructor.urlDescription, cleanerThan: viewDataConstructor.cleanerThanDescription, date: viewDataConstructor.lastTestDate)
-            
             return cell
             
         case .renewable:
@@ -210,6 +209,7 @@ private extension WebPagePresenter {
             cell.update(visitCount: viewDataConstructor.energyHeadTitle, energy: viewDataConstructor.energy, stepperValue: viewDataConstructor.stepperValue)
             cell.configureStepperDelgate(with: stepperDelegate)
             return cell
+            
         case .image:
             guard let image = viewData.image, let cell = tableView.dequeueReusableCell(withIdentifier: ImageCell.reuseIdentifier, for: indexPath) as? ImageCell else {
                 return UITableViewCell()
@@ -248,21 +248,26 @@ private extension WebPagePresenter {
     }
     
     func createURLForShare() -> URL? {
-      guard let viewDataURLString = viewData?.url,
-            let viewDataURL = URL(string: viewDataURLString) else {
-                print("viewData or url is nil or invalid")
-                return nil
-            }
-        let baseURLString = Constants.BaseUrls.websitecarbon
-        guard var host = viewDataURL.host else {
-            print("Invalid URL host")
+        // Ensure that viewData and its URL are valid
+        guard let viewDataURLString = viewData?.url,
+              let viewDataURL = URL(string: viewDataURLString) else {
+            print("viewData or url is nil or invalid")
             return nil
         }
-        if host.hasPrefix("www.") {
-            host.removeFirst(4)
+        let prefixes = ["https://", "http://"]
+        var modifiedURLString = viewDataURLString
+        for prefix in prefixes {
+            if modifiedURLString.hasPrefix(prefix) {
+                modifiedURLString.removeFirst(prefix.count)
+                break
+            }
         }
-        
-        let urlString = baseURLString + "\(host)/"
+        if modifiedURLString.hasPrefix("www.") {
+            modifiedURLString.removeFirst(4)
+        }
+        let modifiedPath = modifiedURLString.replacingOccurrences(of: "/", with: "-")
+        let baseURLString = Constants.BaseUrls.websitecarbon
+        let urlString = baseURLString + "website/" + modifiedPath
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
             return nil
