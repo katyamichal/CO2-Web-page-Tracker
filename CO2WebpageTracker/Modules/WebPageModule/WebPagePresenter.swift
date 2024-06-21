@@ -41,28 +41,6 @@ extension WebPagePresenter {
 }
 
 extension WebPagePresenter: IWebPagePresenter {
-    func saveState() {
-        guard let webPageURL = webPageURL else { return }
-        DispatchQueue.global().async { [weak self] in
-            guard let self = self else { return }
-            var appState = self.appStateService.retrieve(with: webPageURL)
-            if appState == nil {
-                appState = AppState(url: webPageURL, isEditingMode: .edinitig, stepperValue: viewDataConstructor.stepperValue, previosValue: viewDataConstructor.previousValue)
-            } else {
-                appState?.stepperValue = viewDataConstructor.stepperValue
-                appState?.previosValue = viewDataConstructor.previousValue
-            }
-            if let appState = appState {
-                self.appStateService.save(appState: appState)
-            }
-        }
-    }
-    
-    func checkForSafedState() {
-        guard let webPageURL, let state = appStateService.retrieve(with: webPageURL), state.isEditingMode == .edinitig else { return }
-        view?.isEdited = true
-        recoverEditingState(with: state.stepperValue, and: state.previosValue)
-    }
     
     func viewDidLoaded(view: IWebPageView) {
         self.view = view
@@ -76,6 +54,7 @@ extension WebPagePresenter: IWebPagePresenter {
     func updateData(with image: UIImage) {
         viewData?.image = image
         saveWebPage()
+        (coordinator as? WebPageCoordinator)?.dismissImagePicker()
     }
     
     func prepareToSave() {
@@ -96,6 +75,7 @@ extension WebPagePresenter: IWebPagePresenter {
             self?.view?.update()
         }
     }
+    
     func deleteButtonDidPressed() {
         guard let viewData else { return }
         dataService.deleteWebPage(url: viewData.url)
@@ -121,7 +101,38 @@ extension WebPagePresenter: IWebPagePresenter {
         cell(for: tableView, at: index)
     }
     
+    func saveState() {
+        guard let webPageURL = webPageURL else { return }
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            var appState = self.appStateService.retrieve(with: webPageURL)
+            if appState == nil {
+                appState = AppState(url: webPageURL, isEditingMode: .edinitig, stepperValue: viewDataConstructor.stepperValue, previosValue: viewDataConstructor.previousValue)
+            } else {
+                appState?.stepperValue = viewDataConstructor.stepperValue
+                appState?.previosValue = viewDataConstructor.previousValue
+            }
+            if let appState = appState {
+                self.appStateService.save(appState: appState)
+            }
+        }
+    }
+    
+    func checkForSafedState() {
+        guard let webPageURL, let state = appStateService.retrieve(with: webPageURL), state.isEditingMode == .edinitig else { return }
+        view?.isEdited = true
+        recoverEditingState(with: state.stepperValue, and: state.previosValue)
+    }
+    
+    func imagePickerDidCancel() {
+        (coordinator as? WebPageCoordinator)?.dismissImagePicker()
+    }
+    
+    func showImagePicker(with imagePicker: UIImagePickerController) {
+        (coordinator as? WebPageCoordinator)?.showImagePicker(with: imagePicker)
+    }
 }
+
 // MARK: - Stepper Delegate
 
 extension WebPagePresenter: IStepperDelegate {
@@ -141,6 +152,8 @@ extension WebPagePresenter: IStepperDelegate {
 }
 
 private extension WebPagePresenter {
+    
+    
     func getData() {
         guard let webPageURL else { return }
         dataService.fetchWepPage(with: webPageURL) { [weak self] data in
@@ -148,6 +161,7 @@ private extension WebPagePresenter {
             self?.view?.update()
         }
     }
+    
     func cell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         let section = WebPageSection.allCases[indexPath.section]
         

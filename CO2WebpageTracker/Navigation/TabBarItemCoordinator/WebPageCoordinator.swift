@@ -28,7 +28,14 @@ final class WebPageCoordinator: Coordinator {
     
     func backToDetail() {
         navigationController.popToRootViewController(animated: true)
-
+    }
+    
+    func showImagePicker(with imagePicker: UIImagePickerController) {
+        navigationController.present(imagePicker, animated: true)
+    }
+    
+    func dismissImagePicker() {
+        navigationController.dismiss(animated: true)
     }
 }
 

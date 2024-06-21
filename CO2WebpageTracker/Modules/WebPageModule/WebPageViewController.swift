@@ -160,22 +160,17 @@ extension WebPageViewController: UIImagePickerControllerDelegate, UINavigationCo
         imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
-        present(imagePicker, animated: true, completion: nil)
+        presenter.showImagePicker(with: imagePicker)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage
         if let theImage = image {
-            addPhoto(with: theImage)
+            presenter.updateData(with: theImage)
         }
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func addPhoto(with image: UIImage) {
-        presenter.updateData(with: image)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
+        presenter.imagePickerDidCancel()
     }
 }

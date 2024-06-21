@@ -23,4 +23,6 @@ protocol IWebPageTableViewHandler: AnyObject {
     func prepareToSave()
     func saveWebPage()
     func updateData(with image: UIImage)
+    func showImagePicker(with imagePicker: UIImagePickerController)
+    func imagePickerDidCancel()
 }

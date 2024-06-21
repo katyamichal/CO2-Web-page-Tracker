@@ -5,13 +5,9 @@
 //  Created by Catarina Polakowsky on 14.06.2024.
 //
 
-import Foundation
 import UIKit
 
-// energy == over a year, with 1 monthly page views, this web page produces
-#warning("private set??")
 struct WebPageViewData {
-    let id: UUID
     let url: String
     let date: Date
     let ratingLetter: String
@@ -24,7 +20,6 @@ struct WebPageViewData {
 
 extension WebPageViewData {
     init(url: String, date: Date, cleanerThan: Double, ratingLetter: String, isGreen: String, gramForVisit: Double, energy: Double, image: UIImage? = nil) {
-        self.id = UUID()
         self.url = url
         self.date = date
         self.ratingLetter = ratingLetter

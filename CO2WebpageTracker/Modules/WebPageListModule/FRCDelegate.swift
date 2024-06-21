@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-protocol IFetchResultControllerDelegate {
+protocol IFetchResultControllerDelegate: AnyObject {
     func beginUpdating()
     func endUpdating()
     func insertObject(at index: IndexPath, with object: WebPageListViewData)
@@ -17,7 +17,7 @@ protocol IFetchResultControllerDelegate {
 }
 
 final class FRCDelegate: NSObject, NSFetchedResultsControllerDelegate {
-    var delegate: IFetchResultControllerDelegate?
+    weak var delegate: IFetchResultControllerDelegate?
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         delegate?.beginUpdating()
