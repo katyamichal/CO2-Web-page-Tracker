@@ -43,6 +43,7 @@ extension WebPagePresenter {
 // MARK: - Delegate methods
 
 extension WebPagePresenter: IWebPagePresenter {
+    
     func viewDidLoaded(view: IWebPageView) {
         self.view = view
         if webPageURL == nil {
@@ -133,7 +134,7 @@ extension WebPagePresenter: IWebPagePresenter {
         (coordinator as? WebPageCoordinator)?.showImagePicker(with: imagePicker)
     }
     
-    func shareWebPage() {
+    func prepareToShare() {
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
             guard let url = self.createURLForShare() else {
@@ -143,11 +144,13 @@ extension WebPagePresenter: IWebPagePresenter {
                 return
             }
             DispatchQueue.main.async {
-                let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-                activityVC.excludedActivityTypes = [.airDrop]
-                (self.coordinator as? WebPageCoordinator)?.presentView(with: activityVC)
+                self.view?.isReadyToShare(with: url)
             }
         }
+    }
+    
+    func share(with activityViewController: UIActivityViewController) {
+        (coordinator as? WebPageCoordinator)?.presentView(with: activityViewController)
     }
 }
 

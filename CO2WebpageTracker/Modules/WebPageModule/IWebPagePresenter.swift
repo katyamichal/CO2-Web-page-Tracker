@@ -25,5 +25,6 @@ protocol IWebPageTableViewHandler: AnyObject {
     func updateData(with image: UIImage)
     func showImagePicker(with imagePicker: UIImagePickerController)
     func imagePickerDidCancel()
-    func shareWebPage()
+    func prepareToShare()
+    func share(with activityViewController: UIActivityViewController)
 }

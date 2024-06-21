@@ -13,6 +13,7 @@ protocol IWebPageView: AnyObject {
     func updateEnergyWasteTypeCell()
     func showAlert(with type: Constants.AlerMessagesType)
     func showMessage(with message: String)
+    func isReadyToShare(with webPage: URL)
 }
 
 final class WebPageViewController: UIViewController {
@@ -56,6 +57,7 @@ final class WebPageViewController: UIViewController {
 }
 
 extension WebPageViewController: IWebPageView {
+    
     func update() {
         webPageView.tableView.reloadData()
     }
@@ -85,6 +87,12 @@ extension WebPageViewController: IWebPageView {
         let cancelAction = UIAlertAction(title: "Ok", style: .cancel)
         alert.addAction(cancelAction)
         self.present(alert, animated: true)
+    }
+    
+    func isReadyToShare(with webPage: URL) {
+        let activityVC = UIActivityViewController(activityItems: [webPage], applicationActivities: nil)
+        activityVC.excludedActivityTypes = [.airDrop]
+        presenter.share(with: activityVC)
     }
 }
 
@@ -137,7 +145,7 @@ private extension WebPageViewController {
     }
 
     func shareWebPage(action: UIAction) {
-        presenter.shareWebPage()
+        presenter.prepareToShare()
     }
     
     func addPhoto(action: UIAction) {
