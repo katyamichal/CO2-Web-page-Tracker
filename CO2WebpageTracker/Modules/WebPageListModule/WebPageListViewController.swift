@@ -117,19 +117,13 @@ private extension WebPageListViewController {
     func setupNavigationBar() {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.tintColor = .label
-//        let pointSize: CGFloat = 20
-//        let configuration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .light)
-//        let image = UIImage(systemName: Constants.UIElementSystemNames.actionMenu, withConfiguration: configuration)
-//        let rightBarItem = UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
-//        rightBarItem.tintColor = .white
-//        let barButtonMenu = UIMenu(title: "", children: [
-//            UIAction(title: Constants.UIElementTitle.sortByCO2, image: UIImage(systemName: Constants.UIElementSystemNames.co2), handler: sortByCO2),
-//            UIAction(title: Constants.UIElementTitle.sortByDate, image: UIImage(systemName: Constants.UIElementSystemNames.calendar), handler: sortByDate)
-//        ])
-//        rightBarItem.tintColor = .label
-//        rightBarItem.menu = barButtonMenu
-//        navigationItem.rightBarButtonItem = rightBarItem
+        navigationController?.navigationBar.tintColor = Colours.WebPageColours.darkOrange
+        let pointSize: CGFloat = 20
+        let configuration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .light)
+        let image = UIImage(systemName: Constants.UIElementSystemNames.actionMenu, withConfiguration: configuration)
+        let rightBarItem = UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
+        rightBarItem.tintColor = .black
+        navigationItem.rightBarButtonItem = rightBarItem
     }
     
     func createDeleteAction(_ tableView: UITableView, at indexPath: IndexPath) -> UIContextualAction? {
@@ -143,12 +137,5 @@ private extension WebPageListViewController {
     
     func deleteAction(_ tableView: UITableView, at indexPath: IndexPath) {
         presenter.actionDidSwipeToDelete(at: indexPath.row)
-    }
-    
-    func sortByCO2(_ action: UIAction) {
-        presenter.sortByCO2()
-    }
-    func sortByDate(_ action: UIAction) {
-        presenter.sortByDate()
     }
 }

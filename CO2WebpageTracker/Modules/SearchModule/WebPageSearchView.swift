@@ -79,7 +79,7 @@ final class WebPageSearchView: UIView {
 
 private extension WebPageSearchView {
     func setupView() {
-        backgroundColor = Colours.WebPageColours.blue
+        backgroundColor = Colours.BackgroundsColours.light
         setupViews()
         setupConstraints()
     }

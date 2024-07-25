@@ -7,22 +7,32 @@
 
 import UIKit
 
-typealias IWebPagePresenter = IWebPageViewLifeCycle & IWebPageTableViewHandler
+typealias IWebPagePresenter = IWebPageViewLifeCycle & IWebPageTableViewHandler & IWebPagePersistence & IWebPageLogic
 
 protocol IWebPageViewLifeCycle: AnyObject {
     func viewDidLoaded(view: IWebPageView)
-    func checkForSafedState()
-    func saveState()
 }
 
 protocol IWebPageTableViewHandler: AnyObject {
-    func getSectionCount() -> Int
+    var buttonTitle: String { get }
+    var buttonColour: UIColor { get }
+    
+    var sectionCount: Int { get }
     func getRowCountInSection(at section: Int) -> Int
     func rowForCell(tableView: UITableView, at index: IndexPath) -> UITableViewCell
+}
+
+protocol IWebPagePersistence: AnyObject {
+    func updateData(with image: UIImage)
     func deleteButtonDidPressed()
     func prepareToSave()
-    func saveWebPage()
-    func updateData(with image: UIImage)
+    func updateWebPage()
+    func checkForSafedState()
+    func saveState()
+    func saveOrDelete()
+}
+
+protocol IWebPageLogic: AnyObject {
     func showImagePicker(with imagePicker: UIImagePickerController)
     func imagePickerDidCancel()
     func prepareToShare()

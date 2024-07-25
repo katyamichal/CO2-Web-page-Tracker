@@ -11,9 +11,9 @@ final class SearchView: UIView {
     private let inset: CGFloat = 8
     private let searchFieldHeight: CGFloat = 40
     private let spacing: CGFloat = 32
-    private let buttonHeight: CGFloat = 50
+    private let buttonHeight: CGFloat = 60
     private let searchTextFieldHeight: CGFloat = 50
-    private let buttonCornerRadius: CGFloat = 5
+    private let buttonCornerRadius: CGFloat = 15
     
     // MARK: - Inits
     
@@ -48,6 +48,7 @@ final class SearchView: UIView {
         label.text = Constants.LabelPlaceHolders.searchLabel1
         label.font = Fonts.Titles.mainTitle
         label.textAlignment = .left
+        label.textColor = Colours.Text.secondaryText
         return label
     }()
     
@@ -58,6 +59,7 @@ final class SearchView: UIView {
         label.numberOfLines = 0
         label.font = Fonts.Titles.subtitle
         label.text = Constants.LabelPlaceHolders.searchLabel2
+        label.textColor = Colours.Text.secondaryText
         label.textAlignment = .left
         return label
     }()
@@ -75,10 +77,10 @@ final class SearchView: UIView {
         searchTextField.autocorrectionType = .no
         searchTextField.defaultTextAttributes = [
             NSAttributedString.Key.font: Fonts.Body.defaultFont,
-            NSAttributedString.Key.foregroundColor: UIColor.black
+            NSAttributedString.Key.foregroundColor: Colours.Text.secondaryText
         ]
         searchTextField.borderStyle = .bezel
-        searchTextField.tintColor = .white
+        searchTextField.tintColor = Colours.WebPageColours.darkOrange
         searchTextField.heightAnchor.constraint(equalToConstant: searchTextFieldHeight).isActive = true
         return searchTextField
     }()
@@ -86,12 +88,14 @@ final class SearchView: UIView {
     private lazy var calculateButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(.label, for: .normal)
+        button.setTitleColor(Colours.Text.secondaryText, for: .normal)
         button.titleLabel?.font = Fonts.Buttons.primaryButtonFont
         button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
         button.setTitle(Constants.UIElementNames.calculateButton, for: .normal)
-        button.backgroundColor = .systemBackground
+        button.backgroundColor = Colours.WebPageColours.darkOrange
         button.layer.cornerRadius = buttonCornerRadius
+        button.layer.borderColor = Colours.Text.secondaryText.cgColor
+        button.layer.borderWidth = 2
         return button
     }()
     

@@ -42,8 +42,7 @@ extension WebPagePresenter {
 
 // MARK: - Delegate methods
 
-extension WebPagePresenter: IWebPagePresenter {
-    
+extension WebPagePresenter: IWebPageViewLifeCycle {
     func viewDidLoaded(view: IWebPageView) {
         self.view = view
         if webPageURL == nil {
@@ -52,33 +51,20 @@ extension WebPagePresenter: IWebPagePresenter {
             getData()
         }
     }
-    
-    func updateData(with image: UIImage) {
-        viewData?.image = image
-        saveWebPage()
-        (coordinator as? WebPageCoordinator)?.dismissImagePicker()
-    }
-    
-    func prepareToSave() {
-        guard let viewData else { return }
-        let isDublicated = dataService.findDublicate(with: viewData)
-        switch isDublicated {
-        case true:
-            view?.showAlert(with: Constants.AlerMessagesType.webPageDublicated)
-        case false:
-            saveWebPage()
-        }
-    }
-    
-    func saveWebPage() {
-        guard let viewData else { return }
-        dataService.add(webPage: viewData) { [weak self] _ in
-            self?.getData()
-            self?.view?.update()
-        }
-    }
+}
 
-    func getSectionCount() -> Int {
+
+
+extension WebPagePresenter:  IWebPageTableViewHandler{
+    var buttonTitle: String {
+        (webPageURL == nil) ? "Save" : "Delete"
+    }
+    
+    var buttonColour: UIColor {
+        (webPageURL == nil) ? .green : .red
+    }
+    
+    var sectionCount: Int {
         WebPageSection.allCases.count
     }
     
@@ -95,6 +81,54 @@ extension WebPagePresenter: IWebPagePresenter {
     
     func rowForCell(tableView: UITableView, at index: IndexPath) -> UITableViewCell {
         cell(for: tableView, at: index)
+    }
+}
+
+extension WebPagePresenter:  IWebPagePersistence {
+    private func saveWebPage() {
+         guard let viewData else { return }
+         dataService.add(webPage: viewData) { [weak self] _ in
+             self?.getData()
+         }
+     }
+     
+    func updateData(with image: UIImage) {
+        viewData?.image = image
+        guard let viewData else { return }
+        let isDublicated = dataService.findDublicate(with: viewData)
+        switch isDublicated {
+        case true:
+            updateWebPage()
+        case false:
+            saveWebPage()
+        }
+        (coordinator as? WebPageCoordinator)?.dismissImagePicker()
+    }
+    
+
+    func updateWebPage() {
+        guard let viewData else { return }
+        dataService.update(webPage: viewData)
+        getData()
+    }
+    
+    func prepareToSave() {
+        guard let viewData else { return }
+        let isDublicated = dataService.findDublicate(with: viewData)
+        switch isDublicated {
+        case true:
+            view?.showAlert(with: Constants.AlerMessagesType.webPageDublicated)
+        case false:
+            saveWebPage()
+        }
+    }
+    
+    func saveOrDelete() {
+        guard webPageURL != nil else {
+            prepareToSave()
+            return
+        }
+        deleteButtonDidPressed()
     }
     
     func deleteButtonDidPressed() {
@@ -121,11 +155,15 @@ extension WebPagePresenter: IWebPagePresenter {
     }
     
     func checkForSafedState() {
-        guard let webPageURL, let state = appStateService.retrieve(with: webPageURL), state.isEditingMode == .edinitig else { return }
+        guard let webPageURL, let state = appStateService.retrieve(with: webPageURL), 
+                state.isEditingMode == .edinitig else { return }
         view?.isEdited = true
         recoverEditingState(with: state.stepperValue, and: state.previosValue)
     }
-    
+}
+
+
+extension WebPagePresenter: IWebPageLogic {
     func imagePickerDidCancel() {
         (coordinator as? WebPageCoordinator)?.dismissImagePicker()
     }
@@ -175,6 +213,20 @@ extension WebPagePresenter: IStepperDelegate {
 // MARK: - Private methods
 
 private extension WebPagePresenter {
+    func convertGreenToString(_ isGreen: BoolOrString) -> String {
+        switch isGreen {
+        case .bool(let status):
+            switch status {
+            case true:
+                return "true"
+            case false:
+                return "false"
+            }
+        case .string(let str):
+            return str
+        }
+    }
+    
     func getData() {
         guard let webPageURL else { return }
         dataService.fetchWepPage(with: webPageURL) { [weak self] data in
@@ -219,20 +271,6 @@ private extension WebPagePresenter {
         }
     }
     
-    func convertGreenToString(_ isGreen: BoolOrString) -> String {
-        switch isGreen {
-        case .bool(let status):
-            switch status {
-            case true:
-                return "true"
-            case false:
-                return "false"
-            }
-        case .string(let str):
-            return str
-        }
-    }
-    
     func configureDataServiceResponse(with type: CoreDataErrors) -> String {
         switch type {
         case .fetchError:
@@ -250,7 +288,7 @@ private extension WebPagePresenter {
     func createURLForShare() -> URL? {
         // Ensure that viewData and its URL are valid
         guard let viewDataURLString = viewData?.url,
-              let viewDataURL = URL(string: viewDataURLString) else {
+              URL(string: viewDataURLString) != nil else {
             print("viewData or url is nil or invalid")
             return nil
         }

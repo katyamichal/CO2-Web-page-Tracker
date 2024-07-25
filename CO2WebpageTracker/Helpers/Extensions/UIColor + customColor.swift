@@ -10,32 +10,27 @@ import UIKit
 enum Colours {
     
     enum WebPageColours {
-        static let darkBlue = UIColor.rgba(red: 10, green: 11, blue: 122, alpha: 1)
-        static let red = UIColor.rgba(red: 222, green: 135, blue: 134, alpha: 1)
-        static let blue = UIColor.rgba(red: 13, green: 187, blue: 238, alpha: 1)
-        static let defaultColour = UIColor.rgba(red: 240, green: 248, blue: 255, alpha: 1)
-        static let green = UIColor.rgba(red: 0, green: 194, blue: 69, alpha: 1)
-//
-//        static let khaki = UIColor.rgba(red: 89, green: 126, blue: 82, alpha: 1)
-//        static let red = UIColor.rgba(red: 222, green: 135, blue: 134, alpha: 1)
-//        static let blue = UIColor.rgba(red: 48, green: 129, blue: 208, alpha: 1)
-//        static let defaultColour = UIColor.rgba(red: 255, green: 255, blue: 236, alpha: 1)
-//        static let yellowish = UIColor.rgba(red: 183, green: 196, blue: 182, alpha: 1)
+        static let darkOrange = UIColor.rgba(red: 232, green: 160, blue: 60, alpha: 1)
+        static let green = UIColor.rgba(red: 97, green: 178, blue: 115, alpha: 1)
+        static let redish = UIColor.rgba(red: 233, green: 103, blue: 77, alpha: 1)
+        static let blueish = UIColor.rgba(red: 206, green: 234, blue: 220, alpha: 1)
+        static let lightBrown = UIColor.rgba(red: 236, green: 214, blue: 198, alpha: 1)
     }
     
     enum BackgroundsColours {
-        static let defaultColour = UIColor.rgba(red: 250, green: 240, blue: 218, alpha: 1)
+        static let light = UIColor.rgba(red: 245, green: 235, blue: 233, alpha: 1)
+        static let green = UIColor.rgba(red: 97, green: 178, blue: 115, alpha: 1)
     }
     
     enum Text {
-        static let defaultColour = UIColor.rgba(red: 79, green: 77, blue: 80, alpha: 1)
-        static let secondaryText = UIColor.rgba(red: 169, green: 168, blue: 172, alpha: 1)
+        static let secondaryText = UIColor.rgba(red: 0, green: 0, blue: 0, alpha: 1)
     }
 
     enum Button {
-        static let addButtonColour = UIColor.rgba(red: 0, green: 255, blue: 189, alpha: 1)
+        static let black = UIColor.rgba(red: 0, green: 0, blue: 0, alpha: 1)
+        static let grey = UIColor.rgba(red: 51, green: 51, blue: 51, alpha: 1)
+        
     }
-
 }
 
 extension UIColor {

@@ -10,8 +10,8 @@ import UIKit
 
 final class WebPageListTableViewCell: UITableViewCell {
     
-    private let spacing: CGFloat = 16
-    private let inset: CGFloat = 8
+    private let spacing: CGFloat = 24
+    private let inset: CGFloat = 16
     private let buttonCornerRadius: CGFloat = 10
     
     static var reuseIdentifier: String {
@@ -41,8 +41,8 @@ final class WebPageListTableViewCell: UITableViewCell {
         stackView.spacing = spacing
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.backgroundColor = .systemBackground
-        stackView.layer.cornerRadius = buttonCornerRadius
+        stackView.layer.borderColor = UIColor.black.cgColor
+        stackView.layer.borderWidth = 2
         return stackView
     }()
 
@@ -53,6 +53,7 @@ final class WebPageListTableViewCell: UITableViewCell {
         label.numberOfLines = 0
         label.font = Fonts.Titles.subtitle
         label.textAlignment = .center
+        label.textColor = Colours.Text.secondaryText
         return label
     }()
     
@@ -62,6 +63,7 @@ final class WebPageListTableViewCell: UITableViewCell {
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
         label.font = Fonts.Body.defaultFont
+        label.textColor = Colours.Text.secondaryText
         return label
     }()
     
@@ -69,6 +71,7 @@ final class WebPageListTableViewCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = Fonts.Body.secondaryFont
+        label.textColor = Colours.Text.secondaryText
         return label
     }()
     
@@ -83,7 +86,8 @@ final class WebPageListTableViewCell: UITableViewCell {
     
     // MARK: - Public
     
-    func updateLabels(url: String, rating: String, date: String) {
+    func updateLabels(url: String, rating: String, date: String, colour: UIColor) {
+        webPageStackView.backgroundColor = colour
         dateLabel.text = "This web page was tested on \(date)"
         urlLabel.text = url
         ratingLabel.text = "Website Carbon Rating is \(rating)"
@@ -108,9 +112,9 @@ private extension WebPageListTableViewCell {
     }
     
     func setupConstraints() {
-        webPageStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: spacing).isActive = true
+        webPageStackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         webPageStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        webPageStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: spacing).isActive = true
-        webPageStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -spacing).isActive = true
+        webPageStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        webPageStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
     }
 }

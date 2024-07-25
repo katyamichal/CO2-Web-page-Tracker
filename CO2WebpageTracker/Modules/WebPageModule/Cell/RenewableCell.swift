@@ -45,7 +45,7 @@ final class RenewableCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = Fonts.Body.defaultFont
-        label.textColor = .white
+        label.textColor = Colours.Text.secondaryText
         return label
     }()
 
@@ -53,7 +53,7 @@ final class RenewableCell: UITableViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = Fonts.Body.defaultFont
-        label.textColor = .white
+        label.textColor = Colours.Text.secondaryText
         return label
     }()
     

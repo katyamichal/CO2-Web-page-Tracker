@@ -51,7 +51,7 @@ final class CarbonRatingCell: UITableViewCell {
     private lazy var scaleLetterLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.textColor = .blue
+        label.textColor = Colours.Text.secondaryText
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.font = Fonts.Body.largeFont
@@ -63,7 +63,7 @@ final class CarbonRatingCell: UITableViewCell {
         label.numberOfLines = 0
         label.font = Fonts.Body.descriptionFont
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .white
+        label.textColor = Colours.Text.secondaryText
         return label
     }()
     
@@ -72,7 +72,7 @@ final class CarbonRatingCell: UITableViewCell {
         label.numberOfLines = 0
         label.font = Fonts.Body.descriptionFont
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .white
+        label.textColor = Colours.Text.secondaryText
         return label
     }()
     
@@ -81,7 +81,7 @@ final class CarbonRatingCell: UITableViewCell {
         label.numberOfLines = 0
         label.font = Fonts.Body.descriptionFont
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .white
+        label.textColor = Colours.Text.secondaryText
         return label
     }()
     
@@ -99,7 +99,7 @@ final class CarbonRatingCell: UITableViewCell {
         label.numberOfLines = 0
         label.font = Fonts.Body.defaultFont
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .white
+        label.textColor = Colours.Text.secondaryText
         return label
     }()
     
@@ -133,7 +133,6 @@ private extension CarbonRatingCell {
     func setupViews() {
         contentView.addSubview(scaleView)
         scaleView.addSubview(scaleLetterLabel)
-        
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(resultForLabel)
         stackView.addArrangedSubview(descriptionLabel)

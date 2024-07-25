@@ -5,19 +5,18 @@
 //  Created by Catarina Polakowsky on 14.06.2024.
 //
 
-
-import CoreData
 import UIKit
+import CoreData
 
 protocol IDataService: AnyObject {
     func addFetchDelegate(_ delegate: IFetchResultControllerDelegate)
-    
     func fetchWepPages(completionHandler: (Result<[WebPageListViewData],CoreDataErrors>) -> Void)
     func performFetch()
     func fetchWepPage(with webPageURL: String, completionHandler: (WebPageViewData) -> Void)
     func findDublicate(with webPage: WebPageViewData) -> Bool
     func add(webPage: WebPageViewData, completion: (String) -> Void)
     func deleteWebPage(url: String)
+    func update(webPage: WebPageViewData) 
 }
 
 enum PersistantContainerStorage {
@@ -58,11 +57,11 @@ final class DataService: IDataService {
         return controller
     }()
     
-    // MARK: - Fetch
-    
     func addFetchDelegate(_ delegate: IFetchResultControllerDelegate) {
         frcDelegate.delegate = delegate
     }
+    
+    // MARK: - Fetch
 
     func performFetch() {
         do {
@@ -74,7 +73,7 @@ final class DataService: IDataService {
     
     func fetchWepPages(completionHandler: (Result<[WebPageListViewData],CoreDataErrors>) -> Void) {
         let context = PersistantContainerStorage.persistentContainer.viewContext
-        let sortDescriptor = NSSortDescriptor(keyPath: \WebPageInfo.date, ascending: true)
+        let sortDescriptor = NSSortDescriptor(keyPath: \WebPageInfo.date, ascending: false)
         
         let fetchRequest = WebPageInfo.fetchRequest()
         fetchRequest.sortDescriptors = [sortDescriptor]
@@ -106,6 +105,7 @@ final class DataService: IDataService {
             image: image
         ))
     }
+    
     // MARK: - Add
     
     func findDublicate(with webPage: WebPageViewData) -> Bool {
@@ -126,9 +126,6 @@ final class DataService: IDataService {
     }
     
     func add(webPage: WebPageViewData, completion: (String) -> Void) {
-        if findDublicate(with: webPage) {
-            deleteWebPage(url: webPage.url)
-        }
         let context = PersistantContainerStorage.persistentContainer.viewContext
         let newWebPage = WebPageInfo(context: context)
         var binaryImageData: Data?
@@ -151,6 +148,31 @@ final class DataService: IDataService {
         completion("Web Page succesefully save")
     }
     
+    func update(webPage: WebPageViewData) {
+        guard var webPageInfo = getWebPage(with: webPage.url) else {
+            return
+        }
+        var binaryImageData: Data?
+        if let image = webPage.image {
+            if let imageData = image.jpegData(compressionQuality: 1.0) {
+                binaryImageData = imageData
+            } else {
+                print("Error converting image to data")
+            }
+        }
+        webPageInfo.url = webPage.url
+        webPageInfo.date = webPage.date
+        webPageInfo.rating = webPage.ratingLetter
+        webPageInfo.isGreen = webPage.isGreen
+        webPageInfo.gramForVisit = webPage.gramForVisit
+        webPageInfo.cleanerThan = webPage.cleanerThan
+        webPageInfo.energy = webPage.energy
+        webPageInfo.image = binaryImageData
+        PersistantContainerStorage.saveContext()
+    }
+    
+    // MARK: - Delete
+
     func deleteWebPage(url: String) {
         defer { PersistantContainerStorage.saveContext() }
         let context = PersistantContainerStorage.persistentContainer.viewContext

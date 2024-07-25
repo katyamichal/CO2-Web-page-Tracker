@@ -51,6 +51,7 @@ private extension GradientRatingView {
             let label = UILabel()
             label.text = labelText
             label.textAlignment = .center
+            label.textColor = Colours.Text.secondaryText
             label.frame = CGRect(x: CGFloat(index) * labelWidth, y: 0, width: labelWidth, height: self.bounds.height)
             self.addSubview(label)
         }
@@ -58,7 +59,7 @@ private extension GradientRatingView {
     
     func setupMarker() {
         let marker = UIImageView(image: UIImage(systemName: Constants.UIElementSystemNames.globe))
-        marker.tintColor = .white
+        marker.tintColor = Colours.Text.secondaryText
         marker.frame = CGRect(x: self.bounds.width * 0.75, y: self.bounds.height + 10, width: 30, height: 30)
         self.addSubview(marker)
     }
@@ -70,7 +71,7 @@ private extension GradientRatingView {
         label.text = "Global Average"
         label.numberOfLines = 0
         label.font = UIFont(name: "Bradley Hand", size: 19)
-        label.textColor = .white
+        label.textColor = Colours.Text.secondaryText
         self.addSubview(label)
     }
 }

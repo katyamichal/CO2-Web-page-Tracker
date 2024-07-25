@@ -5,8 +5,8 @@
 //  Created by Catarina Polakowsky on 20.06.2024.
 //
 
-
 import UIKit
+
 final class ImageCell: UITableViewCell {
     private let spacing: CGFloat = 16
     private let inset: CGFloat = 24
@@ -34,9 +34,10 @@ final class ImageCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = Fonts.Titles.mainTitle
-        label.textColor = .white
+        label.textColor = Colours.Text.secondaryText
         return label
     }()
+    
     private lazy var webPageImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +54,6 @@ final class ImageCell: UITableViewCell {
     func update(with urlTitle: String, and image: UIImage) {
         titleLabel.text = urlTitle
         webPageImage.image = image
-        
     }
 }
 

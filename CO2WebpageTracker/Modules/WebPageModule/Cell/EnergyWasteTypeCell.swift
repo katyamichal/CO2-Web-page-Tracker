@@ -52,7 +52,7 @@ final class EnergyWasteTypeCell: UITableViewCell {
         label.numberOfLines = 0
         label.font = Fonts.Body.defaultFont
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .white
+        label.textColor = Colours.Text.secondaryText
         return label
     }()
     
@@ -70,7 +70,7 @@ final class EnergyWasteTypeCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = Fonts.Body.defaultFont
-        label.textColor = .white
+        label.textColor = Colours.Text.secondaryText
         return label
     }()
     
@@ -84,9 +84,6 @@ final class EnergyWasteTypeCell: UITableViewCell {
     func configureStepperDelgate(with delegate: UIStepperViewDelegate) {
         stepperDelegate = delegate
     }
-    
-    
-    // MARK: - Public
     
     func update(visitCount: String, energy: String, stepperValue: Int) {
         stepperValueLabel.text = visitCount

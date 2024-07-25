@@ -50,7 +50,7 @@ final class LoadingView: UIView {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.style = .large
-        activityIndicator.color = .white
+        activityIndicator.color = Colours.WebPageColours.darkOrange
         activityIndicator.hidesWhenStopped = true
         return activityIndicator
     }()
@@ -58,7 +58,7 @@ final class LoadingView: UIView {
     private lazy var pauseLosdingButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.tintColor = .white
+        button.tintColor = Colours.WebPageColours.darkOrange
         button.contentMode = .scaleAspectFit
         let font = UIFont.systemFont(ofSize: pauseLoadingButtonFontSize)
         let configuration = UIImage.SymbolConfiguration(font: font)
@@ -75,6 +75,7 @@ final class LoadingView: UIView {
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
         label.font = Fonts.Titles.mainTitle
+        label.textColor = Colours.Text.secondaryText
         label.textAlignment = .center
         return label
     }()
@@ -82,11 +83,10 @@ final class LoadingView: UIView {
     private lazy var tryAgainButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(.label, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = Fonts.Titles.subtitle
         button.setTitle(Constants.SearchLoadingMessage.testAgain, for: .normal)
-        button.backgroundColor = .systemBackground
+        button.backgroundColor = Colours.Button.black
         button.layer.cornerRadius = buttonCornerRadius
         button.heightAnchor.constraint(equalToConstant: buttonHeight).isActive = true
         return button

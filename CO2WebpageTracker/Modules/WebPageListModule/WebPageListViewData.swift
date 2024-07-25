@@ -11,6 +11,10 @@ struct WebPageListViewData {
     let url: String
     let date: Date
     let rating: String
+    
+    func colourRandomizer() -> UIColor {
+        [Colours.WebPageColours.blueish, Colours.WebPageColours.redish, Colours.WebPageColours.green, Colours.WebPageColours.lightBrown].randomElement()!
+    }
 }
 
 extension WebPageListViewData {

@@ -18,8 +18,6 @@ protocol IWebPageListTableViewHandler: AnyObject {
     func rowForCell(tableView: UITableView, at index: IndexPath) -> UITableViewCell
     func actionDidSwipeToDelete(at index: Int)
     func showDetailView(at index: Int)
-    func sortByCO2()
-    func sortByDate()
 }
 
 

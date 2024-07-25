@@ -43,6 +43,7 @@ final class WebPageViewController: UIViewController {
         presenter.viewDidLoaded(view: self)
         setupTableViewDelegates()
         setupNavigationBar()
+        setupViewButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,7 +76,7 @@ extension WebPageViewController: IWebPageView {
         let alert = UIAlertController(title: type.title, message: type.message, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: type.cancelButtonTitle, style: .cancel)
         let resaveAction = UIAlertAction(title: type.actionButtonTitle, style: .default) { _ in
-            self.presenter.saveWebPage()
+            self.presenter.updateWebPage()
         }
         alert.addAction(cancelAction)
         alert.addAction(resaveAction)
@@ -100,7 +101,7 @@ extension WebPageViewController: UITableViewDelegate {}
 
 extension WebPageViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        presenter.getSectionCount()
+        presenter.sectionCount
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -118,6 +119,12 @@ private extension WebPageViewController {
         webPageView.tableView.delegate = self
     }
     
+    func setupViewButton() {
+        webPageView.setSaveDeleteButtonAction(self, action: #selector(saveDelete))
+        webPageView.setSaveDeleteButtonTitle(presenter.buttonTitle)
+        webPageView.setSaveDeleteButtonColour(presenter.buttonColour)
+    }
+    
     func setupNavigationBar() {
         let pointSize: CGFloat = 20
         let configuration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .light)
@@ -127,8 +134,6 @@ private extension WebPageViewController {
         
         let barButtonMenu = UIMenu(title: "", children: [
             UIAction(title: Constants.UIElementTitle.share, image: UIImage(systemName: Constants.UIElementSystemNames.share), handler: shareWebPage),
-            UIAction(title: Constants.UIElementTitle.save, image: UIImage(systemName: Constants.UIElementSystemNames.save), handler: save),
-            UIAction(title: Constants.UIElementTitle.delete, image: UIImage(systemName: Constants.UIElementSystemNames.delete), handler: selectionHandler),
             UIAction(title: Constants.UIElementTitle.addPhoto, image: UIImage(systemName: Constants.UIElementSystemNames.camera), handler: addPhoto)
         ])
         rightBarItem.tintColor = .label
@@ -136,12 +141,9 @@ private extension WebPageViewController {
         navigationItem.rightBarButtonItem = rightBarItem
     }
     
-    func save(action: UIAction) {
-        presenter.prepareToSave()
-    }
-    
-    func selectionHandler(action: UIAction) {
-        presenter.deleteButtonDidPressed()
+    @objc
+    func saveDelete() {
+        presenter.saveOrDelete()
     }
 
     func shareWebPage(action: UIAction) {

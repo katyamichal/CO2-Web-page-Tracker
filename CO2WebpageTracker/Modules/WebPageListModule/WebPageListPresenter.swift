@@ -48,16 +48,6 @@ extension WebPageListPresenter: IWebPageListPresenter {
         dataService.deleteWebPage(url: viewData[index].url)
     }
     
-    func sortByDate() {
-        viewData.sort(by: {$0.date > $1.date})
-        view?.update()
-    }
-    
-    func sortByCO2() {
-        viewData.sort(by: {$0.rating < $1.rating})
-        view?.update()
-    }
-    
     func showDetailView(at index: Int) {
         let id = viewData[index].url
         (coordinator as? WebPageListCoordinator)?.showWebPageDetail(with: id)
@@ -77,19 +67,16 @@ extension WebPageListPresenter: IFetchResultControllerDelegate {
     
     func insertObject(at index: IndexPath, with object: WebPageListViewData) {
         viewData.insert(object, at: index.row)
-        print(index)
         view?.insertRow(at: index)
     }
     
     func objectDidChange(at index: IndexPath, with object: WebPageListViewData) {
-        print(index)
+
         viewData[index.row] = object
         view?.update()
     }
     
     func deleteRow(at index: IndexPath) {
-        print(index)
-        print(viewData)
         viewData.remove(at: index.row)
         view?.deleteRow(at: index)
     }
@@ -107,7 +94,6 @@ private extension WebPageListPresenter {
             }
             self?.view?.update()
         }
-        print(viewData.count)
     }
     
     func cell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
@@ -116,7 +102,7 @@ private extension WebPageListPresenter {
         }
         let data = viewData[indexPath.row]
         let testDate = dateFormatter.string(from: data.date)
-        cell.updateLabels(url: data.url, rating: data.rating, date: testDate)
+        cell.updateLabels(url: data.url, rating: data.rating, date: testDate, colour: data.colourRandomizer())
         return cell
     }
 }
