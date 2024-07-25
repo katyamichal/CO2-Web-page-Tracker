@@ -16,7 +16,7 @@ protocol IDataService: AnyObject {
     func findDublicate(with webPage: WebPageViewData) -> Bool
     func add(webPage: WebPageViewData, completion: (String) -> Void)
     func deleteWebPage(url: String)
-    func update(webPage: WebPageViewData) 
+    func update(webPage: WebPageViewData)
 }
 
 enum PersistantContainerStorage {
@@ -49,9 +49,10 @@ final class DataService: IDataService {
     private let maxPercentage: Int = 100
     
     private lazy var controller: NSFetchedResultsController<WebPageInfo> = {
-        let sortDescriptor = NSSortDescriptor(keyPath: \WebPageInfo.date, ascending: true)
+        let sortDescriptor = NSSortDescriptor(keyPath: \WebPageInfo.date, ascending: false)
         let fetchRequest = WebPageInfo.fetchRequest()
         fetchRequest.sortDescriptors = [sortDescriptor]
+        
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: PersistantContainerStorage.persistentContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
         controller.delegate = frcDelegate
         return controller
@@ -176,8 +177,12 @@ final class DataService: IDataService {
     func deleteWebPage(url: String) {
         defer { PersistantContainerStorage.saveContext() }
         let context = PersistantContainerStorage.persistentContainer.viewContext
+        let sortDescriptor = NSSortDescriptor(keyPath: \WebPageInfo.date, ascending: false)
+        
         let fetchRequest = WebPageInfo.fetchRequest()
+        fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.predicate = NSPredicate(format: "url == %@", url)
+        
         do {
             let webPages = try context.fetch(fetchRequest)
             webPages.forEach { context.delete($0) }
@@ -191,8 +196,7 @@ private extension DataService {
     func getWebPage(with url: String) -> WebPageInfo? {
         let webPageToReturn: WebPageInfo?
         let context = PersistantContainerStorage.persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<WebPageInfo>
-        fetchRequest = WebPageInfo.fetchRequest()
+        let fetchRequest: NSFetchRequest<WebPageInfo> = WebPageInfo.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "url == %@" , url)
         do {
             let webPage = try context.fetch(fetchRequest)

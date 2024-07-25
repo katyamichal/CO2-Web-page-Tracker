@@ -68,17 +68,19 @@ extension WebPageListPresenter: IFetchResultControllerDelegate {
     func insertObject(at index: IndexPath, with object: WebPageListViewData) {
         viewData.insert(object, at: index.row)
         view?.insertRow(at: index)
+        print(index)
     }
     
     func objectDidChange(at index: IndexPath, with object: WebPageListViewData) {
-
         viewData[index.row] = object
         view?.update()
+        print(index)
     }
     
     func deleteRow(at index: IndexPath) {
         viewData.remove(at: index.row)
         view?.deleteRow(at: index)
+        print(index)
     }
 }
 
