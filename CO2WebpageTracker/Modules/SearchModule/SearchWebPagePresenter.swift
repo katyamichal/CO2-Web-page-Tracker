@@ -24,25 +24,15 @@ final class SearchWebPagePresenter {
 }
 
 extension SearchWebPagePresenter: ISearchWebPagePresenter {
-    func changeLoadingStatus() {
-        let currentStatus = viewData.searchStatus
-        switch currentStatus {
-        case .load(let loadingStatus):
-            switch loadingStatus {
-            case .paused:
-                viewData.searchStatus = .load(status: .loading(message: Constants.SearchLoadingMessage.loading))
-                networkService.resumeLoading()
-            case .loading:
-                viewData.searchStatus = .load(status: .paused)
-                networkService.pauseLoading()
-            case .completed, .failed, .nonActive:
-                break
-            }
-        case .search:
-            break
-        }
-        view?.updateView(with: viewData.searchStatus)
+    func viewDidLoaded(view: ISearchWebPageView) {
+        self.view = view
     }
+    
+    func loadData(with url: String) {
+        networkService.performRequest(with: url)
+    }
+   
+    // MARK: - Loading Handeling
     
     func prepareToLoad(with url: String) -> Bool {
         guard checkForEmptyTextField(with: url) else {
@@ -50,28 +40,54 @@ extension SearchWebPagePresenter: ISearchWebPagePresenter {
         }
         return true
     }
+
+    func switchPauseResumeLoading() {
+        let currentStatus = viewData.searchStatus
+        
+        switch currentStatus {
+        case .load(let loadingStatus):
+            
+            switch loadingStatus {
+            case .paused:
+                updateSearchStatus(with: .load(status: .loading(message: Constants.SearchLoadingMessage.loading)))
+                networkService.resumeLoading()
+            case .loading:
+                updateSearchStatus(with: .load(status: .paused))
+                networkService.pauseLoading()
+            case .completed, .failed, .nonActive:
+                break
+            }
+        case .search:
+            break
+        }
+        updateView()
+    }
     
     func tryAgainButtonPressed() {
-        viewData.searchStatus = .search
-        view?.updateView(with: viewData.searchStatus)
+        updateSearchStatus(with: .search)
+        updateView()
     }
     
-    func viewDidLoaded(view: ISearchWebPageView) {
-        self.view = view
-    }
-    
-    func loadData(with url: String) {
-        updateViewData()
-        networkService.performRequest(with: url)
-    }
-    
-    func updateViewData()  {
-        viewData.searchStatus = .load(status: .loading(message: Constants.SearchLoadingMessage.waitForLoad))
-        view?.updateView(with: viewData.searchStatus)
+    func cancelLoading() {
+        networkService.cancelLoading()
+        updateSearchStatus(with: .search)
+        updateView()
     }
 }
 
-private extension SearchWebPagePresenter {    
+private extension SearchWebPagePresenter {
+    // MARK: - View and Data Updatig
+
+    func updateSearchStatus(with status: SearchStatus) {
+        viewData.searchStatus = status
+    }
+    
+    func updateView() {
+        view?.updateView(with: viewData.searchStatus)
+    }
+   
+    // MARK: - Text Field Configuration
+
     func checkForEmptyTextField(with keyword: String) -> Bool {
         let searchKeyword = keyword.trimmingCharacters(in: .whitespaces)
         guard !searchKeyword.isEmpty else {
@@ -81,6 +97,8 @@ private extension SearchWebPagePresenter {
         return true
     }
     
+    // MARK: - Networking Complition
+
     func configureServiceCompletionHandler() {
         networkService.backgroundCompletionHandler = { [weak self] (responseData, error) in
             guard let self else { return }
@@ -91,7 +109,7 @@ private extension SearchWebPagePresenter {
                 }
             } else {
                 let failedMessage = self.configureErrorResponse(with: error!)
-                self.viewData.searchStatus = .load(status: .failed(message: failedMessage))
+                self.updateSearchStatus(with: .load(status: .failed(message: failedMessage)))
             }
             DispatchQueue.main.async {
                 self.view?.updateView(with: self.viewData.searchStatus)

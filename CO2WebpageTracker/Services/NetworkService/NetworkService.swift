@@ -11,10 +11,10 @@ protocol INetworkService: AnyObject {
     func performRequest(with stringURL: String)
     func pauseLoading()
     func resumeLoading()
+    func cancelLoading()
 }
 
 final class NetworkService: NSObject, INetworkService {
-    
     var backgroundCompletionHandler: ((WebsiteData?, APIError?) -> Void)?
     
     private var currentTaskStatus: (keyword: String, paused: Bool, resumeData: Data?)?
@@ -63,6 +63,13 @@ final class NetworkService: NSObject, INetworkService {
         guard let status = currentTaskStatus else { return }
         currentTaskStatus = (keyword: status.keyword, paused: false, resumeData: status.resumeData)
         performRequest(with: status.keyword)
+    }
+    
+    func cancelLoading() {
+        guard currentTask != nil else { return }
+        currentTask?.cancel()
+        currentTask = nil
+        currentTaskStatus = nil
     }
 }
 

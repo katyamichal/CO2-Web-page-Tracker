@@ -59,6 +59,9 @@ final class WebPageSearchView: UIView {
     func setupActionForPauseButton(target: Any?, action: Selector) {
         loadingView.setupActionForPauseButton(target: target, action: action)
     }
+    func setupActionForCancelLoadingButton(target: Any?, action: Selector) {
+        loadingView.setupActionForCancelLoadingButton(target: target, action: action)
+    }
     
     func setupActionForCalculateButton(target: Any?, action: Selector) {
         searchView.setupActionForCalculateButton(target: target, action: action)
@@ -91,7 +94,6 @@ private extension WebPageSearchView {
     }
     
     func setupConstraints() {
-        
         searchStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
         searchStackView.bottomAnchor.constraint(lessThanOrEqualToSystemSpacingBelow: bottomAnchor, multiplier: 1).isActive = true
         searchStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true

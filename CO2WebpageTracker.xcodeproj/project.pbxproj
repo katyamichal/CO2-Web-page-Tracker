@@ -275,8 +275,8 @@
 		4EABD5EA2C1C26D10089DF1D /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				4EABD5E02C1C1FCA0089DF1D /* LoadingView.swift */,
 				4EABD5EB2C1C285C0089DF1D /* SearchView.swift */,
+				4EABD5E02C1C1FCA0089DF1D /* LoadingView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";

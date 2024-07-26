@@ -11,7 +11,7 @@ protocol ISearchWebPagePresenter: AnyObject {
     func viewDidLoaded(view: ISearchWebPageView)
     func prepareToLoad(with url: String) -> Bool
     func loadData(with url: String)
-    func updateViewData()
     func tryAgainButtonPressed()
-    func changeLoadingStatus()
+    func switchPauseResumeLoading()
+    func cancelLoading()
 }

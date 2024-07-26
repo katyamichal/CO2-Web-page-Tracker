@@ -150,7 +150,7 @@ final class DataService: IDataService {
     }
     
     func update(webPage: WebPageViewData) {
-        guard var webPageInfo = getWebPage(with: webPage.url) else {
+        guard let webPageInfo = getWebPage(with: webPage.url) else {
             return
         }
         var binaryImageData: Data?
@@ -169,6 +169,7 @@ final class DataService: IDataService {
         webPageInfo.cleanerThan = webPage.cleanerThan
         webPageInfo.energy = webPage.energy
         webPageInfo.image = binaryImageData
+        
         PersistantContainerStorage.saveContext()
     }
     

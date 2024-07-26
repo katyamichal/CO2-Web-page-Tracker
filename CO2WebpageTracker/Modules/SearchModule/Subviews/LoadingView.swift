@@ -39,7 +39,7 @@ final class LoadingView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.distribution = .fill
-        stackView.alignment = .fill
+        stackView.alignment = .center
         stackView.spacing = spacing
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -55,7 +55,7 @@ final class LoadingView: UIView {
         return activityIndicator
     }()
     
-    private lazy var pauseLosdingButton: UIButton = {
+    private lazy var pauseLoadingButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = Colours.WebPageColours.darkOrange
@@ -66,6 +66,16 @@ final class LoadingView: UIView {
         let selectedImage = UIImage(systemName: Constants.UIElementSystemNames.activeImage, withConfiguration: configuration)
         button.setImage(unselectedImage, for: .normal)
         button.setImage(selectedImage, for: .selected)
+        return button
+    }()
+    
+    private lazy var cancelLoadingButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Cancel", for: .normal)
+        button.backgroundColor = Colours.Button.black
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = buttonCornerRadius
         return button
     }()
     
@@ -99,7 +109,11 @@ final class LoadingView: UIView {
     }
     
     func setupActionForPauseButton(target: Any?, action: Selector, for event: UIControl.Event = .touchUpInside) {
-        pauseLosdingButton.addTarget(target, action: action, for: event)
+        pauseLoadingButton.addTarget(target, action: action, for: event)
+    }
+    
+    func setupActionForCancelLoadingButton(target: Any?, action: Selector, for event: UIControl.Event = .touchUpInside) {
+        cancelLoadingButton.addTarget(target, action: action, for: event)
     }
 }
 
@@ -114,9 +128,10 @@ private extension LoadingView {
     func setupViews() {
         addSubview(loadingStackView)
         loadingStackView.addArrangedSubview(messageLabel)
-        loadingStackView.addArrangedSubview(pauseLosdingButton)
+        loadingStackView.addArrangedSubview(pauseLoadingButton)
         loadingStackView.addArrangedSubview(activityIndicator)
         loadingStackView.addArrangedSubview(tryAgainButton)
+        loadingStackView.addArrangedSubview(cancelLoadingButton)
     }
     
     func setupConstraints() {
@@ -124,6 +139,8 @@ private extension LoadingView {
         loadingStackView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         loadingStackView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         loadingStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        
+        cancelLoadingButton.widthAnchor.constraint(equalTo: loadingStackView.widthAnchor, multiplier: 0.6).isActive = true
     }
     
     private func updateState() {
@@ -133,34 +150,39 @@ private extension LoadingView {
             activityIndicator.startAnimating()
             messageLabel.isHidden = false
             messageLabel.text = message
-            pauseLosdingButton.isHidden = false
-            pauseLosdingButton.isHidden = false
+            pauseLoadingButton.isHidden = false
+            pauseLoadingButton.isHidden = false
             tryAgainButton.isHidden = true
-            pauseLosdingButton.isSelected = false
+            pauseLoadingButton.isSelected = false
+            cancelLoadingButton.isHidden = false
             
         case .completed(let url):
-            pauseLosdingButton.isHidden = true
+            pauseLoadingButton.isHidden = true
             messageLabel.isHidden = false
             messageLabel.text = url
             tryAgainButton.isHidden = true
+            cancelLoadingButton.isHidden = true
             activityIndicator.stopAnimating()
             
         case .failed(let message):
-            pauseLosdingButton.isHidden = true
+            pauseLoadingButton.isHidden = true
             messageLabel.isHidden = false
             messageLabel.text = message
             activityIndicator.stopAnimating()
+            cancelLoadingButton.isHidden = true
             tryAgainButton.isHidden = false
             
         case .nonActive:
-            pauseLosdingButton.isHidden = true
+            pauseLoadingButton.isHidden = true
             messageLabel.isHidden = true
             tryAgainButton.isHidden = true
+            cancelLoadingButton.isHidden = true
             
         case .paused:
-            pauseLosdingButton.isHidden = false
-            pauseLosdingButton.isSelected = true
+            pauseLoadingButton.isHidden = false
+            pauseLoadingButton.isSelected = true
             messageLabel.isHidden = false
+            cancelLoadingButton.isHidden = false
             activityIndicator.stopAnimating()
         }
     }

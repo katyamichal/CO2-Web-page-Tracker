@@ -85,10 +85,13 @@ extension SearchWebPageViewController: UISearchTextFieldDelegate {
 }
 
 private extension SearchWebPageViewController {
+    // MARK: - Buttons' Setups
+    
     func setupActions() {
         setupTryAgainAction()
         setupCalculateAction()
         setupPauseLoaingButton()
+        setupCancelLoadingButton()
     }
     
     func setupTryAgainAction() {
@@ -106,6 +109,10 @@ private extension SearchWebPageViewController {
     func setupSearchTextField() {
         searchView.searchView.searchTextField.becomeFirstResponder()
         searchView.searchView.searchTextField.delegate = self
+    }
+    
+    func setupCancelLoadingButton() {
+        searchView.setupActionForCancelLoadingButton(target: self, action: #selector(cancelLoading))
     }
     
     @objc
@@ -127,15 +134,21 @@ private extension SearchWebPageViewController {
     
     @objc
     func pauseLoading() {
-        presenter.changeLoadingStatus()
+        presenter.switchPauseResumeLoading()
     }
+    
+    @objc
+    func cancelLoading() {
+        presenter.cancelLoading()
+    }
+    
+    // MARK: - Keybord Handeling
     
     func setupKeyboardBehavior() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHandling), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardHandling), name: UIResponder.keyboardWillHideNotification, object: nil)
         hideKeyboardWhenTappedAround()
     }
-    
     
     @objc func keyboardHandling(notification: NSNotification) {
         guard let userInfo = notification.userInfo,
