@@ -52,7 +52,6 @@ final class WebPageListTableViewCell: UITableViewCell {
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
         label.font = Fonts.Titles.subtitle
-        label.textAlignment = .center
         label.textColor = Colours.Text.secondaryText
         return label
     }()
