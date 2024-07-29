@@ -28,16 +28,18 @@ final class FRCDelegate: NSObject, NSFetchedResultsControllerDelegate {
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        
         switch type {
+            
         case .insert:
             if let indexPath = newIndexPath, let webPage = anObject as? WebPageInfo {
                 delegate?.insertObject(at: indexPath, with: WebPageListViewData(url: webPage.url, date: webPage.date, rating: webPage.rating))
             }
+            
         case .update:
             if let indexPath = indexPath, let webPage = anObject as? WebPageInfo {
                 delegate?.objectDidChange(at: indexPath, with: WebPageListViewData(url: webPage.url, date: webPage.date, rating: webPage.rating))
             }
+            
         case .delete:
             if let indexPath {
                 delegate?.deleteRow(at: indexPath)
