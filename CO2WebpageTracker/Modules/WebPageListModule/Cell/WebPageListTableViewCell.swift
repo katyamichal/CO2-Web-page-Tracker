@@ -5,7 +5,6 @@
 //  Created by Catarina Polakowsky on 13.06.2024.
 //
 
-import Foundation
 import UIKit
 
 final class WebPageListTableViewCell: UITableViewCell {

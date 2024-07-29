@@ -34,25 +34,6 @@ final class WebPageView: UIView {
         tableView.register(ImageCell.self, forCellReuseIdentifier: ImageCell.reuseIdentifier)
         return tableView
     }()
-    
-    private lazy var saveDeleteButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleColor(.label, for: .normal)
-        return button
-    }()
-    
-    func setSaveDeleteButtonTitle(_ title: String) {
-        saveDeleteButton.setTitle(title, for: .normal)
-    }
-    
-    func setSaveDeleteButtonAction(_ target: Any, action: Selector, for event: UIControl.Event = .touchDown) {
-        saveDeleteButton.addTarget(target, action: action, for: event)
-    }
-    
-    func setSaveDeleteButtonColour(_ colour: UIColor) {
-        saveDeleteButton.backgroundColor = colour
-    }
 }
 
 private extension WebPageView {
@@ -64,19 +45,12 @@ private extension WebPageView {
     
     func setupViews() {
         addSubview(tableView)
-        addSubview(saveDeleteButton)
     }
     
     func setupConstraints() {
         tableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: saveDeleteButton.topAnchor, constant: 20).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor).isActive = true
-        
-        saveDeleteButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor).isActive = true
-        saveDeleteButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        saveDeleteButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        saveDeleteButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.6).isActive = true
     }
-    
 }

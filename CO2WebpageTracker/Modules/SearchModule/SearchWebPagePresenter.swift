@@ -30,17 +30,27 @@ extension SearchWebPagePresenter: ISearchWebPagePresenter {
     
     func loadData(with url: String) {
         networkService.performRequest(with: url)
+        updateSearchStatus(with: .load(status: .loading(message: Constants.SearchLoadingMessage.loading)))
+        updateView()
     }
    
     // MARK: - Loading Handeling
     
     func prepareToLoad(with url: String) -> Bool {
-        guard checkForEmptyTextField(with: url) else {
-            return false
-        }
-        return true
+        checkForEmptyTextField(with: url) ? true : false
     }
-
+    
+    func tryAgainButtonPressed() {
+        updateSearchStatus(with: .search)
+        updateView()
+    }
+    
+    func cancelLoading() {
+        networkService.cancelLoading()
+        updateSearchStatus(with: .search)
+        updateView()
+    }
+    
     func switchPauseResumeLoading() {
         let currentStatus = viewData.searchStatus
         
@@ -60,17 +70,6 @@ extension SearchWebPagePresenter: ISearchWebPagePresenter {
         case .search:
             break
         }
-        updateView()
-    }
-    
-    func tryAgainButtonPressed() {
-        updateSearchStatus(with: .search)
-        updateView()
-    }
-    
-    func cancelLoading() {
-        networkService.cancelLoading()
-        updateSearchStatus(with: .search)
         updateView()
     }
 }

@@ -7,13 +7,12 @@
 
 import UIKit
 protocol IWebPageView: AnyObject {
-    var isEdited: Bool { get set }
     func update()
     func setupNavigationTitle(with title: String)
     func updateEnergyWasteTypeCell()
     func showAlert(with type: Constants.AlerMessagesType)
     func showMessage(with message: String)
-    func isReadyToShare(with webPage: URL)
+    func prepareToShareWebPage(with webPage: URL)
 }
 
 final class WebPageViewController: UIViewController {
@@ -43,7 +42,6 @@ final class WebPageViewController: UIViewController {
         presenter.viewDidLoaded(view: self)
         setupTableViewDelegates()
         setupNavigationBar()
-        setupViewButton()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,7 +88,7 @@ extension WebPageViewController: IWebPageView {
         self.present(alert, animated: true)
     }
     
-    func isReadyToShare(with webPage: URL) {
+    func prepareToShareWebPage(with webPage: URL) {
         let activityVC = UIActivityViewController(activityItems: [webPage], applicationActivities: nil)
         activityVC.excludedActivityTypes = [.airDrop]
         presenter.share(with: activityVC)
@@ -113,47 +111,6 @@ extension WebPageViewController: UITableViewDataSource {
     }
 }
 
-private extension WebPageViewController {
-    func setupTableViewDelegates() {
-        webPageView.tableView.dataSource = self
-        webPageView.tableView.delegate = self
-    }
-    
-    func setupViewButton() {
-        webPageView.setSaveDeleteButtonAction(self, action: #selector(saveDelete))
-        webPageView.setSaveDeleteButtonTitle(presenter.buttonTitle)
-        webPageView.setSaveDeleteButtonColour(presenter.buttonColour)
-    }
-    
-    func setupNavigationBar() {
-        let pointSize: CGFloat = 20
-        let configuration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .light)
-        let image = UIImage(systemName: Constants.UIElementSystemNames.actionMenu, withConfiguration: configuration)
-        let rightBarItem = UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
-        rightBarItem.tintColor = .systemBackground
-        
-        let barButtonMenu = UIMenu(title: "", children: [
-            UIAction(title: Constants.UIElementTitle.share, image: UIImage(systemName: Constants.UIElementSystemNames.share), handler: shareWebPage),
-            UIAction(title: Constants.UIElementTitle.addPhoto, image: UIImage(systemName: Constants.UIElementSystemNames.camera), handler: addPhoto)
-        ])
-        rightBarItem.tintColor = .label
-        rightBarItem.menu = barButtonMenu
-        navigationItem.rightBarButtonItem = rightBarItem
-    }
-    
-    @objc
-    func saveDelete() {
-        presenter.saveOrDelete()
-    }
-
-    func shareWebPage(action: UIAction) {
-        presenter.prepareToShare()
-    }
-    
-    func addPhoto(action: UIAction) {
-        choosePhotoFromLibrary()
-    }
-}
 // MARK: - Image Picker Delegates
 
 extension WebPageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -175,5 +132,70 @@ extension WebPageViewController: UIImagePickerControllerDelegate, UINavigationCo
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         presenter.imagePickerDidCancel()
+    }
+}
+
+
+private extension WebPageViewController {
+    func setupTableViewDelegates() {
+        webPageView.tableView.dataSource = self
+        webPageView.tableView.delegate = self
+    }
+    
+    func setupNavigationBar() {
+        navigationItem.rightBarButtonItems = [createBarMenuButton()]
+        if presenter.isExisted {
+            navigationItem.rightBarButtonItems?.append(createSaveBarButton())
+          
+        } else {
+            navigationItem.rightBarButtonItems?.append(createDeleteBarButton())
+        }
+       
+    }
+  
+    // MARK: - Bar Buttons
+
+    func createBarMenuButton() -> UIBarButtonItem {
+        let pointSize: CGFloat = 20
+        let configuration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .light)
+        let image = UIImage(systemName: Constants.UIElementSystemNames.actionMenu, withConfiguration: configuration)
+        let rightBarItem = UIBarButtonItem(image: image, style: .plain, target: nil, action: nil)
+        rightBarItem.tintColor = .systemBackground
+        
+        let barButtonMenu = UIMenu(title: "", children: [
+            UIAction(title: Constants.UIElementTitle.share, image: UIImage(systemName: Constants.UIElementSystemNames.share), handler: shareWebPage),
+            UIAction(title: Constants.UIElementTitle.addPhoto, image: UIImage(systemName: Constants.UIElementSystemNames.camera), handler: addPhoto)
+        ])
+        rightBarItem.tintColor = .label
+        rightBarItem.menu = barButtonMenu
+        return rightBarItem
+    }
+    
+    func shareWebPage(action: UIAction) {
+        presenter.prepareToShare()
+    }
+    
+    func addPhoto(action: UIAction) {
+        choosePhotoFromLibrary()
+    }
+    
+    func createSaveBarButton() -> UIBarButtonItem {
+        let saveBarButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveWebPage))
+        return saveBarButton
+    }
+    
+    func createDeleteBarButton() -> UIBarButtonItem {
+        let deleteBarButton = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(deeleteWebPage))
+        return deleteBarButton
+    }
+    
+    @objc
+    func saveWebPage() {
+        presenter.saveButtonDidPressed()
+    }
+    
+    @objc
+    func deeleteWebPage() {
+        presenter.deleteButtonDidPressed()
     }
 }

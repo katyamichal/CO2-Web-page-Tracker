@@ -26,7 +26,7 @@ final class WebPageCoordinator: Coordinator {
         showModule()
     }
     
-    func backToDetail() {
+    func goBack() {
         navigationController.popToRootViewController(animated: true)
     }
     

@@ -53,17 +53,13 @@ extension WebPagePresenter: IWebPageViewLifeCycle {
     }
 }
 
-
-
-extension WebPagePresenter:  IWebPageTableViewHandler{
-    var buttonTitle: String {
-        (webPageURL == nil) ? "Save" : "Delete"
+extension WebPagePresenter:  IWebPageTableViewHandler {
+    var isExisted: Bool {
+        (webPageURL == nil) ? true : false
     }
     
-    var buttonColour: UIColor {
-        (webPageURL == nil) ? .green : .red
-    }
-    
+    // MARK: - Table Data Source Handeling
+
     var sectionCount: Int {
         WebPageSection.allCases.count
     }
@@ -85,13 +81,9 @@ extension WebPagePresenter:  IWebPageTableViewHandler{
 }
 
 extension WebPagePresenter:  IWebPagePersistence {
-    private func saveWebPage() {
-         guard let viewData else { return }
-         dataService.add(webPage: viewData) { [weak self] _ in
-             self?.getData()
-         }
-     }
      
+    // MARK: - Updating WebPage with image
+    
     func updateData(with image: UIImage) {
         viewData?.image = image
         guard let viewData else { return }
@@ -100,11 +92,16 @@ extension WebPagePresenter:  IWebPagePersistence {
         case true:
             updateWebPage()
         case false:
-            saveWebPage()
+            break
         }
         (coordinator as? WebPageCoordinator)?.dismissImagePicker()
     }
+ 
+    // MARK: - Saving
     
+    func saveButtonDidPressed() {
+        prepareToSave()
+    }
 
     func updateWebPage() {
         guard let viewData else { return }
@@ -112,31 +109,16 @@ extension WebPagePresenter:  IWebPagePersistence {
         getData()
     }
     
-    func prepareToSave() {
-        guard let viewData else { return }
-        let isDublicated = dataService.findDublicate(with: viewData)
-        switch isDublicated {
-        case true:
-            view?.showAlert(with: Constants.AlerMessagesType.webPageDublicated)
-        case false:
-            saveWebPage()
-        }
-    }
-    
-    func saveOrDelete() {
-        guard webPageURL != nil else {
-            prepareToSave()
-            return
-        }
-        deleteButtonDidPressed()
-    }
-    
+    // MARK: - Deleting Web Page
+
     func deleteButtonDidPressed() {
         guard let webPageURL else { return }
         dataService.deleteWebPage(url: webPageURL)
-        (coordinator as? WebPageCoordinator)?.backToDetail()
+        (coordinator as? WebPageCoordinator)?.goBack()
     }
     
+    // MARK: - Stepper State
+
     func saveState() {
         guard let webPageURL = webPageURL else { return }
         DispatchQueue.global().async { [weak self] in
@@ -157,7 +139,6 @@ extension WebPagePresenter:  IWebPagePersistence {
     func checkForSafedState() {
         guard let webPageURL, let state = appStateService.retrieve(with: webPageURL), 
                 state.isEditingMode == .edinitig else { return }
-        view?.isEdited = true
         recoverEditingState(with: state.stepperValue, and: state.previosValue)
     }
 }
@@ -182,7 +163,7 @@ extension WebPagePresenter: IWebPageLogic {
                 return
             }
             DispatchQueue.main.async {
-                self.view?.isReadyToShare(with: url)
+                self.view?.prepareToShareWebPage(with: url)
             }
         }
     }
@@ -234,6 +215,25 @@ private extension WebPagePresenter {
             self?.view?.update()
         }
     }
+    
+    func prepareToSave() {
+          guard let viewData else { return }
+          let isDublicated = dataService.findDublicate(with: viewData)
+          switch isDublicated {
+          case true:
+              view?.showAlert(with: Constants.AlerMessagesType.webPageDublicated)
+          case false:
+              saveWebPage()
+          }
+      }
+      
+    func saveWebPage() {
+           guard let viewData else { return }
+           dataService.add(webPage: viewData) { [weak self] _ in
+               self?.getData()
+           }
+        (coordinator as? WebPageCoordinator)?.goBack()
+       }
     
     func cell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         let section = WebPageSection.allCases[indexPath.section]

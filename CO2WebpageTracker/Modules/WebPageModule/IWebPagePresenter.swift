@@ -14,8 +14,7 @@ protocol IWebPageViewLifeCycle: AnyObject {
 }
 
 protocol IWebPageTableViewHandler: AnyObject {
-    var buttonTitle: String { get }
-    var buttonColour: UIColor { get }
+    var isExisted: Bool { get }
     
     var sectionCount: Int { get }
     func getRowCountInSection(at section: Int) -> Int
@@ -23,13 +22,13 @@ protocol IWebPageTableViewHandler: AnyObject {
 }
 
 protocol IWebPagePersistence: AnyObject {
+    func saveButtonDidPressed()
     func updateData(with image: UIImage)
-    func deleteButtonDidPressed()
-    func prepareToSave()
     func updateWebPage()
+    func deleteButtonDidPressed()
+
     func checkForSafedState()
     func saveState()
-    func saveOrDelete()
 }
 
 protocol IWebPageLogic: AnyObject {
