@@ -81,7 +81,6 @@ final class CarbonRatingCell: UITableViewCell {
         label.numberOfLines = 0
         label.font = Fonts.Body.defaultFont
         label.translatesAutoresizingMaskIntoConstraints = false
-       // label.textColor = Colours.Text.secondaryText
         return label
     }()
     
@@ -97,7 +96,7 @@ final class CarbonRatingCell: UITableViewCell {
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = Fonts.Body.descriptionFont
+        label.font = Fonts.Body.secondaryFont
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Colours.Text.secondaryText
         return label
@@ -112,12 +111,12 @@ final class CarbonRatingCell: UITableViewCell {
         super.prepareForReuse()
     }
     
-    func update(with colour: UIColor, with letter: String, description: String, url: String, cleanerThan: String, date: String) {
+    func update(with colour: UIColor, with letter: String, description: String, url: String, cleanerThan: NSAttributedString, date: String) {
         scaleView.backgroundColor = colour
         resultForLabel.text = url
         scaleLetterLabel.text = letter
         descriptionLabel.text = description
-        cleanerThanLabel.text = cleanerThan
+        cleanerThanLabel.attributedText = cleanerThan
         dateLabel.text = date
     }
 }

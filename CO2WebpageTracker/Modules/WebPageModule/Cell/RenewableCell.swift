@@ -44,8 +44,6 @@ final class RenewableCell: UITableViewCell {
     private lazy var gramsLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = Fonts.Body.defaultFont
-        label.textColor = Colours.Text.secondaryText
         return label
     }()
 
@@ -65,8 +63,8 @@ final class RenewableCell: UITableViewCell {
 
     // MARK: - Public
     
-    func update(with grams: String, energyType: String) {
-        gramsLabel.text = grams
+    func update(with grams: NSAttributedString, energyType: String) {
+        gramsLabel.attributedText = grams
         greenEnergyStatusLabel.text = energyType
     }
 }
