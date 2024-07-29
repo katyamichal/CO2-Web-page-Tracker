@@ -104,7 +104,7 @@ private extension WebPageListPresenter {
         }
         let data = viewData[indexPath.row]
         let testDate = dateFormatter.string(from: data.date)
-        cell.updateLabels(url: data.url, rating: data.rating, date: testDate, colour: data.colourRandomizer())
+        cell.updateLabels(url: data.url, rating: data.rating, date: testDate, colour: .white)
         return cell
     }
 }

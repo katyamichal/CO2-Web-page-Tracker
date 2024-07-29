@@ -12,7 +12,7 @@ final class ViewDataConstructor {
     
     private enum WebPageHelperStrings {
         static let noData = "no data"
-        static let cleanerThan = "This is cleaner then "
+        static let cleanerThan = "This is cleaner than "
         static let globally = " of all web pages globally"
         static let testOn = "This page was tested on "
         static let overAYear = "Over a year, with "
@@ -27,8 +27,8 @@ final class ViewDataConstructor {
     
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .short
         return dateFormatter
     }()
     
@@ -74,7 +74,7 @@ final class ViewDataConstructor {
     }
     
     // MARK: - Data for Renewable Cell
-
+    
     var co2PerPageviewDescription: String {
         guard let viewData else { return WebPageHelperStrings.noData}
         return (String(format: "%.2f", viewData.energy)) + " " + (DescriptionConstructor.shared.getDescription(for: "co2PerPageview") as? String ?? "")
@@ -91,12 +91,12 @@ final class ViewDataConstructor {
     var previousValue: Int = 1
     
     var energyHeadTitle: String {
-        guard let viewData else { return WebPageHelperStrings.noData}
+        guard viewData != nil else { return WebPageHelperStrings.noData}
         let headString = WebPageHelperStrings.overAYear
         let valueString = String(stepperValue)
         return headString + valueString
     }
-   
+    
     var energy: String {
         guard let viewData else { return WebPageHelperStrings.noData}
         let headString = WebPageHelperStrings.monthlyView
@@ -111,5 +111,19 @@ final class ViewDataConstructor {
     var urlTitle: String {
         guard let viewData else { return WebPageHelperStrings.noData}
         return WebPageHelperStrings.urlTitle + "\(viewData.url)"
+    }
+    
+    static func convertGreenToString(_ isGreen: BoolOrString) -> String {
+        switch isGreen {
+        case .bool(let status):
+            switch status {
+            case true:
+                return "true"
+            case false:
+                return "false"
+            }
+        case .string(let str):
+            return str
+        }
     }
 }

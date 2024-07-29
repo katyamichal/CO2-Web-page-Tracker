@@ -22,6 +22,7 @@
 		4E34E0432C1EF3AD004D15A5 /* RenewableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34E0422C1EF3AD004D15A5 /* RenewableCell.swift */; };
 		4E34E0452C1F178A004D15A5 /* WebPageCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E34E0442C1F178A004D15A5 /* WebPageCoordinator.swift */; };
 		4E34E04D2C1F5C2A004D15A5 /* Descriptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4E34E04C2C1F5C2A004D15A5 /* Descriptions.plist */; };
+		4E4D6C652C578E6200F47B5F /* URLConstructor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D6C642C578E6200F47B5F /* URLConstructor.swift */; };
 		4EABD5AB2C182C210089DF1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5AA2C182C210089DF1D /* AppDelegate.swift */; };
 		4EABD5AD2C182C210089DF1D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5AC2C182C210089DF1D /* SceneDelegate.swift */; };
 		4EABD5AF2C182C210089DF1D /* WebPageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5AE2C182C210089DF1D /* WebPageListViewController.swift */; };
@@ -80,6 +81,7 @@
 		4E34E0442C1F178A004D15A5 /* WebPageCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageCoordinator.swift; sourceTree = "<group>"; };
 		4E34E04C2C1F5C2A004D15A5 /* Descriptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Descriptions.plist; sourceTree = "<group>"; };
 		4E34E04E2C1F5DBA004D15A5 /* desc.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = desc.md; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xml; };
+		4E4D6C642C578E6200F47B5F /* URLConstructor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstructor.swift; sourceTree = "<group>"; };
 		4EABD5A72C182C210089DF1D /* CO2WebpageTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CO2WebpageTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EABD5AA2C182C210089DF1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EABD5AC2C182C210089DF1D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -164,6 +166,17 @@
 				4EAC848F2C21CB1600F6CD8A /* CarbonCellSubview */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		4E4D6C662C578E7700F47B5F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4EABD5FC2C1C95240089DF1D /* WebPageSection.swift */,
+				4EAC848D2C21C2F800F6CD8A /* StepperDelegate.swift */,
+				4EAC84922C2201A400F6CD8A /* ViewDataConstructor.swift */,
+				4E4D6C642C578E6200F47B5F /* URLConstructor.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		4EABD59E2C182C210089DF1D = {
@@ -312,9 +325,7 @@
 				4E0D1CCA2C2422F6004B09B4 /* IWebPagePresenter.swift */,
 				4EABD5F82C1C92490089DF1D /* WebPagePresenter.swift */,
 				4EABD5FA2C1C93050089DF1D /* WebPageViewData.swift */,
-				4EABD5FC2C1C95240089DF1D /* WebPageSection.swift */,
-				4EAC848D2C21C2F800F6CD8A /* StepperDelegate.swift */,
-				4EAC84922C2201A400F6CD8A /* ViewDataConstructor.swift */,
+				4E4D6C662C578E7700F47B5F /* Helpers */,
 				4E34E03F2C1EEE66004D15A5 /* Cell */,
 			);
 			path = WebPageModule;
@@ -440,6 +451,7 @@
 				4EAC84792C20340E00F6CD8A /* DescriptionConstructor.swift in Sources */,
 				4E0D1CD92C24A1AB004B09B4 /* ISearchWebPagePresenter.swift in Sources */,
 				4EABD5AF2C182C210089DF1D /* WebPageListViewController.swift in Sources */,
+				4E4D6C652C578E6200F47B5F /* URLConstructor.swift in Sources */,
 				4E34E0382C1EAB9B004D15A5 /* SearchCoordinator.swift in Sources */,
 				4E0D1CD52C245BD9004B09B4 /* WebPageInfo+CoreDataProperties.swift in Sources */,
 				4E0D1CCB2C2422F6004B09B4 /* IWebPagePresenter.swift in Sources */,

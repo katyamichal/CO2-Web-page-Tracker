@@ -70,7 +70,7 @@ final class CarbonRatingCell: UITableViewCell {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = Fonts.Body.descriptionFont
+        label.font = Fonts.Body.defaultFont
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Colours.Text.secondaryText
         return label
@@ -79,9 +79,9 @@ final class CarbonRatingCell: UITableViewCell {
     private lazy var cleanerThanLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = Fonts.Body.descriptionFont
+        label.font = Fonts.Body.defaultFont
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = Colours.Text.secondaryText
+       // label.textColor = Colours.Text.secondaryText
         return label
     }()
     
@@ -97,7 +97,7 @@ final class CarbonRatingCell: UITableViewCell {
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = Fonts.Body.defaultFont
+        label.font = Fonts.Body.descriptionFont
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Colours.Text.secondaryText
         return label

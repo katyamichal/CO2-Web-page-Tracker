@@ -34,7 +34,7 @@ extension WebPagePresenter {
             date: Date(),
             cleanerThan: data.cleanerThan,
             ratingLetter: data.rating,
-            isGreen: convertGreenToString(data.green),
+            isGreen: ViewDataConstructor.convertGreenToString(data.green),
             gramForVisit: Double(data.statistics.energy),
             energy: data.statistics.co2.renewable.grams)
     }
@@ -54,12 +54,12 @@ extension WebPagePresenter: IWebPageViewLifeCycle {
 }
 
 extension WebPagePresenter:  IWebPageTableViewHandler {
-    var isExisted: Bool {
+    var isWebPageExisted: Bool {
         (webPageURL == nil) ? true : false
     }
     
     // MARK: - Table Data Source Handeling
-
+    
     var sectionCount: Int {
         WebPageSection.allCases.count
     }
@@ -81,7 +81,7 @@ extension WebPagePresenter:  IWebPageTableViewHandler {
 }
 
 extension WebPagePresenter:  IWebPagePersistence {
-     
+    
     // MARK: - Updating WebPage with image
     
     func updateData(with image: UIImage) {
@@ -96,13 +96,13 @@ extension WebPagePresenter:  IWebPagePersistence {
         }
         (coordinator as? WebPageCoordinator)?.dismissImagePicker()
     }
- 
-    // MARK: - Saving
+    
+    // MARK: - Saving Web Page
     
     func saveButtonDidPressed() {
         prepareToSave()
     }
-
+    
     func updateWebPage() {
         guard let viewData else { return }
         dataService.update(webPage: viewData)
@@ -110,15 +110,15 @@ extension WebPagePresenter:  IWebPagePersistence {
     }
     
     // MARK: - Deleting Web Page
-
+    
     func deleteButtonDidPressed() {
         guard let webPageURL else { return }
         dataService.deleteWebPage(url: webPageURL)
         (coordinator as? WebPageCoordinator)?.goBack()
     }
     
-    // MARK: - Stepper State
-
+    // MARK: - App State
+    
     func saveState() {
         guard let webPageURL = webPageURL else { return }
         DispatchQueue.global().async { [weak self] in
@@ -136,15 +136,18 @@ extension WebPagePresenter:  IWebPagePersistence {
         }
     }
     
-    func checkForSafedState() {
-        guard let webPageURL, let state = appStateService.retrieve(with: webPageURL), 
-                state.isEditingMode == .edinitig else { return }
+    func checkForSavedState() {
+        guard let webPageURL, let state = appStateService.retrieve(with: webPageURL),
+              state.isEditingMode == .edinitig else { return }
         recoverEditingState(with: state.stepperValue, and: state.previosValue)
     }
 }
 
 
 extension WebPagePresenter: IWebPageLogic {
+    
+    // MARK: - Image Picker Logic
+    
     func imagePickerDidCancel() {
         (coordinator as? WebPageCoordinator)?.dismissImagePicker()
     }
@@ -153,12 +156,15 @@ extension WebPagePresenter: IWebPageLogic {
         (coordinator as? WebPageCoordinator)?.showImagePicker(with: imagePicker)
     }
     
+    // MARK: - Share WebPage
+    
     func prepareToShare() {
         DispatchQueue.global().async { [weak self] in
             guard let self = self else { return }
-            guard let url = self.createURLForShare() else {
+            guard let viewData,
+                  let url = URLConstructor.createURLForShare(with: viewData.url) else {
                 DispatchQueue.main.async {
-                    self.view?.showMessage(with: "We couldn'n create URL to share")
+                    self.view?.showMessage(with: "We couldn't create URL to share")
                 }
                 return
             }
@@ -194,20 +200,6 @@ extension WebPagePresenter: IStepperDelegate {
 // MARK: - Private methods
 
 private extension WebPagePresenter {
-    func convertGreenToString(_ isGreen: BoolOrString) -> String {
-        switch isGreen {
-        case .bool(let status):
-            switch status {
-            case true:
-                return "true"
-            case false:
-                return "false"
-            }
-        case .string(let str):
-            return str
-        }
-    }
-    
     func getData() {
         guard let webPageURL else { return }
         dataService.fetchWepPage(with: webPageURL) { [weak self] data in
@@ -217,23 +209,23 @@ private extension WebPagePresenter {
     }
     
     func prepareToSave() {
-          guard let viewData else { return }
-          let isDublicated = dataService.findDublicate(with: viewData)
-          switch isDublicated {
-          case true:
-              view?.showAlert(with: Constants.AlerMessagesType.webPageDublicated)
-          case false:
-              saveWebPage()
-          }
-      }
-      
+        guard let viewData else { return }
+        let isDublicated = dataService.findDublicate(with: viewData)
+        switch isDublicated {
+        case true:
+            view?.showAlert(with: Constants.AlerMessagesType.webPageDublicated)
+        case false:
+            saveWebPage()
+        }
+    }
+    
     func saveWebPage() {
-           guard let viewData else { return }
-           dataService.add(webPage: viewData) { [weak self] _ in
-               self?.getData()
-           }
+        guard let viewData else { return }
+        dataService.add(webPage: viewData) { [weak self] _ in
+            self?.getData()
+        }
         (coordinator as? WebPageCoordinator)?.goBack()
-       }
+    }
     
     func cell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
         let section = WebPageSection.allCases[indexPath.section]
@@ -283,34 +275,6 @@ private extension WebPagePresenter {
     func recoverEditingState(with stepperValue: Int, and previosValue: Int) {
         viewDataConstructor.stepperValue = stepperValue
         viewDataConstructor.previousValue = previosValue
-    }
-    
-    func createURLForShare() -> URL? {
-        // Ensure that viewData and its URL are valid
-        guard let viewDataURLString = viewData?.url,
-              URL(string: viewDataURLString) != nil else {
-            print("viewData or url is nil or invalid")
-            return nil
-        }
-        let prefixes = ["https://", "http://"]
-        var modifiedURLString = viewDataURLString
-        for prefix in prefixes {
-            if modifiedURLString.hasPrefix(prefix) {
-                modifiedURLString.removeFirst(prefix.count)
-                break
-            }
-        }
-        if modifiedURLString.hasPrefix("www.") {
-            modifiedURLString.removeFirst(4)
-        }
-        let modifiedPath = modifiedURLString.replacingOccurrences(of: "/", with: "-")
-        let baseURLString = Constants.BaseUrls.websitecarbon
-        let urlString = baseURLString + "website/" + modifiedPath
-        guard let url = URL(string: urlString) else {
-            print("Invalid URL")
-            return nil
-        }
-        return url
     }
 }
 

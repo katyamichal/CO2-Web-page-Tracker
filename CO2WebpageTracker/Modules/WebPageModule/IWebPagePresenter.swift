@@ -14,7 +14,7 @@ protocol IWebPageViewLifeCycle: AnyObject {
 }
 
 protocol IWebPageTableViewHandler: AnyObject {
-    var isExisted: Bool { get }
+    var isWebPageExisted: Bool { get }
     
     var sectionCount: Int { get }
     func getRowCountInSection(at section: Int) -> Int
@@ -27,7 +27,7 @@ protocol IWebPagePersistence: AnyObject {
     func updateWebPage()
     func deleteButtonDidPressed()
 
-    func checkForSafedState()
+    func checkForSavedState()
     func saveState()
 }
 

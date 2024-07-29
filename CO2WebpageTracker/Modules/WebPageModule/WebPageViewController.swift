@@ -18,7 +18,6 @@ protocol IWebPageView: AnyObject {
 final class WebPageViewController: UIViewController {
     private var webPageView: WebPageView { return self.view as! WebPageView }
     private let presenter: IWebPagePresenter
-    var isEdited: Bool = false
     
     // MARK: - Inits
     
@@ -37,16 +36,17 @@ final class WebPageViewController: UIViewController {
     override func loadView() {
         view = WebPageView()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoaded(view: self)
         setupTableViewDelegates()
-        setupNavigationBar()
+        setupNavigationBarButtons()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presenter.checkForSafedState()
+        presenter.checkForSavedState()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -56,7 +56,6 @@ final class WebPageViewController: UIViewController {
 }
 
 extension WebPageViewController: IWebPageView {
-    
     func update() {
         webPageView.tableView.reloadData()
     }
@@ -142,19 +141,18 @@ private extension WebPageViewController {
         webPageView.tableView.delegate = self
     }
     
-    func setupNavigationBar() {
+    func setupNavigationBarButtons() {
         navigationItem.rightBarButtonItems = [createBarMenuButton()]
-        if presenter.isExisted {
+        if presenter.isWebPageExisted {
             navigationItem.rightBarButtonItems?.append(createSaveBarButton())
-          
+            
         } else {
             navigationItem.rightBarButtonItems?.append(createDeleteBarButton())
         }
-       
     }
-  
+    
     // MARK: - Bar Buttons
-
+    
     func createBarMenuButton() -> UIBarButtonItem {
         let pointSize: CGFloat = 20
         let configuration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .light)
@@ -171,22 +169,22 @@ private extension WebPageViewController {
         return rightBarItem
     }
     
+    func createSaveBarButton() -> UIBarButtonItem {
+        let saveBarButton = UIBarButtonItem(title: Constants.UIElementTitle.save, style: .plain, target: self, action: #selector(saveWebPage))
+        return saveBarButton
+    }
+    
+    func createDeleteBarButton() -> UIBarButtonItem {
+        let deleteBarButton = UIBarButtonItem(title: Constants.UIElementTitle.delete, style: .plain, target: self, action: #selector(deeleteWebPage))
+        return deleteBarButton
+    }
+    
     func shareWebPage(action: UIAction) {
         presenter.prepareToShare()
     }
     
     func addPhoto(action: UIAction) {
         choosePhotoFromLibrary()
-    }
-    
-    func createSaveBarButton() -> UIBarButtonItem {
-        let saveBarButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveWebPage))
-        return saveBarButton
-    }
-    
-    func createDeleteBarButton() -> UIBarButtonItem {
-        let deleteBarButton = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(deeleteWebPage))
-        return deleteBarButton
     }
     
     @objc
