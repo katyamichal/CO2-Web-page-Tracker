@@ -36,4 +36,9 @@ struct URLConstructor {
         }
         return url
     }
+    
+    static func createURLRequest(with urlString: String) -> URLRequest? {
+        guard let url = URL(string: urlString) else { return nil }
+        return URLRequest(url: url)
+    }
 }

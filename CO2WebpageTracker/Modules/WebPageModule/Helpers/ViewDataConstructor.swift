@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+//https://www.websitecarbon.com/introducing-the-website-carbon-rating-system/
 final class ViewDataConstructor {
     private var viewData: WebPageViewData?
     
@@ -76,6 +76,20 @@ final class ViewDataConstructor {
         return fullString
     }
 
+    
+    var learnAboutButtonTitle: NSAttributedString {
+        let headString = NSAttributedString(string: "Learn more about our")
+        let attributes: [NSAttributedString.Key : Any] = [
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+        ]
+        let tailString = NSAttributedString(string: " rating system", attributes: attributes)
+        let fullString = NSMutableAttributedString()
+        fullString.append(headString)
+        fullString.append(tailString)
+        return fullString
+    }
+    
+    
     var lastTestDate: String {
         guard let viewData else { return WebPageHelperStrings.noData }
         let headString = WebPageHelperStrings.testOn

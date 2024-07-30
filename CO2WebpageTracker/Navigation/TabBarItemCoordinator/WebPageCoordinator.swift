@@ -41,6 +41,13 @@ final class WebPageCoordinator: Coordinator {
     func presentView(with activity: UIActivityViewController) {
         navigationController.present(activity, animated: true)
     }
+    
+    func showWebKit(with urlString: String) {
+        let webKitCoordinator = WebKitCoordinator(navigationController: navigationController, urlString: urlString)
+        webKitCoordinator.parentCoordinator = self
+        childCoordinators.append(webKitCoordinator)
+        webKitCoordinator.start()
+    }
 }
 
 private extension WebPageCoordinator {

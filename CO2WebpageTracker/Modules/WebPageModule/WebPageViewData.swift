@@ -16,6 +16,7 @@ struct WebPageViewData {
     let gramForVisit: Double
     let energy: Double
     var image: UIImage?
+    let learnAboutURLString = "https://www.websitecarbon.com/introducing-the-website-carbon-rating-system/"
 }
 
 extension WebPageViewData {
