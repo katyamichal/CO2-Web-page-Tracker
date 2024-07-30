@@ -9,8 +9,7 @@ import Foundation
 
 protocol ILinkButtonDelegate: AnyObject {
     func learnAboutButtonDidTapped()
-    // how do we calculate this button
-    // how do we find out this button
+    func howDoesItWorkDidTapped()
 }
 
 final class LinkButtonDelegate {
@@ -20,5 +19,11 @@ final class LinkButtonDelegate {
 extension LinkButtonDelegate: ILearnAboutDelegate {
     func buttonDidTapped() {
         delegate?.learnAboutButtonDidTapped()
+    }
+}
+
+extension LinkButtonDelegate: IHowDoesItWorkButtonDelegate {
+    func howDoesItWorkButtoDidTapped() {
+        delegate?.howDoesItWorkDidTapped()
     }
 }

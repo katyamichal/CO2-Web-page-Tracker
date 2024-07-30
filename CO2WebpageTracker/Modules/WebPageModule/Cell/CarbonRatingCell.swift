@@ -119,7 +119,6 @@ final class CarbonRatingCell: UITableViewCell {
         descriptionLabel.text = nil
         cleanerThanLabel.text = nil
         dateLabel.text = nil
-        
         super.prepareForReuse()
     }
     

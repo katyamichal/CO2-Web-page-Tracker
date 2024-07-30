@@ -6,7 +6,7 @@
 //
 
 import UIKit
-//https://www.websitecarbon.com/introducing-the-website-carbon-rating-system/
+
 final class ViewDataConstructor {
     private var viewData: WebPageViewData?
     
@@ -16,7 +16,6 @@ final class ViewDataConstructor {
         static let testOn = "This page was tested on "
         static let overAYear = "Over a year, with "
         static let monthlyView = "monthly page views, this page produces "
-        static let co2Equivalent = " of CO2 equivalent"
         static let urlTitle = "Web page screen with URL: "
     }
     
@@ -76,19 +75,14 @@ final class ViewDataConstructor {
         return fullString
     }
 
-    
     var learnAboutButtonTitle: NSAttributedString {
         let headString = NSAttributedString(string: "Learn more about our")
-        let attributes: [NSAttributedString.Key : Any] = [
-            .underlineStyle: NSUnderlineStyle.single.rawValue,
-        ]
-        let tailString = NSAttributedString(string: " rating system", attributes: attributes)
+        let tailString = NSAttributedString(string: " rating system", attributes: linkAttributes)
         let fullString = NSMutableAttributedString()
         fullString.append(headString)
         fullString.append(tailString)
         return fullString
     }
-    
     
     var lastTestDate: String {
         guard let viewData else { return WebPageHelperStrings.noData }
@@ -103,7 +97,7 @@ final class ViewDataConstructor {
         guard let viewData else {
             return NSAttributedString(string: WebPageHelperStrings.noData)
         }
-        let grams = NSAttributedString(string: String(format: "%.2f", viewData.energy) + " grams of ", attributes: attributes)
+        let grams = NSAttributedString(string: String(format: "%.3f", viewData.energy) + " grams of ", attributes: attributes)
         
         let descriptionString = " " + (DescriptionConstructor.shared.getDescription(for: "co2PerPageview") as? String ?? "")
         let description = NSAttributedString(string: descriptionString, attributes: attributes)
@@ -120,6 +114,11 @@ final class ViewDataConstructor {
         return DescriptionConstructor.shared.getGreenDescription(isGreen: viewData.isGreen)
     }
     
+    var howDoesItWorkButtonTitle: NSAttributedString {
+        let fullString = NSAttributedString(string: "How do we calculate this?", attributes: linkAttributes)
+        return fullString
+    }
+    
     // MARK: - Data for Energy Waste Type Cell
     
     var stepperValue: Int = 1
@@ -132,21 +131,34 @@ final class ViewDataConstructor {
         return headString + valueString
     }
     
-    var energy: String {
-        guard let viewData else { return WebPageHelperStrings.noData }
-        let headString = WebPageHelperStrings.monthlyView
-        let midString = String(format: "%.3f", (viewData.gramForVisit * Double(stepperValue)))
-        let tailString = WebPageHelperStrings.co2Equivalent
-        let fullString = headString + midString + tailString
+    var energy: NSAttributedString {
+        guard let viewData else {
+            return NSAttributedString(string: WebPageHelperStrings.noData)
+        }
+        
+        let headString = NSAttributedString(string: WebPageHelperStrings.monthlyView)
+        let mid = String(format: "%.3f", (viewData.gramForVisit * Double(stepperValue)))
+        let midString = NSAttributedString(string: mid + " of ")
+        
+        let tail = " equivalent"
+        let tailSting = NSAttributedString(string: tail)
+        
+        let fullString = NSMutableAttributedString()
+        fullString.append(headString)
+        fullString.append(midString)
+        fullString.append(co2String)
+        fullString.append(tailSting)
         return fullString
     }
     
-    // MARK: - Data for Energy Waste Type Cell
+    // MARK: - Data for Image Cell
     
     var urlTitle: String {
         guard let viewData else { return WebPageHelperStrings.noData}
         return WebPageHelperStrings.urlTitle + "\(viewData.url)"
     }
+    
+    // MARK: - Addintional
     
     static func convertGreenToString(_ isGreen: BoolOrString) -> String {
         switch isGreen {
@@ -162,10 +174,13 @@ final class ViewDataConstructor {
         }
     }
     
-    // MARK: - Addintional
-    
     private let attributes: [NSAttributedString.Key : Any] = [
         .font: Fonts.Body.defaultFont
+    ]
+    
+    private let linkAttributes: [NSAttributedString.Key : Any] = [
+        .underlineStyle: NSUnderlineStyle.single.rawValue,
+        .font: Fonts.Titles.subtitle
     ]
     
     private lazy var dateFormatter: DateFormatter = {
@@ -179,12 +194,11 @@ final class ViewDataConstructor {
         let baseString = NSMutableAttributedString(string: "CO", attributes: attributes)
         
         let subsriptAttributes: [NSAttributedString.Key: Any] = [
-            .baselineOffset: -3,
+            .baselineOffset: -2,
             .font: Fonts.Body.secondaryFont
         ]
         let subscriptString = NSAttributedString(string: "2", attributes: subsriptAttributes)
         baseString.append(subscriptString)
-        
         return baseString
     }
 }

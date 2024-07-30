@@ -6,7 +6,13 @@
 //
 
 import UIKit
+
+protocol IHowDoesItWorkButtonDelegate: AnyObject {
+    func howDoesItWorkButtoDidTapped()
+}
+
 final class RenewableCell: UITableViewCell {
+    private weak var howDoesItWorkButtonDelegate: IHowDoesItWorkButtonDelegate?
     private let spacing: CGFloat = 16
     private let inset: CGFloat = 24
     
@@ -33,7 +39,7 @@ final class RenewableCell: UITableViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.distribution = .fill
-        stackView.alignment = .fill
+        stackView.alignment = .leading
         stackView.spacing = spacing
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -55,6 +61,13 @@ final class RenewableCell: UITableViewCell {
         return label
     }()
     
+    private lazy var howDoesItWorkButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(buttonDidTapped), for: .touchUpInside)
+        return button
+    }()
+    
     override func prepareForReuse() {
         greenEnergyStatusLabel.text = nil
         gramsLabel.text = nil
@@ -63,9 +76,14 @@ final class RenewableCell: UITableViewCell {
 
     // MARK: - Public
     
-    func update(with grams: NSAttributedString, energyType: String) {
+    func update(with grams: NSAttributedString, energyType: String, buttonTitle: NSAttributedString) {
         gramsLabel.attributedText = grams
         greenEnergyStatusLabel.text = energyType
+        howDoesItWorkButton.setAttributedTitle(buttonTitle, for: .normal)
+    }
+    
+    func configureLinkButtonDelgate(with delegate: IHowDoesItWorkButtonDelegate) {
+        howDoesItWorkButtonDelegate = delegate
     }
 }
 
@@ -81,6 +99,7 @@ private extension RenewableCell {
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(gramsLabel)
         stackView.addArrangedSubview(greenEnergyStatusLabel)
+        stackView.addArrangedSubview(howDoesItWorkButton)
     }
     
     func setupConstraints() {
@@ -88,5 +107,10 @@ private extension RenewableCell {
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -inset).isActive = true
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+    }
+    
+    @objc
+    func buttonDidTapped() {
+        howDoesItWorkButtonDelegate?.howDoesItWorkButtoDidTapped()
     }
 }

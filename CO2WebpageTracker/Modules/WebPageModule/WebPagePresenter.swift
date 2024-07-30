@@ -201,6 +201,11 @@ extension WebPagePresenter: IStepperDelegate {
 }
 
 extension WebPagePresenter: ILinkButtonDelegate {
+    func howDoesItWorkDidTapped() {
+        guard let viewData else { return }
+        (coordinator as? WebPageCoordinator)?.showWebKit(with: viewData.howDoesItWork)
+    }
+    
     func learnAboutButtonDidTapped() {
         guard let viewData else { return }
         (coordinator as? WebPageCoordinator)?.showWebKit(with: viewData.learnAboutURLString)
@@ -253,7 +258,8 @@ private extension WebPagePresenter {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RenewableCell.reuseIdentifier, for: indexPath) as? RenewableCell else {
                 return UITableViewCell()
             }
-            cell.update(with: viewDataConstructor.co2PerPageviewDescription, energyType: viewDataConstructor.greenDescription)
+            cell.update(with: viewDataConstructor.co2PerPageviewDescription, energyType: viewDataConstructor.greenDescription, buttonTitle: viewDataConstructor.howDoesItWorkButtonTitle)
+            cell.configureLinkButtonDelgate(with: linkButtonDelegate)
             return cell
             
         case .energyType:

@@ -24,8 +24,10 @@ enum Constants {
         static let webPageNavigationTitle = "Web Pages"
     }
     
-    enum BaseUrls {
+    enum Urls {
         static let websitecarbon = "https://www.websitecarbon.com/website/"
+        static let learnAboutURLString = "https://www.websitecarbon.com/introducing-the-website-carbon-rating-system/"
+        static let howDoesItWork = "https://www.websitecarbon.com/how-does-it-work/"
     }
     
     enum UIElementSystemNames {

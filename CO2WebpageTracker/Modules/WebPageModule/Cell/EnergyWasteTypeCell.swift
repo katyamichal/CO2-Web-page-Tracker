@@ -85,10 +85,10 @@ final class EnergyWasteTypeCell: UITableViewCell {
         stepperDelegate = delegate
     }
     
-    func update(visitCount: String, energy: String, stepperValue: Int) {
+    func update(visitCount: String, energy: NSAttributedString, stepperValue: Int) {
         stepperValueLabel.text = visitCount
         stepper.value = Double(stepperValue)
-        energyLabel.text = energy
+        energyLabel.attributedText = energy
     }
 }
 
