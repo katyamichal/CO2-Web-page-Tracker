@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import WebKit
 
 protocol IWebKitPresenter: AnyObject {
     var urlRequest: URLRequest? { get }
@@ -27,9 +28,11 @@ final class WebKitPresenter {
 extension WebKitPresenter: IWebKitPresenter {
     func viewDidLoaded(view: IWebKitView) {
         self.view = view
+        self.view?.makeRequest()
     }
     
     var urlRequest: URLRequest? {
+        
         URLConstructor.createURLRequest(with: viewData.url)
     }
     

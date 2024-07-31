@@ -27,7 +27,7 @@ final class WebPageCoordinator: Coordinator {
     }
     
     func goBack() {
-        navigationController.popToRootViewController(animated: true)
+        navigationController.popViewController(animated: true)
     }
     
     func showImagePicker(with imagePicker: UIImagePickerController) {

@@ -27,6 +27,10 @@ final class WebPagePresenter {
         self.stepperDelegate.delegate = self
         self.linkButtonDelegate.delegate = self
     }
+    
+    deinit {
+        print("WebPageView Deinit")
+    }
 }
 
 extension WebPagePresenter {

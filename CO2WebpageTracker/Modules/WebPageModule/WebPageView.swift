@@ -23,6 +23,10 @@ final class WebPageView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("WebPageView Deinit")
+    }
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false

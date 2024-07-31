@@ -23,6 +23,10 @@ final class ViewDataConstructor {
         self.viewData = viewData
     }
     
+    deinit {
+        print("ViewDataConstructor Deinit")
+    }
+    
     // MARK: - Data for Carbon Rating Cell
     
     var scaleDescription: [String: [String: Any]]? {
@@ -55,18 +59,19 @@ final class ViewDataConstructor {
             return NSAttributedString(string: WebPageHelperStrings.noData)
         }
         
-        let headString = NSAttributedString(string: "This is ")
+        let headString = NSAttributedString(string: "This is ", attributes: attributes)
         
         let percentageString = (DescriptionConstructor.shared.getDescription(for: "cleanerThan") as? String ?? "") + "\(Int(viewData.cleanerThan * 100))" + "%"
         
-        let attributes: [NSAttributedString.Key : Any] = [
+        let percentageAttributes: [NSAttributedString.Key : Any] = [
             .font: Fonts.Body.defaultFont,
-            .backgroundColor: ratingColor
+            .backgroundColor: ratingColor,
+            .foregroundColor: UIColor.black
         ]
         
-        let midString = NSAttributedString(string: "cleaner than " + percentageString, attributes: attributes)
+        let midString = NSAttributedString(string: "cleaner than " + percentageString, attributes: percentageAttributes)
         
-        let tailString = NSAttributedString(string: WebPageHelperStrings.globally)
+        let tailString = NSAttributedString(string: WebPageHelperStrings.globally, attributes: attributes)
         
         let fullString = NSMutableAttributedString()
         fullString.append(headString)
@@ -76,7 +81,7 @@ final class ViewDataConstructor {
     }
 
     var learnAboutButtonTitle: NSAttributedString {
-        let headString = NSAttributedString(string: "Learn more about our")
+        let headString = NSAttributedString(string: "Learn more about our", attributes: linkAttributes)
         let tailString = NSAttributedString(string: " rating system", attributes: linkAttributes)
         let fullString = NSMutableAttributedString()
         fullString.append(headString)
@@ -175,12 +180,14 @@ final class ViewDataConstructor {
     }
     
     private let attributes: [NSAttributedString.Key : Any] = [
-        .font: Fonts.Body.defaultFont
+        .font: Fonts.Body.defaultFont,
+        .foregroundColor: UIColor.black
     ]
     
     private let linkAttributes: [NSAttributedString.Key : Any] = [
         .underlineStyle: NSUnderlineStyle.single.rawValue,
-        .font: Fonts.Titles.subtitle
+        .font: Fonts.Titles.subtitle,
+        .foregroundColor: UIColor.black
     ]
     
     private lazy var dateFormatter: DateFormatter = {
@@ -195,7 +202,9 @@ final class ViewDataConstructor {
         
         let subsriptAttributes: [NSAttributedString.Key: Any] = [
             .baselineOffset: -2,
-            .font: Fonts.Body.secondaryFont
+            .font: Fonts.Body.secondaryFont,
+            .foregroundColor: UIColor.black
+                
         ]
         let subscriptString = NSAttributedString(string: "2", attributes: subsriptAttributes)
         baseString.append(subscriptString)

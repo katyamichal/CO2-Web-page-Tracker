@@ -33,6 +33,10 @@ final class WebPageListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("WebPageListViewController Deinit")
+    }
+    
     // MARK: - Cycle
 
     override func loadView() {

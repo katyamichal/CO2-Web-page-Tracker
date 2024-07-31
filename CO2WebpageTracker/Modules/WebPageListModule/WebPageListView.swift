@@ -24,6 +24,10 @@ final class WebPageListView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("WebPageListView Deinit")
+    }
+    
     // MARK: - UI Element
     lazy var tableView: UITableView = {
         let tableView = UITableView()

@@ -111,7 +111,7 @@ private extension WebPageListTableViewCell {
     
     func setupConstraints() {
         webPageStackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        webPageStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        webPageStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2).isActive = true
         webPageStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: spacing).isActive = true
         webPageStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -spacing).isActive = true
     }

@@ -19,6 +19,10 @@ final class WebPageListPresenter {
         self.dataService = dataService
     }
     
+    deinit {
+        print("WebPageListPresenter Deinit")
+    }
+    
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium

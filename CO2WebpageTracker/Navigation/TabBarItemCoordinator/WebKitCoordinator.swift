@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 final class WebKitCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
@@ -23,7 +24,7 @@ final class WebKitCoordinator: Coordinator {
     }
     
     func goBack() {
-     //   navigationController.popViewController(animated: true)
+        navigationController.dismiss(animated: true)
     }
 }
 
@@ -31,6 +32,7 @@ private extension WebKitCoordinator {
     func showModule() {
         let presenter = WebKitPresenter(coordinator: self, url: urlString)
         let viewController = WebKitViewController(presenter: presenter)
-        navigationController.present(viewController, animated: true)
+        let navController = UINavigationController(rootViewController: viewController)
+        navigationController.present(navController, animated: true)
     }
 }
