@@ -27,7 +27,9 @@ final class WebPageCoordinator: Coordinator {
     }
     
     func goBack() {
-        navigationController.popViewController(animated: true)
+        finish()
+        navigationController.popToRootViewController(animated: true)
+        print(navigationController)
     }
     
     func showImagePicker(with imagePicker: UIImagePickerController) {
@@ -35,7 +37,7 @@ final class WebPageCoordinator: Coordinator {
     }
     
     func dismissImagePicker() {
-        navigationController.dismiss(animated: true)
+        navigationController.topViewController?.dismiss(animated: true)
     }
     
     func presentView(with activity: UIActivityViewController) {

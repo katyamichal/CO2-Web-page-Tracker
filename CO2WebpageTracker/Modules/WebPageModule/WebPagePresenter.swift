@@ -121,7 +121,7 @@ extension WebPagePresenter:  IWebPagePersistence {
     func deleteButtonDidPressed() {
         guard let webPageURL else { return }
         dataService.deleteWebPage(url: webPageURL)
-        (coordinator as? WebPageCoordinator)?.goBack()
+//        (coordinator as? WebPageCoordinator)?.goBack()
     }
     
     // MARK: - App State

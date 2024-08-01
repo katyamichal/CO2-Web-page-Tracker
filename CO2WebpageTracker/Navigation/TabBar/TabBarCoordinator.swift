@@ -37,15 +37,20 @@ final class TabBarCoordinator: Coordinator {
 private extension TabBarCoordinator {
     func showTabBarFlow() {
         let searchImage = UIImage(systemName: TabBarImageView.search.rawValue)
+        
         let searchNavigationController = UINavigationController()
+        
         searchNavigationController.tabBarItem = UITabBarItem(title: "Search", image: searchImage, selectedImage: searchImage)
         let searchCoordinator = SearchCoordinator(navigationController: searchNavigationController, networkService: networkService, dataService: dataService)
         searchCoordinator.parentCoordinator = self
         searchCoordinator.start()
         
         let listImage = UIImage(systemName: TabBarImageView.list.rawValue)
+        
         let webPageListNavigationController = UINavigationController()
+        
         webPageListNavigationController.tabBarItem = UITabBarItem(title: "Web Pages", image: listImage, selectedImage: listImage)
+        
         let webPageListCoordinator = WebPageListCoordinator(navigationController: webPageListNavigationController, dataService: dataService)
         webPageListCoordinator.parentCoordinator = self
         webPageListCoordinator.start()

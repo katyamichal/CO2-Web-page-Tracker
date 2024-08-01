@@ -24,7 +24,8 @@ final class WebKitCoordinator: Coordinator {
     }
     
     func goBack() {
-        navigationController.dismiss(animated: true)
+        finish()
+        navigationController.topViewController?.dismiss(animated: true)
     }
 }
 

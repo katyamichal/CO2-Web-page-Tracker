@@ -27,7 +27,6 @@ final class WebPageListCoordinator: Coordinator {
         webPageCoordinator.parentCoordinator = self
         childCoordinators.append(webPageCoordinator)
         webPageCoordinator.start()
-        
     }
 }
 
