@@ -72,7 +72,7 @@ final class LoadingView: UIView {
     private lazy var cancelLoadingButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Cancel", for: .normal)
+        button.setTitle(Constants.UIElementNames.cancelButton, for: .normal)
         button.backgroundColor = Colours.Button.black
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = buttonCornerRadius
@@ -102,7 +102,7 @@ final class LoadingView: UIView {
         return button
     }()
     
-    // MARK: - Public - Setup method for subviews' buttons
+    // MARK: - Public - Setup methods for subviews' buttons
     
     func setupActionForTryAgainButton(target: Any?, action: Selector, for event: UIControl.Event = .touchUpInside) {
         tryAgainButton.addTarget(target, action: action, for: event)

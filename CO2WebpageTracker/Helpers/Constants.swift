@@ -58,6 +58,7 @@ enum Constants {
     
     enum UIElementNames {
         static let calculateButton = "Calculate"
+        static let cancelButton = "Cancel"
     }
      
     enum SearchLoadingMessage {
