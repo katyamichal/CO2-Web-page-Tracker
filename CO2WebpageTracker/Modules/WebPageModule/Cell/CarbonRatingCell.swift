@@ -6,7 +6,13 @@
 //
 
 import UIKit
+
+protocol ILearnAboutDelegate: AnyObject {
+    func buttonDidTapped()
+}
+
 final class CarbonRatingCell: UITableViewCell {
+    private weak var learnAboutButtonDelegate: ILearnAboutDelegate?
     private let spacing: CGFloat = 16
     private let inset: CGFloat = 24
     private let letterViewHeight: CGFloat = 130
@@ -34,7 +40,7 @@ final class CarbonRatingCell: UITableViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.distribution = .fill
-        stackView.alignment = .fill
+        stackView.alignment = .leading
         stackView.spacing = spacing
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -81,7 +87,6 @@ final class CarbonRatingCell: UITableViewCell {
         label.numberOfLines = 0
         label.font = Fonts.Body.defaultFont
         label.translatesAutoresizingMaskIntoConstraints = false
-       // label.textColor = Colours.Text.secondaryText
         return label
     }()
     
@@ -92,12 +97,17 @@ final class CarbonRatingCell: UITableViewCell {
         return view
     }()
     
-    // leart about
+    private lazy var learnAboutButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(buttonDidTapped), for: .touchUpInside)
+        return button
+    }()
     
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = Fonts.Body.descriptionFont
+        label.font = Fonts.Body.secondaryFont
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = Colours.Text.secondaryText
         return label
@@ -112,13 +122,18 @@ final class CarbonRatingCell: UITableViewCell {
         super.prepareForReuse()
     }
     
-    func update(with colour: UIColor, with letter: String, description: String, url: String, cleanerThan: String, date: String) {
+    func update(with colour: UIColor, with letter: String, description: String, url: String, cleanerThan: NSAttributedString, buttonTitle: NSAttributedString, date: String) {
         scaleView.backgroundColor = colour
         resultForLabel.text = url
         scaleLetterLabel.text = letter
         descriptionLabel.text = description
-        cleanerThanLabel.text = cleanerThan
+        cleanerThanLabel.attributedText = cleanerThan
+        learnAboutButton.setAttributedTitle(buttonTitle, for: .normal)
         dateLabel.text = date
+    }
+    
+    func configureLearnAboutButtonDelgate(with delegate: ILearnAboutDelegate) {
+        learnAboutButtonDelegate = delegate
     }
 }
 
@@ -138,6 +153,7 @@ private extension CarbonRatingCell {
         stackView.addArrangedSubview(descriptionLabel)
         stackView.addArrangedSubview(ratingView)
         stackView.addArrangedSubview(cleanerThanLabel)
+        stackView.addArrangedSubview(learnAboutButton)
         stackView.addArrangedSubview(dateLabel)
     }
     
@@ -154,5 +170,10 @@ private extension CarbonRatingCell {
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -inset).isActive = true
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+    }
+    
+    @objc
+    func buttonDidTapped() {
+        learnAboutButtonDelegate?.buttonDidTapped()
     }
 }

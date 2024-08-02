@@ -8,13 +8,15 @@
 import UIKit
 
 final class WebPagePresenter {
-    
     private weak var coordinator: Coordinator?
     private weak var view: IWebPageView?
     private var dataService: IDataService
     private var viewData: WebPageViewData?
-    private let appStateService = AppStateService.shared
     private let webPageURL: String?
+    
+    private let appStateService = AppStateService.shared
+  
+    private let linkButtonDelegate = LinkButtonDelegate()
     private let stepperDelegate = StepperDelegate()
     private lazy var viewDataConstructor = ViewDataConstructor(viewData: viewData)
     
@@ -23,6 +25,11 @@ final class WebPagePresenter {
         self.webPageURL = webPageURL
         self.coordinator = coordinator
         self.stepperDelegate.delegate = self
+        self.linkButtonDelegate.delegate = self
+    }
+    
+    deinit {
+        print("WebPageView Deinit")
     }
 }
 
@@ -114,7 +121,7 @@ extension WebPagePresenter:  IWebPagePersistence {
     func deleteButtonDidPressed() {
         guard let webPageURL else { return }
         dataService.deleteWebPage(url: webPageURL)
-        (coordinator as? WebPageCoordinator)?.goBack()
+//        (coordinator as? WebPageCoordinator)?.goBack()
     }
     
     // MARK: - App State
@@ -197,6 +204,17 @@ extension WebPagePresenter: IStepperDelegate {
     }
 }
 
+extension WebPagePresenter: ILinkButtonDelegate {
+    func howDoesItWorkDidTapped() {
+        guard let viewData else { return }
+        (coordinator as? WebPageCoordinator)?.showWebKit(with: viewData.howDoesItWork)
+    }
+    
+    func learnAboutButtonDidTapped() {
+        guard let viewData else { return }
+        (coordinator as? WebPageCoordinator)?.showWebKit(with: viewData.learnAboutURLString)
+    }
+}
 // MARK: - Private methods
 
 private extension WebPagePresenter {
@@ -236,14 +254,16 @@ private extension WebPagePresenter {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CarbonRatingCell.reuseIdentifier, for: indexPath) as? CarbonRatingCell else {
                 return UITableViewCell()
             }
-            cell.update(with: viewDataConstructor.ratingColor, with: viewData.ratingLetter, description: viewDataConstructor.ratingDescription, url: viewDataConstructor.urlDescription, cleanerThan: viewDataConstructor.cleanerThanDescription, date: viewDataConstructor.lastTestDate)
+            cell.update(with: viewDataConstructor.ratingColor, with: viewData.ratingLetter, description: viewDataConstructor.ratingDescription, url: viewDataConstructor.urlDescription, cleanerThan: viewDataConstructor.cleanerThanDescription, buttonTitle: viewDataConstructor.learnAboutButtonTitle, date: viewDataConstructor.lastTestDate)
+            cell.configureLearnAboutButtonDelgate(with: linkButtonDelegate)
             return cell
             
         case .renewable:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RenewableCell.reuseIdentifier, for: indexPath) as? RenewableCell else {
                 return UITableViewCell()
             }
-            cell.update(with: viewDataConstructor.co2PerPageviewDescription, energyType: viewDataConstructor.greenDescription)
+            cell.update(with: viewDataConstructor.co2PerPageviewDescription, energyType: viewDataConstructor.greenDescription, buttonTitle: viewDataConstructor.howDoesItWorkButtonTitle)
+            cell.configureLinkButtonDelgate(with: linkButtonDelegate)
             return cell
             
         case .energyType:

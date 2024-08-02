@@ -47,7 +47,7 @@ private extension GradientRatingView {
         let labels = ["A+", "A", "B", "C", "D", "E", "F"]
         let labelCount = labels.count
         let labelWidth = self.bounds.width / CGFloat(labelCount)
-        labels.enumerated().map { (index, labelText) in
+        let _ = labels.enumerated().map { (index, labelText) in
             let label = UILabel()
             label.text = labelText
             label.textAlignment = .center

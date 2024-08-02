@@ -27,7 +27,9 @@ final class WebPageCoordinator: Coordinator {
     }
     
     func goBack() {
+        finish()
         navigationController.popToRootViewController(animated: true)
+        print(navigationController)
     }
     
     func showImagePicker(with imagePicker: UIImagePickerController) {
@@ -35,11 +37,18 @@ final class WebPageCoordinator: Coordinator {
     }
     
     func dismissImagePicker() {
-        navigationController.dismiss(animated: true)
+        navigationController.topViewController?.dismiss(animated: true)
     }
     
     func presentView(with activity: UIActivityViewController) {
         navigationController.present(activity, animated: true)
+    }
+    
+    func showWebKit(with urlString: String) {
+        let webKitCoordinator = WebKitCoordinator(navigationController: navigationController, urlString: urlString)
+        webKitCoordinator.parentCoordinator = self
+        childCoordinators.append(webKitCoordinator)
+        webKitCoordinator.start()
     }
 }
 

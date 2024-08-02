@@ -12,12 +12,10 @@ final class ViewDataConstructor {
     
     private enum WebPageHelperStrings {
         static let noData = "no data"
-        static let cleanerThan = "This is cleaner than "
         static let globally = " of all web pages globally"
         static let testOn = "This page was tested on "
         static let overAYear = "Over a year, with "
         static let monthlyView = "monthly page views, this page produces "
-        static let co2Equivalent = " of CO2 equivalent"
         static let urlTitle = "Web page screen with URL: "
     }
     
@@ -25,12 +23,9 @@ final class ViewDataConstructor {
         self.viewData = viewData
     }
     
-    private lazy var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .short
-        return dateFormatter
-    }()
+    deinit {
+        print("ViewDataConstructor Deinit")
+    }
     
     // MARK: - Data for Carbon Rating Cell
     
@@ -43,31 +38,59 @@ final class ViewDataConstructor {
             let viewData,
             let letterColour = DescriptionConstructor.shared.getRatingLetter(with: viewData.ratingLetter)?.lowercased(),
             let colour = UIColor.init(hex: letterColour)
-        else { return UIColor.gray }
+        else {
+            return UIColor.gray
+        }
         return colour
     }
     
     var ratingDescription: String {
-        guard let viewData else { return WebPageHelperStrings.noData}
+        guard let viewData else { return WebPageHelperStrings.noData }
         return DescriptionConstructor.shared.getRatingDescription(with: viewData.ratingLetter)
     }
     
     var urlDescription: String {
-        guard let viewData else { return WebPageHelperStrings.noData}
-        return (DescriptionConstructor.shared.getDescription(for: "url") as? String ?? "") + " " + viewData.url
+        guard let viewData else { return WebPageHelperStrings.noData }
+        return (DescriptionConstructor.shared.getDescription(for: "url") as? String ?? "") + "\n" + viewData.url
     }
     
-    var cleanerThanDescription: String {
-        guard let viewData else { return WebPageHelperStrings.noData}
-        let headString = WebPageHelperStrings.cleanerThan
-        let midString = ((DescriptionConstructor.shared.getDescription(for: "cleanerThan") as? String ?? "") + "\(Int(viewData.cleanerThan * 100))" + "%")
-        let tailString = WebPageHelperStrings.globally
-        let fullString = headString + midString + tailString
+    var cleanerThanDescription: NSAttributedString {
+        guard let viewData else {
+            return NSAttributedString(string: WebPageHelperStrings.noData)
+        }
+        
+        let headString = NSAttributedString(string: "This is ", attributes: attributes)
+        
+        let percentageString = (DescriptionConstructor.shared.getDescription(for: "cleanerThan") as? String ?? "") + "\(Int(viewData.cleanerThan * 100))" + "%"
+        
+        let percentageAttributes: [NSAttributedString.Key : Any] = [
+            .font: Fonts.Body.defaultFont,
+            .backgroundColor: ratingColor,
+            .foregroundColor: UIColor.black
+        ]
+        
+        let midString = NSAttributedString(string: "cleaner than " + percentageString, attributes: percentageAttributes)
+        
+        let tailString = NSAttributedString(string: WebPageHelperStrings.globally, attributes: attributes)
+        
+        let fullString = NSMutableAttributedString()
+        fullString.append(headString)
+        fullString.append(midString)
+        fullString.append(tailString)
+        return fullString
+    }
+
+    var learnAboutButtonTitle: NSAttributedString {
+        let headString = NSAttributedString(string: "Learn more about our", attributes: linkAttributes)
+        let tailString = NSAttributedString(string: " rating system", attributes: linkAttributes)
+        let fullString = NSMutableAttributedString()
+        fullString.append(headString)
+        fullString.append(tailString)
         return fullString
     }
     
     var lastTestDate: String {
-        guard let viewData else { return WebPageHelperStrings.noData}
+        guard let viewData else { return WebPageHelperStrings.noData }
         let headString = WebPageHelperStrings.testOn
         let tailString = dateFormatter.string(from: viewData.date)
         return headString + tailString
@@ -75,14 +98,30 @@ final class ViewDataConstructor {
     
     // MARK: - Data for Renewable Cell
     
-    var co2PerPageviewDescription: String {
-        guard let viewData else { return WebPageHelperStrings.noData}
-        return (String(format: "%.2f", viewData.energy)) + " " + (DescriptionConstructor.shared.getDescription(for: "co2PerPageview") as? String ?? "")
+    var co2PerPageviewDescription: NSAttributedString {
+        guard let viewData else {
+            return NSAttributedString(string: WebPageHelperStrings.noData)
+        }
+        let grams = NSAttributedString(string: String(format: "%.3f", viewData.energy) + " grams of ", attributes: attributes)
+        
+        let descriptionString = " " + (DescriptionConstructor.shared.getDescription(for: "co2PerPageview") as? String ?? "")
+        let description = NSAttributedString(string: descriptionString, attributes: attributes)
+    
+        let fullString = NSMutableAttributedString()
+        fullString.append(grams)
+        fullString.append(co2String)
+        fullString.append(description)
+        return fullString
     }
     
     var greenDescription: String {
         guard let viewData else { return WebPageHelperStrings.noData}
         return DescriptionConstructor.shared.getGreenDescription(isGreen: viewData.isGreen)
+    }
+    
+    var howDoesItWorkButtonTitle: NSAttributedString {
+        let fullString = NSAttributedString(string: "How do we calculate this?", attributes: linkAttributes)
+        return fullString
     }
     
     // MARK: - Data for Energy Waste Type Cell
@@ -97,21 +136,34 @@ final class ViewDataConstructor {
         return headString + valueString
     }
     
-    var energy: String {
-        guard let viewData else { return WebPageHelperStrings.noData}
-        let headString = WebPageHelperStrings.monthlyView
-        let midString = String(format: "%.3f", (viewData.gramForVisit * Double(stepperValue)))
-        let tailString = WebPageHelperStrings.co2Equivalent
-        let fullString = headString + midString + tailString
+    var energy: NSAttributedString {
+        guard let viewData else {
+            return NSAttributedString(string: WebPageHelperStrings.noData)
+        }
+        
+        let headString = NSAttributedString(string: WebPageHelperStrings.monthlyView)
+        let mid = String(format: "%.3f", (viewData.gramForVisit * Double(stepperValue)))
+        let midString = NSAttributedString(string: mid + " of ")
+        
+        let tail = " equivalent"
+        let tailSting = NSAttributedString(string: tail)
+        
+        let fullString = NSMutableAttributedString()
+        fullString.append(headString)
+        fullString.append(midString)
+        fullString.append(co2String)
+        fullString.append(tailSting)
         return fullString
     }
     
-    // MARK: - Data for Energy Waste Type Cell
+    // MARK: - Data for Image Cell
     
     var urlTitle: String {
         guard let viewData else { return WebPageHelperStrings.noData}
         return WebPageHelperStrings.urlTitle + "\(viewData.url)"
     }
+    
+    // MARK: - Addintional
     
     static func convertGreenToString(_ isGreen: BoolOrString) -> String {
         switch isGreen {
@@ -125,5 +177,37 @@ final class ViewDataConstructor {
         case .string(let str):
             return str
         }
+    }
+    
+    private let attributes: [NSAttributedString.Key : Any] = [
+        .font: Fonts.Body.defaultFont,
+        .foregroundColor: UIColor.black
+    ]
+    
+    private let linkAttributes: [NSAttributedString.Key : Any] = [
+        .underlineStyle: NSUnderlineStyle.single.rawValue,
+        .font: Fonts.Titles.subtitle,
+        .foregroundColor: UIColor.black
+    ]
+    
+    private lazy var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .short
+        return dateFormatter
+    }()
+    
+    private var co2String: NSAttributedString {
+        let baseString = NSMutableAttributedString(string: "CO", attributes: attributes)
+        
+        let subsriptAttributes: [NSAttributedString.Key: Any] = [
+            .baselineOffset: -2,
+            .font: Fonts.Body.secondaryFont,
+            .foregroundColor: UIColor.black
+                
+        ]
+        let subscriptString = NSAttributedString(string: "2", attributes: subsriptAttributes)
+        baseString.append(subscriptString)
+        return baseString
     }
 }

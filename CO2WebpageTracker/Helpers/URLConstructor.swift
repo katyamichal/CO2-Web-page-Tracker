@@ -28,12 +28,17 @@ struct URLConstructor {
             modifiedURLString.removeFirst(4)
         }
         let modifiedPath = modifiedURLString.replacingOccurrences(of: "/", with: "-")
-        let baseURLString = Constants.BaseUrls.websitecarbon
+        let baseURLString = Constants.Urls.websitecarbon
         let urlString = baseURLString + "website/" + modifiedPath
         guard let url = URL(string: urlString) else {
             print("Invalid URL")
             return nil
         }
         return url
+    }
+    
+    static func createURLRequest(with urlString: String) -> URLRequest? {
+        guard let url = URL(string: urlString) else { return nil }
+        return URLRequest(url: url)
     }
 }

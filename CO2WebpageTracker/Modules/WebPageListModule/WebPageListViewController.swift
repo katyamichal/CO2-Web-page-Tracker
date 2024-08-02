@@ -33,6 +33,10 @@ final class WebPageListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("WebPageListViewController Deinit")
+    }
+    
     // MARK: - Cycle
 
     override func loadView() {
@@ -82,7 +86,6 @@ extension WebPageListViewController: IWebPageListView {
 extension WebPageListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print(indexPath)
         presenter.showDetailView(at: indexPath.row)
     }
 }

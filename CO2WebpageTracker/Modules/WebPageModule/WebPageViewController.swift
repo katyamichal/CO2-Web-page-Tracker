@@ -24,11 +24,16 @@ final class WebPageViewController: UIViewController {
     init(presenter: IWebPagePresenter) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
+        print("WebPageViewController Init")
     }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("WebPageViewController Deinit")
     }
     
     // MARK: - Cycle
@@ -161,12 +166,26 @@ private extension WebPageViewController {
         rightBarItem.tintColor = .systemBackground
         
         let barButtonMenu = UIMenu(title: "", children: [
-            UIAction(title: Constants.UIElementTitle.share, image: UIImage(systemName: Constants.UIElementSystemNames.share), handler: shareWebPage),
-            UIAction(title: Constants.UIElementTitle.addPhoto, image: UIImage(systemName: Constants.UIElementSystemNames.camera), handler: addPhoto)
+            UIAction(title: Constants.UIElementTitle.share, image: UIImage(systemName: Constants.UIElementSystemNames.share)) {  [weak self] action in
+                self?.shareWebPage(action: action)
+            },
+ 
+            UIAction(title: Constants.UIElementTitle.addPhoto, image: UIImage(systemName: Constants.UIElementSystemNames.camera)) { [weak self] action in
+                self?.addPhoto(action: action)
+            }
         ])
         rightBarItem.tintColor = .label
         rightBarItem.menu = barButtonMenu
         return rightBarItem
+    }
+    
+    
+    func shareWebPage(action: UIAction) {
+        presenter.prepareToShare()
+    }
+    
+    func addPhoto(action: UIAction) {
+        choosePhotoFromLibrary()
     }
     
     func createSaveBarButton() -> UIBarButtonItem {
@@ -177,14 +196,6 @@ private extension WebPageViewController {
     func createDeleteBarButton() -> UIBarButtonItem {
         let deleteBarButton = UIBarButtonItem(title: Constants.UIElementTitle.delete, style: .plain, target: self, action: #selector(deeleteWebPage))
         return deleteBarButton
-    }
-    
-    func shareWebPage(action: UIAction) {
-        presenter.prepareToShare()
-    }
-    
-    func addPhoto(action: UIAction) {
-        choosePhotoFromLibrary()
     }
     
     @objc

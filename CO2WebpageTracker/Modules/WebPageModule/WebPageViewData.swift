@@ -16,6 +16,9 @@ struct WebPageViewData {
     let gramForVisit: Double
     let energy: Double
     var image: UIImage?
+    
+    let learnAboutURLString = Constants.Urls.learnAboutURLString
+    let howDoesItWork = Constants.Urls.howDoesItWork
 }
 
 extension WebPageViewData {

@@ -43,8 +43,12 @@ final  class SearchWebPageViewController: UIViewController {
         super.viewDidLoad()
         presenter.viewDidLoaded(view: self)
         setupKeyboardBehavior()
-        setupSearchTextField()
         setupActions()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupSearchTextField()
     }
 }
 

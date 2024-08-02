@@ -11,7 +11,7 @@ final class WebPageListCoordinator: Coordinator {
     var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     private let navigationController: UINavigationController
-    private  let dataService: IDataService
+    private let dataService: IDataService
     
     init(navigationController: UINavigationController, dataService: IDataService) {
         self.navigationController = navigationController

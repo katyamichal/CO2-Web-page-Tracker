@@ -24,8 +24,10 @@ enum Constants {
         static let webPageNavigationTitle = "Web Pages"
     }
     
-    enum BaseUrls {
+    enum Urls {
         static let websitecarbon = "https://www.websitecarbon.com/website/"
+        static let learnAboutURLString = "https://www.websitecarbon.com/introducing-the-website-carbon-rating-system/"
+        static let howDoesItWork = "https://www.websitecarbon.com/how-does-it-work/"
     }
     
     enum UIElementSystemNames {
@@ -51,6 +53,7 @@ enum Constants {
         static let sortByDate = "Sort by Date"
         static let webPageList = "Wep Pages"
         static let addPhoto = "Add Photo"
+        static let done = "Done"
     }
     
     enum UIElementNames {
@@ -79,6 +82,7 @@ enum Constants {
     enum AlerMessagesType {
         case emptyTextField
         case webPageDublicated
+        case errorToLoadWebKit
         
         var title: String {
             switch self {
@@ -86,6 +90,8 @@ enum Constants {
                 return "The text field is empty"
             case .webPageDublicated:
                 return "It seems that you've already had this web page in your list"
+            case .errorToLoadWebKit:
+                return "Oops!"
             }
         }
         
@@ -95,11 +101,13 @@ enum Constants {
                 return "Please enter a URL"
             case .webPageDublicated:
                 return "Do you want to resave it?"
+            case .errorToLoadWebKit:
+                return "The page is not available atm, please try later"
             }
         }
         var cancelButtonTitle: String {
             switch self {
-            case .emptyTextField:
+            case .emptyTextField, .errorToLoadWebKit:
                 return "OK"
             case .webPageDublicated:
                 return "Leave"
@@ -108,7 +116,7 @@ enum Constants {
         
         var actionButtonTitle: String {
             switch self {
-            case .webPageDublicated:
+            case .webPageDublicated, .errorToLoadWebKit:
                 return "Resave"
             case .emptyTextField:
                 return ""
