@@ -16,6 +16,7 @@ final class WebPageView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        print("WebPageView Init")
     }
     
     @available(*, unavailable)

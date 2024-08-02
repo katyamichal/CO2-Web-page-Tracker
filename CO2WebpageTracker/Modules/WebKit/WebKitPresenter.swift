@@ -6,11 +6,14 @@
 //
 
 import Foundation
-import WebKit
 
 protocol IWebKitPresenter: AnyObject {
     var urlRequest: URLRequest? { get }
     func viewDidLoaded(view: IWebKitView)
+    func viewIsReady()
+    func viewIsLoading()
+    func viewIsLoaded()
+    func viewIsLoaded(with error: Error)
     func doneButtonDidTapped()
 }
 
@@ -25,15 +28,32 @@ final class WebKitPresenter {
     }
 }
 
+// MARK: - Protocol
+
 extension WebKitPresenter: IWebKitPresenter {
+    func viewIsLoaded(with error: Error) {
+        view?.hideLoadingIndicator()
+        view?.showError(message: .errorToLoadWebKit)
+    }
+    
+    func viewIsLoading() {
+        view?.showLoadingIndicator()
+    }
+    
     func viewDidLoaded(view: IWebKitView) {
         self.view = view
-        self.view?.makeRequest()
+    }
+    
+    func viewIsReady() {
+        view?.makeRequest()
     }
     
     var urlRequest: URLRequest? {
-        
         URLConstructor.createURLRequest(with: viewData.url)
+    }
+    
+    func viewIsLoaded() {
+        view?.hideLoadingIndicator()
     }
     
     func doneButtonDidTapped() {

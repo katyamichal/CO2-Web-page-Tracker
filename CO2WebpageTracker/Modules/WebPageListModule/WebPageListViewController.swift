@@ -86,7 +86,6 @@ extension WebPageListViewController: IWebPageListView {
 extension WebPageListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print(indexPath)
         presenter.showDetailView(at: indexPath.row)
     }
 }
