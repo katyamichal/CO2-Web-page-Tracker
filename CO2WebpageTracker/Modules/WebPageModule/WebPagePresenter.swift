@@ -121,7 +121,7 @@ extension WebPagePresenter:  IWebPagePersistence {
     func deleteButtonDidPressed() {
         guard let webPageURL else { return }
         dataService.deleteWebPage(url: webPageURL)
-//        (coordinator as? WebPageCoordinator)?.goBack()
+        (coordinator as? WebPageCoordinator)?.goBack()
     }
     
     // MARK: - App State
@@ -149,7 +149,6 @@ extension WebPagePresenter:  IWebPagePersistence {
         recoverEditingState(with: state.stepperValue, and: state.previosValue)
     }
 }
-
 
 extension WebPagePresenter: IWebPageLogic {
     
@@ -183,6 +182,12 @@ extension WebPagePresenter: IWebPageLogic {
     
     func share(with activityViewController: UIActivityViewController) {
         (coordinator as? WebPageCoordinator)?.presentView(with: activityViewController)
+    }
+    
+    // MARK: - Reminder
+
+    func addReminderButtonDidTapped() {
+        (coordinator as? WebPageCoordinator)?.showReminderModule()
     }
 }
 

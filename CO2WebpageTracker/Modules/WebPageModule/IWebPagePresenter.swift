@@ -36,4 +36,5 @@ protocol IWebPageLogic: AnyObject {
     func imagePickerDidCancel()
     func prepareToShare()
     func share(with activityViewController: UIActivityViewController)
+    func addReminderButtonDidTapped()
 }

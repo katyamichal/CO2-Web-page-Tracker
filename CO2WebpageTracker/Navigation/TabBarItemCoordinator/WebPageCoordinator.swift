@@ -50,6 +50,14 @@ final class WebPageCoordinator: Coordinator {
         childCoordinators.append(webKitCoordinator)
         webKitCoordinator.start()
     }
+    
+    func showReminderModule() {
+        guard let webPageURL else { return }
+        let reminderCoordinator = ReminderCoordinator(navigationController: navigationController, dataService: dataService, webPageURL: webPageURL)
+        reminderCoordinator.parentCoordinator = self
+        childCoordinators.append(reminderCoordinator)
+        reminderCoordinator.start()
+    }
 }
 
 private extension WebPageCoordinator {

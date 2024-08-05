@@ -43,6 +43,7 @@ enum Constants {
         static let globe = "globe.asia.australia.fill"
         static let camera = "camera"
         static let calendar = "calendar"
+        static let reminder = "calendar.circle"
     }
     
     enum UIElementTitle {
@@ -54,11 +55,13 @@ enum Constants {
         static let webPageList = "Wep Pages"
         static let addPhoto = "Add Photo"
         static let done = "Done"
+        static let addReminder = "Add Reminder"
     }
     
     enum UIElementNames {
         static let calculateButton = "Calculate"
         static let cancelButton = "Cancel"
+       
     }
      
     enum SearchLoadingMessage {

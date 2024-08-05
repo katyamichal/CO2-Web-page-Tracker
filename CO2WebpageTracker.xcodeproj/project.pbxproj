@@ -28,6 +28,11 @@
 		4E4D6C6F2C58DACD00F47B5F /* WebKitCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D6C6E2C58DACD00F47B5F /* WebKitCoordinator.swift */; };
 		4E4D6C712C58E19300F47B5F /* WebKitViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D6C702C58E19300F47B5F /* WebKitViewData.swift */; };
 		4E4D6C732C58EED200F47B5F /* LinkButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D6C722C58EED200F47B5F /* LinkButtonDelegate.swift */; };
+		4E4D6C7A2C60B2A900F47B5F /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D6C792C60B2A900F47B5F /* ReminderViewController.swift */; };
+		4E4D6C7C2C60B2D400F47B5F /* ReminderPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D6C7B2C60B2D400F47B5F /* ReminderPresenter.swift */; };
+		4E4D6C7E2C60B30700F47B5F /* ReminderViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D6C7D2C60B30700F47B5F /* ReminderViewData.swift */; };
+		4E4D6C802C60B31D00F47B5F /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D6C7F2C60B31D00F47B5F /* ReminderView.swift */; };
+		4E4D6C822C60BBDB00F47B5F /* ReminderCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4D6C812C60BBDB00F47B5F /* ReminderCoordinator.swift */; };
 		4EABD5AB2C182C210089DF1D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5AA2C182C210089DF1D /* AppDelegate.swift */; };
 		4EABD5AD2C182C210089DF1D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5AC2C182C210089DF1D /* SceneDelegate.swift */; };
 		4EABD5AF2C182C210089DF1D /* WebPageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EABD5AE2C182C210089DF1D /* WebPageListViewController.swift */; };
@@ -92,6 +97,11 @@
 		4E4D6C6E2C58DACD00F47B5F /* WebKitCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebKitCoordinator.swift; sourceTree = "<group>"; };
 		4E4D6C702C58E19300F47B5F /* WebKitViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebKitViewData.swift; sourceTree = "<group>"; };
 		4E4D6C722C58EED200F47B5F /* LinkButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkButtonDelegate.swift; sourceTree = "<group>"; };
+		4E4D6C792C60B2A900F47B5F /* ReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
+		4E4D6C7B2C60B2D400F47B5F /* ReminderPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPresenter.swift; sourceTree = "<group>"; };
+		4E4D6C7D2C60B30700F47B5F /* ReminderViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewData.swift; sourceTree = "<group>"; };
+		4E4D6C7F2C60B31D00F47B5F /* ReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
+		4E4D6C812C60BBDB00F47B5F /* ReminderCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCoordinator.swift; sourceTree = "<group>"; };
 		4EABD5A72C182C210089DF1D /* CO2WebpageTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CO2WebpageTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EABD5AA2C182C210089DF1D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EABD5AC2C182C210089DF1D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -163,6 +173,7 @@
 				4E34E02D2C1DCA1F004D15A5 /* WebPageListCoordinator.swift */,
 				4E34E0442C1F178A004D15A5 /* WebPageCoordinator.swift */,
 				4E4D6C6E2C58DACD00F47B5F /* WebKitCoordinator.swift */,
+				4E4D6C812C60BBDB00F47B5F /* ReminderCoordinator.swift */,
 			);
 			path = TabBarItemCoordinator;
 			sourceTree = "<group>";
@@ -198,6 +209,17 @@
 				4E4D6C702C58E19300F47B5F /* WebKitViewData.swift */,
 			);
 			path = WebKit;
+			sourceTree = "<group>";
+		};
+		4E4D6C782C60B28D00F47B5F /* ReminderModule */ = {
+			isa = PBXGroup;
+			children = (
+				4E4D6C792C60B2A900F47B5F /* ReminderViewController.swift */,
+				4E4D6C7F2C60B31D00F47B5F /* ReminderView.swift */,
+				4E4D6C7B2C60B2D400F47B5F /* ReminderPresenter.swift */,
+				4E4D6C7D2C60B30700F47B5F /* ReminderViewData.swift */,
+			);
+			path = ReminderModule;
 			sourceTree = "<group>";
 		};
 		4EABD59E2C182C210089DF1D = {
@@ -356,6 +378,7 @@
 		4EABD5FE2C1C964E0089DF1D /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				4E4D6C782C60B28D00F47B5F /* ReminderModule */,
 				4EABD5DB2C1C1D870089DF1D /* SearchModule */,
 				4EABD5C42C1AD0100089DF1D /* WebPageListModule */,
 				4EABD5F32C1C8CB80089DF1D /* WebPageModule */,
@@ -466,7 +489,9 @@
 				4EAC84912C21FC7300F6CD8A /* CoreDataErrors.swift in Sources */,
 				4EABD5F22C1C8CB40089DF1D /* WebPageViewController.swift in Sources */,
 				4EABD5F72C1C8F8F0089DF1D /* CarbonRatingCell.swift in Sources */,
+				4E4D6C7C2C60B2D400F47B5F /* ReminderPresenter.swift in Sources */,
 				4EAC84932C2201A400F6CD8A /* ViewDataConstructor.swift in Sources */,
+				4E4D6C822C60BBDB00F47B5F /* ReminderCoordinator.swift in Sources */,
 				4E0D1CD42C245BD9004B09B4 /* WebPageInfo+CoreDataClass.swift in Sources */,
 				4EABD5CD2C1AD6F10089DF1D /* CorboneDTO.swift in Sources */,
 				4EAC84822C20995F00F6CD8A /* UIFont + CustomFont.swift in Sources */,
@@ -478,6 +503,7 @@
 				4E34E0382C1EAB9B004D15A5 /* SearchCoordinator.swift in Sources */,
 				4E4D6C732C58EED200F47B5F /* LinkButtonDelegate.swift in Sources */,
 				4E0D1CD52C245BD9004B09B4 /* WebPageInfo+CoreDataProperties.swift in Sources */,
+				4E4D6C7A2C60B2A900F47B5F /* ReminderViewController.swift in Sources */,
 				4E0D1CCB2C2422F6004B09B4 /* IWebPagePresenter.swift in Sources */,
 				4EABD5E52C1C23D60089DF1D /* SearchViewData.swift in Sources */,
 				4E34E0412C1EF387004D15A5 /* EnergyWasteTypeCell.swift in Sources */,
@@ -496,12 +522,14 @@
 				4EAC84772C202E7300F6CD8A /* UIColor + hex.swift in Sources */,
 				4E34E03E2C1ED983004D15A5 /* FRCDelegate.swift in Sources */,
 				4EABD5EC2C1C285C0089DF1D /* SearchView.swift in Sources */,
+				4E4D6C7E2C60B30700F47B5F /* ReminderViewData.swift in Sources */,
 				4EABD5AD2C182C210089DF1D /* SceneDelegate.swift in Sources */,
 				4EB2FD7B2C255A13000FD988 /* AppStateService.swift in Sources */,
 				4EABD5FD2C1C95240089DF1D /* WebPageSection.swift in Sources */,
 				4EABD5C72C1AD3420089DF1D /* APIErrors.swift in Sources */,
 				4EABD5D52C1AE2CC0089DF1D /* WebPageListPresenter.swift in Sources */,
 				4EABD5D12C1AE1E20089DF1D /* WebPageListView.swift in Sources */,
+				4E4D6C802C60B31D00F47B5F /* ReminderView.swift in Sources */,
 				4EAC84752C2008B700F6CD8A /* TabBarController.swift in Sources */,
 				4E34E0342C1EAA01004D15A5 /* TabBarCoordinator.swift in Sources */,
 				4E34E02E2C1DCA1F004D15A5 /* WebPageListCoordinator.swift in Sources */,

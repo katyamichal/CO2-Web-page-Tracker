@@ -146,6 +146,8 @@ private extension WebPageViewController {
         webPageView.tableView.delegate = self
     }
     
+    // MARK: - Bar Buttons
+    
     func setupNavigationBarButtons() {
         navigationItem.rightBarButtonItems = [createBarMenuButton()]
         if presenter.isWebPageExisted {
@@ -155,8 +157,6 @@ private extension WebPageViewController {
             navigationItem.rightBarButtonItems?.append(createDeleteBarButton())
         }
     }
-    
-    // MARK: - Bar Buttons
     
     func createBarMenuButton() -> UIBarButtonItem {
         let pointSize: CGFloat = 20
@@ -172,6 +172,9 @@ private extension WebPageViewController {
  
             UIAction(title: Constants.UIElementTitle.addPhoto, image: UIImage(systemName: Constants.UIElementSystemNames.camera)) { [weak self] action in
                 self?.addPhoto(action: action)
+            },
+            UIAction(title: Constants.UIElementTitle.addReminder, image: UIImage(systemName: Constants.UIElementSystemNames.reminder)) { [weak self] action in 
+                self?.addReminder(action: action)
             }
         ])
         rightBarItem.tintColor = .label
@@ -179,13 +182,16 @@ private extension WebPageViewController {
         return rightBarItem
     }
     
-    
     func shareWebPage(action: UIAction) {
         presenter.prepareToShare()
     }
     
     func addPhoto(action: UIAction) {
         choosePhotoFromLibrary()
+    }
+    
+    func addReminder(action: UIAction) {
+        presenter.addReminderButtonDidTapped()
     }
     
     func createSaveBarButton() -> UIBarButtonItem {
