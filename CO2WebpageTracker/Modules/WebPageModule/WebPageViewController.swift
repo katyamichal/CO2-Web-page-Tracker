@@ -174,7 +174,6 @@ private extension WebPageViewController {
                 self?.addPhoto(action: action)
             }
         ])
-        rightBarItem.tintColor = .label
         rightBarItem.menu = barButtonMenu
         return rightBarItem
     }

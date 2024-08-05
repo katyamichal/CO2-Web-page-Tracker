@@ -103,9 +103,9 @@ private extension SearchWebPagePresenter {
             guard let self else { return }
             if let responseData {
                 self.viewData.searchStatus = .search
-//                DispatchQueue.main.async {
-//                    (self.coordinator as? SearchCoordinator)?.showDetail(with: responseData)
-//                }
+                DispatchQueue.main.async {
+                    (self.coordinator as? SearchCoordinator)?.showDetail(with: responseData)
+                }
             } else {
                 let failedMessage = self.configureErrorResponse(with: error!)
                 self.updateSearchStatus(with: .load(status: .failed(message: failedMessage)))

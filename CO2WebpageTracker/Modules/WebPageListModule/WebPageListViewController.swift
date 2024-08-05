@@ -120,7 +120,6 @@ private extension WebPageListViewController {
     func setupNavigationBar() {
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.tintColor = Colours.WebPageColours.darkOrange
         let pointSize: CGFloat = 20
         let configuration = UIImage.SymbolConfiguration(pointSize: pointSize, weight: .light)
         let image = UIImage(systemName: Constants.UIElementSystemNames.actionMenu, withConfiguration: configuration)

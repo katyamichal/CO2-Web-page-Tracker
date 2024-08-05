@@ -10,9 +10,16 @@ import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let largeTitleAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.black,
+                .font: UIFont.boldSystemFont(ofSize: 34)
+        ]
+        UINavigationBar.appearance().tintColor = Colours.WebPageColours.darkOrange
+        UINavigationBar.appearance().barTintColor = Colours.BackgroundsColours.light
+        UINavigationBar.appearance().largeTitleTextAttributes = largeTitleAttributes
         return true
     }
 

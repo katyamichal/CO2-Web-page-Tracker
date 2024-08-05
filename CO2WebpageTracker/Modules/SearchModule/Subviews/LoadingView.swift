@@ -141,6 +141,8 @@ private extension LoadingView {
         loadingStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         
         cancelLoadingButton.widthAnchor.constraint(equalTo: loadingStackView.widthAnchor, multiplier: 0.6).isActive = true
+        tryAgainButton.widthAnchor.constraint(equalTo: loadingStackView.widthAnchor, multiplier: 0.6).isActive = true
+        
     }
     
     private func updateState() {
