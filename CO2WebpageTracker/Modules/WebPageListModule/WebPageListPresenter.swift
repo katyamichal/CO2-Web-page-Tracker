@@ -13,6 +13,7 @@ final class WebPageListPresenter {
     private let dataService: IDataService
     private weak var coordinator: Coordinator?
     private var viewData: [WebPageListViewData] = []
+    // sorting service --> with a protocol
     
     init(coordinator: Coordinator, dataService: IDataService) {
         self.coordinator = coordinator

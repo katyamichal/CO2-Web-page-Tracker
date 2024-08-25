@@ -29,9 +29,9 @@ extension SearchWebPagePresenter: ISearchWebPagePresenter {
     }
     
     func loadData(with url: String) {
-        networkService.performRequest(with: url)
         updateSearchStatus(with: .load(status: .loading(message: Constants.SearchLoadingMessage.loading)))
         updateView()
+        networkService.performRequest(with: url)
     }
    
     // MARK: - Loading Handeling

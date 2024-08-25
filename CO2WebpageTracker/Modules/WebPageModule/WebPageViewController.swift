@@ -175,6 +175,7 @@ private extension WebPageViewController {
             }
         ])
         rightBarItem.menu = barButtonMenu
+        rightBarItem.tintColor = Colours.WebPageColours.darkOrange
         return rightBarItem
     }
     

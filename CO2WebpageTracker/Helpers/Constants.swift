@@ -62,13 +62,13 @@ enum Constants {
     }
      
     enum SearchLoadingMessage {
-        static let noInternetConnection = "Poor Internet Connection. Please check your network settings and try again."
+        static let noInternetConnection = "Poor Internet Connection." + "\n" + "Please check your network settings and try again."
         static let waitForLoad = "We're just loading your result..."
         static let failFetchData = "We're sorry but something hasn't worked. Please check the URL and try testing again."
         static let urlSessionError = "Oops! Something went wrong while getting your result. Please try again."
         static let serverError = "Our server is currently unavailable. Please try again later."
         static let testAgain = "Try testing again"
-        static let loading = "We're loading you result. The test requires a full load of the page, so the bigger the webpage, the longer it takes."
+        static let loading = "We're loading you result." + "\n" + "The test requires a full load of the page, so the bigger the webpage, the longer it takes."
     }
     
     enum CoreDataMessage {
