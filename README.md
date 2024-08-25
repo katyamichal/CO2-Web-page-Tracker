@@ -39,7 +39,11 @@
 - Переход на экран деталей/результата анализа веб-страницы при успешной обработке.
 - Загрузка продолжается в фоне, может быть приостановлена и возобновлена с сохранением прогресса, а также отменена.
 
-## https://github.com/user-attachments/assets/f78943c6-a553-48d5-88b0-b697857d17eb
+![ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/fe88158f-57c7-44d1-a287-f05af794b1d9)
+![ezgif com-video-to-gif-converter-2](https://github.com/user-attachments/assets/0b42729e-99c6-4d87-9fcc-be9474edbf99)
+![ezgif com-video-to-gif-converter-3](https://github.com/user-attachments/assets/40e82a06-0e4f-4ff6-a888-742d3b4954b4)
+![ezgif com-video-to-gif-converter-4](https://github.com/user-attachments/assets/218779c2-b656-4523-9eb2-bdd2c1d38e61)
+
 
 ### Экран 2 (Список сохранённых веб-страниц)
 
