@@ -31,10 +31,8 @@ final class WebKitViewController: UIViewController {
     }()
     
     private lazy var loadingIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .large)
+        let indicator = UIActivityIndicatorView(style: .medium)
         indicator.hidesWhenStopped = true
-        indicator.style = .large
-        indicator.tintColor = .red
         return indicator
     }()
     
@@ -97,9 +95,13 @@ extension WebKitViewController: IWebKitView {
 // MARK: - WebKit Navigation Delegate
 
 extension WebKitViewController: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         presenter.viewIsLoaded()
     }
+    
+//    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+//        presenter.viewIsLoaded()
+//    }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         presenter.viewIsLoaded(with: error)
