@@ -61,9 +61,14 @@
 - Переход по ссылке на сайт [Website Carbon](https://websitecarbon.com) для получения более детальной информации о методах подсчёта CO2.
 - Возможность поделиться результатом.
 
+![detail-ezgif com-video-to-gif-converter-2](https://github.com/user-attachments/assets/718dc3c7-2659-4ee7-9971-f3ea05188cb4)
+
+
 ### Экран 4 (WebKit)
 
 - Просмотр подробностей расчета эко-параметров веб-страницы.
+
+![SimulatorScreenRecording-iPhone15Pro-2024-08-25at13 09 57-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/e0f7d0ea-5aef-49a9-b985-f4713e49f8a7)
 
 ## Планы развития
 
