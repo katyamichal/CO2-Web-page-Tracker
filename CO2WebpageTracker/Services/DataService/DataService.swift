@@ -10,11 +10,11 @@ import CoreData
 
 protocol IDataService: AnyObject {
     func addFetchDelegate(_ delegate: IFetchResultControllerDelegate)
-    func fetchWepPages(completionHandler: (Result<[WebPageListViewData],CoreDataErrors>) -> Void)
+    func fetchWepPages(completionHandler: @escaping (Result<[WebPageListViewData],CoreDataErrors>) -> Void)
     func performFetch()
-    func fetchWepPage(with webPageURL: String, completionHandler: (WebPageViewData) -> Void)
+    func fetchWepPage(with webPageURL: String, completionHandler: @escaping (WebPageViewData) -> Void)
     func findDublicate(with webPage: WebPageViewData) -> Bool
-    func add(webPage: WebPageViewData, completion: (String) -> Void)
+    func add(webPage: WebPageViewData, completion: @escaping (String) -> Void)
     func deleteWebPage(url: String)
     func update(webPage: WebPageViewData)
 }
@@ -72,7 +72,7 @@ final class DataService: IDataService {
         }
     }
     
-    func fetchWepPages(completionHandler: (Result<[WebPageListViewData],CoreDataErrors>) -> Void) {
+    func fetchWepPages(completionHandler: @escaping (Result<[WebPageListViewData],CoreDataErrors>) -> Void) {
         let context = PersistantContainerStorage.persistentContainer.viewContext
         let sortDescriptor = NSSortDescriptor(keyPath: \WebPageInfo.date, ascending: false)
         
@@ -89,7 +89,7 @@ final class DataService: IDataService {
         }
     }
     
-    func fetchWepPage(with webPageURL: String, completionHandler: (WebPageViewData) -> Void) {
+    func fetchWepPage(with webPageURL: String, completionHandler: @escaping (WebPageViewData) -> Void) {
         guard let webPage = getWebPage(with: webPageURL) else { return }
         var image: UIImage?
         if let imageData = webPage.image {
@@ -126,7 +126,7 @@ final class DataService: IDataService {
         return isDublicated
     }
     
-    func add(webPage: WebPageViewData, completion: (String) -> Void) {
+    func add(webPage: WebPageViewData, completion: @escaping (String) -> Void) {
         let context = PersistantContainerStorage.persistentContainer.viewContext
         let newWebPage = WebPageInfo(context: context)
         var binaryImageData: Data?
